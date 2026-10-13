@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_helpers\CtrlHelper.cs" />
     <Compile Include="_helpers\IoHelper.cs" />
     <Compile Include="_utilities\DrawExternalBorder.cs" />
     <Compile Include="_utilities\LinkNudToBtns.cs" />
