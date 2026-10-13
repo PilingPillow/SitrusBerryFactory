@@ -1,5 +1,4 @@
-﻿using System;
-using SitrusBerryFactory._utilities;
+﻿using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._helpers
 {
@@ -58,6 +57,39 @@ namespace SitrusBerryFactory._helpers
 
                 buffer[offset + i] = (byte)((value >> shift) & BinaryConstants.ByteMask);
             }
+        }
+
+        /// <summary>
+        /// Reads the target pointer offset as int.
+        /// Returns true and BinaryConstants.InvalidValue for a null pointer.
+        /// Returns false and BinaryConstants.InvalidValue for an invalid pointer.
+        /// </summary>
+        public static bool TryReadPointer(
+            byte[] source,
+            int pointerOffset,
+            out int resultOffset)
+        {
+            uint rawAddr = (uint)ReadBytesAsLong(
+                source,
+                pointerOffset,
+                sizeof(uint));
+
+            // Null pointer
+            if (rawAddr == 0U)
+            {
+                resultOffset = BinaryConstants.InvalidValue;
+                return true;
+            }
+
+            // Out of range
+            if (rawAddr < BinaryConstants.BaseAddr || BinaryConstants.EndAddr < rawAddr )
+            {
+                resultOffset = BinaryConstants.InvalidValue;
+                return false;
+            }
+
+            resultOffset = (int)(rawAddr - BinaryConstants.BaseAddr);
+            return true;
         }
 
     }
