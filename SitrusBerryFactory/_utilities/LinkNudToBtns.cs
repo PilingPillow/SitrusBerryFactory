@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace SitrusBerryFactory._helpers
+namespace SitrusBerryFactory._utilities
 {
     public sealed class NudBtnBinding
     {

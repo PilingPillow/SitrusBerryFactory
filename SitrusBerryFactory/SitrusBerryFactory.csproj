@@ -55,7 +55,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_helpers\IoHelper.cs" />
-    <Compile Include="_helpers\LinkNudToBtns.cs" />
+    <Compile Include="_utilities\DrawExternalBorder.cs" />
+    <Compile Include="_utilities\LinkNudToBtns.cs" />
     <Compile Include="_utilities\Constants.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
