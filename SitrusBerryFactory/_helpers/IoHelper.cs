@@ -91,6 +91,5 @@ namespace SitrusBerryFactory._helpers
             resultOffset = (int)(rawAddr - BinaryConstants.BaseAddr);
             return true;
         }
-
     }
 }
