@@ -30,11 +30,15 @@ namespace SitrusBerryFactory._utilities
         /// </summary>
         public dynamic AsDynamic() => this;
 
-        public override bool TryGetMember(
-            GetMemberBinder binder,
-            out object result)
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            result = _values[binder.Name];
+            if (_values.TryGetValue(binder.Name, out T value))
+            {
+                result = value;
+                return true;
+            }
+
+            result = default(T);
             return true;
         }
     }
