@@ -5,7 +5,7 @@ namespace SitrusBerryFactory._utilities
 {
     public sealed class EventBinder
     {
-        private List<Action> _detachActions = new List<Action>();
+        private readonly List<Action> _detachActions = new List<Action>();
 
         /// <summary>
         /// Binds an event and registers its removal.
