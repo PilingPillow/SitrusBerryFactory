@@ -61,6 +61,7 @@
     <Compile Include="_managers\ConfigManager.cs" />
     <Compile Include="_utilities\DrawExternalBorder.cs" />
     <Compile Include="_utilities\DynamicAccessor.cs" />
+    <Compile Include="_utilities\EventBinder.cs" />
     <Compile Include="_utilities\LinkNudToBtns.cs" />
     <Compile Include="_utilities\Constants.cs" />
     <EmbeddedResource Include="MainForm.resx">
