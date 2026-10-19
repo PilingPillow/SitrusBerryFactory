@@ -64,8 +64,11 @@ namespace SitrusBerryFactory
             this.btnTrade = new System.Windows.Forms.Button();
             this.btnTrainerSprite = new System.Windows.Forms.Button();
             this.btnTrainerClass = new System.Windows.Forms.Button();
+            this.grpChangeLog = new System.Windows.Forms.GroupBox();
+            this.lstChangeLog = new System.Windows.Forms.ListBox();
             this.msMain.SuspendLayout();
             this.grpEditors.SuspendLayout();
+            this.grpChangeLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // msMain
@@ -79,7 +82,7 @@ namespace SitrusBerryFactory
             this.msMain.Location = new System.Drawing.Point(0, 0);
             this.msMain.Name = "msMain";
             this.msMain.Padding = new System.Windows.Forms.Padding(0);
-            this.msMain.Size = new System.Drawing.Size(933, 24);
+            this.msMain.Size = new System.Drawing.Size(492, 24);
             this.msMain.TabIndex = 0;
             this.msMain.Text = "MenuBar";
             // 
@@ -428,11 +431,35 @@ namespace SitrusBerryFactory
             this.btnTrainerClass.Text = "Trainer Class";
             this.btnTrainerClass.UseVisualStyleBackColor = true;
             // 
+            // grpChangeLog
+            // 
+            this.grpChangeLog.Controls.Add(this.lstChangeLog);
+            this.grpChangeLog.Location = new System.Drawing.Point(20, 326);
+            this.grpChangeLog.Margin = new System.Windows.Forms.Padding(0);
+            this.grpChangeLog.Name = "grpChangeLog";
+            this.grpChangeLog.Padding = new System.Windows.Forms.Padding(0);
+            this.grpChangeLog.Size = new System.Drawing.Size(450, 174);
+            this.grpChangeLog.TabIndex = 2;
+            this.grpChangeLog.TabStop = false;
+            this.grpChangeLog.Text = "Change Log";
+            // 
+            // lstChangeLog
+            // 
+            this.lstChangeLog.FormattingEnabled = true;
+            this.lstChangeLog.ItemHeight = 15;
+            this.lstChangeLog.Location = new System.Drawing.Point(20, 28);
+            this.lstChangeLog.Margin = new System.Windows.Forms.Padding(0);
+            this.lstChangeLog.Name = "lstChangeLog";
+            this.lstChangeLog.ScrollAlwaysVisible = true;
+            this.lstChangeLog.Size = new System.Drawing.Size(408, 124);
+            this.lstChangeLog.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(933, 562);
+            this.ClientSize = new System.Drawing.Size(492, 517);
+            this.Controls.Add(this.grpChangeLog);
             this.Controls.Add(this.grpEditors);
             this.Controls.Add(this.msMain);
             this.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -444,6 +471,7 @@ namespace SitrusBerryFactory
             this.msMain.ResumeLayout(false);
             this.msMain.PerformLayout();
             this.grpEditors.ResumeLayout(false);
+            this.grpChangeLog.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -486,6 +514,8 @@ namespace SitrusBerryFactory
         private System.Windows.Forms.Button btnTrade;
         private System.Windows.Forms.Button btnTrainerSprite;
         private System.Windows.Forms.Button btnTrainerClass;
+        private System.Windows.Forms.GroupBox grpChangeLog;
+        private System.Windows.Forms.ListBox lstChangeLog;
     }
 }
 
