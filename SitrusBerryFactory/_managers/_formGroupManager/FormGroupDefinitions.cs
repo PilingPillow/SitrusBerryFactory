@@ -28,7 +28,7 @@ namespace SitrusBerryFactory._managers._formGroupManager
     }
 
     /// <summary>
-    /// Defines the available form groups.
+    /// Defines form groups.
     /// </summary>
     public enum FormGroup
     {
