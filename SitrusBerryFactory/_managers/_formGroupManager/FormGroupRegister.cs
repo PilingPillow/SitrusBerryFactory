@@ -9,7 +9,7 @@ namespace SitrusBerryFactory._managers._formGroupManager
 {
     public sealed class FormGroupRegister
     {
-        public FormGroupData GroupData { get; set; } // Shares data within the group
+        public FormGroupData GroupData { get; set; }
         public EventHandler Closed { get; set; } // Updates the main UI state
 
         private Form _ownerForm = null;
@@ -36,14 +36,13 @@ namespace SitrusBerryFactory._managers._formGroupManager
                 .OrderBy(x => x.Attribute.Order)
                 .ToList();
 
-            // Create shared data when the group has multiple forms
+            // Create group data when the group has multiple forms
             if (formInfos.Any(x => x.Attribute.Order >= 0))
             {
                 GroupData = new FormGroupData();
                 GroupData.RefreshRequested += RefreshForms;
             }
 
-            // Create the forms
             foreach (var info in formInfos)
             {
                 var form = GroupData != null

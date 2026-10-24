@@ -11,7 +11,7 @@ namespace SitrusBerryFactory._managers._formGroupManager
     }
 
     /// <summary>
-    /// Specifies the form group and display order.
+    /// Defines form group and display order.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class FormGroupAttribute : Attribute
