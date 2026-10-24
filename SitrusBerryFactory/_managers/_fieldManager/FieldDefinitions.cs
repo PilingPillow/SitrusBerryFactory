@@ -27,6 +27,12 @@
         Divided,
     }
 
+    public enum StringLength
+    {
+        EntryLength,
+        AllowedLength,
+    }
+
     /// <summary>
     /// Stores the metadata of a def file line.
     /// </summary>
