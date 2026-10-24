@@ -59,6 +59,7 @@
     <Compile Include="_helpers\IoHelper.cs" />
     <Compile Include="_managers\CharmapManager.cs" />
     <Compile Include="_managers\ConfigManager.cs" />
+    <Compile Include="_managers\_fieldManager\FieldDefinitions.cs" />
     <Compile Include="_managers\_formGroupManager\FormGroupData.cs" />
     <Compile Include="_managers\_formGroupManager\FormGroupDefinitions.cs" />
     <Compile Include="_managers\_formGroupManager\FormGroupRegister.cs" />
