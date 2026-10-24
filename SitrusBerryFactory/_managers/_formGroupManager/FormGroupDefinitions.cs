@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SitrusBerryFactory._managers
+namespace SitrusBerryFactory._managers._formGroupManager
 {
     /// <summary>
     /// Refreshes the UI after undo/redo.
