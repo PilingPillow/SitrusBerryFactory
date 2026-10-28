@@ -32,13 +32,9 @@ namespace SitrusBerryFactory._utilities
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            if (_values.TryGetValue(binder.Name, out T value))
-            {
-                result = value;
-                return true;
-            }
-
-            result = default(T);
+            result = _values.TryGetValue(binder.Name, out T value)
+                ? value
+                : default(T);
             return true;
         }
     }
