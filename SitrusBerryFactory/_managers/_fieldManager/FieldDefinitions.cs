@@ -1,18 +1,7 @@
-﻿namespace SitrusBerryFactory._managers._fieldManager
-{
-    /// <summary>
-    /// Defines the order of separated values by colons in each def line.
-    /// </summary>
-    public enum DefName
-    {
-        FieldName,
-        KindName,
-        AttrName,
-    }
+﻿using SitrusBerryFactory._utilities;
 
-    /// <summary>
-    /// Defines the field kinds in a def file.
-    /// </summary>
+namespace SitrusBerryFactory._managers._fieldManager
+{
     public enum FieldKind
     {
         Byte,
@@ -21,35 +10,42 @@
         Int16,
         UInt32,
         Int32,
-
-        Pointer,
         String,
-        Divided,
     }
 
-    public enum StringLength
+    public static class AttrDefinitions
     {
-        EntryLength,
-        AllowedLength,
-    }
-
-    /// <summary>
-    /// Stores the metadata of a def file line.
-    /// </summary>
-    public sealed class FieldMetaData
-    {
-        public string Name { get; }
-        public FieldKind Field { get; }
-        public string Attr { get; }
-
-        public FieldMetaData(
-            string name,
-            FieldKind kind,
-            string attr)
+        /// <summary>
+        /// Gets the length of the field type.
+        /// </summary>
+        public static int GetFieldSize(this FieldKind kind)
         {
-            Name = name;
-            Field = kind;
-            Attr = attr;
+            switch (kind)
+            {
+                case FieldKind.Byte:
+                case FieldKind.SByte:
+                    return sizeof(byte);
+
+                case FieldKind.UInt16:
+                case FieldKind.Int16:
+                    return sizeof(ushort);
+
+                case FieldKind.UInt32:
+                case FieldKind.Int32:
+                    return sizeof(uint);
+
+                // String has variable length
+                default:
+                    return BinaryConstants.InvalidValue;
+            }
         }
+
+        /// <summary>
+        /// Checks whether the field type is signed.
+        /// </summary>
+        public static bool IsSigned(this FieldKind kind) =>
+            kind is FieldKind.SByte ||
+            kind is FieldKind.Int16 ||
+            kind is FieldKind.Int32;
     }
 }
