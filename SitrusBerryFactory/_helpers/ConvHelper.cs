@@ -1,11 +1,32 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._helpers
 {
     public static class ConvHelper
     {
+        public static string RemoveSpace(this string str)
+        {
+            if (str == null)
+            {
+                return str;
+            }
+
+            var sb = new StringBuilder(str.Length);
+
+            foreach (char c in str)
+            {
+                if (!char.IsWhiteSpace(c))
+                {
+                    sb.Append(c);
+                }
+            }
+
+            return sb.ToString();
+        }
+
         public static int ParseStringToInt(this string str)
         {
             // Check for null or empty
@@ -14,10 +35,7 @@ namespace SitrusBerryFactory._helpers
                 return BinaryConstants.InvalidValue;
             }
 
-            // Remove spaces
-            var trimStr = str.Replace(" ", string.Empty);
-
-            return int.TryParse(trimStr, NumberStyles.HexNumber, null, out int value)
+            return int.TryParse(str.RemoveSpace(), NumberStyles.HexNumber, null, out int value)
                     ? value
                     : BinaryConstants.InvalidValue;
         }

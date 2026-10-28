@@ -8,7 +8,7 @@ namespace SitrusBerryFactory._helpers
         /// Uses long to support signed.
         /// </summary>
         public static long ReadBytesAsLong(
-            byte[] buffer,
+            this byte[] buffer,
             int offset,
             int byteCount,
             bool isLittleEndian = true,
@@ -44,7 +44,7 @@ namespace SitrusBerryFactory._helpers
         }
 
         public static void WriteLongAsBytes(
-            byte[] buffer,
+            this byte[] buffer,
             int offset,
             int byteCount,
             long value,
@@ -65,7 +65,7 @@ namespace SitrusBerryFactory._helpers
         /// Returns false and BinaryConstants.InvalidValue for an invalid pointer.
         /// </summary>
         public static bool TryReadPointer(
-            byte[] source,
+            this byte[] source,
             int pointerOffset,
             out int resultOffset)
         {

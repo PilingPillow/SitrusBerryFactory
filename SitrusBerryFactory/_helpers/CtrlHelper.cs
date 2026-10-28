@@ -15,13 +15,13 @@ namespace SitrusBerryFactory._helpers
         /// Enables or disables controls recursively.
         /// </summary>
         public static void SetControlsEnabled(
-            Control container,
+            this Control container,
             bool enabled,
             bool includeSelf = true,
             IEnumerable<string> excludeNames = null,
             IEnumerable<Type> excludeTypes = null)
         {
-            foreach (var ctrl in GetTargetControls(container, includeSelf, excludeNames, excludeTypes))
+            foreach (var ctrl in container.GetTargetControls(includeSelf, excludeNames, excludeTypes))
             {
                 ctrl.Enabled = enabled;
             }
@@ -31,12 +31,12 @@ namespace SitrusBerryFactory._helpers
         /// Resets controls recursively.
         /// </summary>
         public static void ResetControls(
-            Control container,
+            this Control container,
             bool includeSelf = true,
             IEnumerable<string> excludeNames = null,
             IEnumerable<Type> excludeTypes = null)
         {
-            foreach (var ctrl in GetTargetControls(container, includeSelf, excludeNames, excludeTypes))
+            foreach (var ctrl in container.GetTargetControls(includeSelf, excludeNames, excludeTypes))
             {
                 switch (ctrl)
                 {
@@ -60,7 +60,7 @@ namespace SitrusBerryFactory._helpers
         }
 
         private static List<Control> GetTargetControls(
-            Control container,
+            this Control container,
             bool includeSelf,
             IEnumerable<string> excludeNames,
             IEnumerable<Type> excludeTypes)
@@ -110,7 +110,7 @@ namespace SitrusBerryFactory._helpers
         /// Sets ComboBox items and selects the default item.
         /// </summary>
         public static void SetupCmbItems(
-            ComboBox cmb,
+            this ComboBox cmb,
             int defaultIndex = 0,
             params string[] items)
         {
@@ -119,7 +119,10 @@ namespace SitrusBerryFactory._helpers
                 cmb.BeginUpdate();
                 cmb.Items.Clear();
                 cmb.Items.AddRange(items);
-                cmb.SelectedIndex = defaultIndex;
+
+                cmb.SelectedIndex = items.Length == 0
+                    ? BinaryConstants.InvalidValue
+                    : defaultIndex;
             }
             finally
             {
