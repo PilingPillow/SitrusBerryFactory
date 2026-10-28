@@ -10,7 +10,7 @@ namespace SitrusBerryFactory._managers._fieldManager
         Int16,
         UInt32,
         Int32,
-        String,
+        Variable,
     }
 
     public static class AttrDefinitions
@@ -34,7 +34,6 @@ namespace SitrusBerryFactory._managers._fieldManager
                 case FieldKind.Int32:
                     return sizeof(uint);
 
-                // String has variable length
                 default:
                     return BinaryConstants.InvalidValue;
             }
@@ -51,8 +50,9 @@ namespace SitrusBerryFactory._managers._fieldManager
 
     public enum AttrKind
     {
+        String,
         Pointer,
         Bit,
-        Custom,
+        Unknown,
     }
 }
