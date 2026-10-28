@@ -33,11 +33,17 @@ namespace SitrusBerryFactory._managers
         {
             ClearDict();
 
-            if (!Configs.TryGetValue(configName, out string filePath)) return;
+            if (!Configs.TryGetValue(configName, out string filePath))
+            {
+                return;
+            }
 
             foreach (string line in File.ReadLines(filePath, Encoding.UTF8))
             {
-                if (!TryParseLine(line, out string key, out string rawValue)) continue;
+                if (!TryParseLine(line, out string key, out string rawValue))
+                {
+                    continue;
+                }
 
                 if (bool.TryParse(rawValue, out bool boolValue))
                 {
@@ -66,15 +72,21 @@ namespace SitrusBerryFactory._managers
             key = string.Empty;
             rawValue = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(line) || line.StartsWith(";")) return false;
+            if (string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
+            {
+                return false;
+            }
 
             // Split at '='
             string[] parts = line.Split('=');
             int count = Enum.GetValues(typeof(PartName)).Length;
-            if (parts.Length < count) return false;
+            if (parts.Length != count)
+            {
+                return false;
+            }
 
-            key = parts[(int)PartName.Key].Trim();
-            rawValue = parts[(int)PartName.Value].Trim();
+            key = parts[(int)PartName.Key].RemoveSpace();
+            rawValue = parts[(int)PartName.Value].RemoveSpace();
             return true;
         }
 

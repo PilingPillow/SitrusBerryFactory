@@ -82,7 +82,10 @@ namespace SitrusBerryFactory._helpers
 
             void SearchCtrl(Control parent)
             {
-                if (!ShouldRecurse(parent)) return;
+                if (!ShouldRecurse(parent))
+                {
+                    return;
+                }
 
                 foreach (Control child in parent.Controls)
                 {
@@ -142,7 +145,10 @@ namespace SitrusBerryFactory._helpers
                 foreach (string line in File.ReadLines(target.Path, Encoding.UTF8))
                 {
                     // Skip blank lines and comments
-                    if (string.IsNullOrWhiteSpace(line) || line.StartsWith(";")) continue;
+                    if (string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
+                    {
+                        continue;
+                    }
 
                     // Parse the value inside the brackets
                     int closeBracketIndex = line.IndexOf(']');

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._managers
@@ -27,8 +28,14 @@ namespace SitrusBerryFactory._managers
                 }
 
                 string[] parts = line.Split('=');
-                string hexKey = parts[(int)PartName.Key].Replace(" ", string.Empty);
-                string value = parts[(int)PartName.Value];
+                int count = Enum.GetValues(typeof(PartName)).Length;
+                if (parts.Length != count)
+                {
+                    continue;
+                }
+
+                string hexKey = parts[(int)PartName.Key].RemoveSpace();
+                string value = parts[(int)PartName.Value].RemoveSpace();
 
                 int byteLen = hexKey.Length / BinaryConstants.HexCharsPerByte;
                 byte[] bytes = new byte[byteLen];
@@ -236,7 +243,10 @@ namespace SitrusBerryFactory._managers
                 currentText = stringInfo.SubstringByTextElements(0, count);
 
                 byte[] bytes = StringToBytes(currentText, false);
-                if (bytes.Length <= maxBytes) break;
+                if (bytes.Length <= maxBytes)
+                {
+                    break;
+                }
             }
 
             return currentText;
