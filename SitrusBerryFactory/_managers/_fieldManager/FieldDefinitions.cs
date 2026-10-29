@@ -47,4 +47,18 @@ namespace SitrusBerryFactory._managers._fieldManager
             kind is FieldKind.Int16 ||
             kind is FieldKind.Int32;
     }
+
+    public enum AttrKind
+    {
+        String,
+        Pointer,
+        Bit,
+        Unknown,
+    }
+
+    public enum StringAttrArgs
+    {
+        EntryLengthArg,
+        AllowedLengthArg,
+    }
 }

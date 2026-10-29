@@ -9,7 +9,7 @@ namespace SitrusBerryFactory._managers._fieldManager
     {
         public string Key { get; }
         public int Offset { get; set; }
-        public FieldLength Lengths { get; }
+        public FieldLength Lengths { get; set; }
         public ValueInterpretations Interps { get; }
         public byte[] BinaryData
         {
@@ -35,7 +35,7 @@ namespace SitrusBerryFactory._managers._fieldManager
             Interps = new ValueInterpretations();
             Interps.IsSigned = metadata.Field.IsSigned();
             Interps.IsPointer = metadata.Attrs.ContainsKey(AttrKind.Pointer);
-            Interps.BitSequence = new BitAttrMapiing();
+            Interps.BitMapping = new List<BitDefinition>();
 
             // set the key
             Key = metadata.Key;
@@ -72,13 +72,8 @@ namespace SitrusBerryFactory._managers._fieldManager
                         foreach (var bitLengthKey in kvp.Value)
                         {
                             int bitLength = (int)config[bitLengthKey];
-                            int nextPos = currentPos + bitLength;
-
-                            Interps.BitSequence.Register(
-                                bitLengthKey,
-                                new BitAttrDefinition(currentPos, nextPos));
-
-                            currentPos = nextPos;
+                            Interps.BitMapping.Add(new BitDefinition(bitLengthKey, currentPos, bitLength));
+                            currentPos += bitLength;
                         }
 
                         continue;
@@ -97,6 +92,6 @@ namespace SitrusBerryFactory._managers._fieldManager
     {
         public bool IsSigned { get; set; }
         public bool IsPointer { get; set; }
-        public BitAttrMapiing BitSequence { get; set; }
+        public List<BitDefinition> BitMapping { get; set; }
     }
 }
