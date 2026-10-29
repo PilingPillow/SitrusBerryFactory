@@ -39,6 +39,7 @@ namespace SitrusBerryFactory._managers._recordManager
 
             // set the key
             Key = metadata.Key;
+            var config = _sharedData.Config.AsDynamic();
 
             // Set temporary lengths
             Lengths = new FieldLength();
@@ -52,7 +53,7 @@ namespace SitrusBerryFactory._managers._recordManager
                 {
                     case AttrKind.String:
                         string entryLenthKey = kvp.Value[(int)StringAttrArgs.EntryLengthArg];
-                        Lengths.EntryLength = (int)_sharedData.Config.AsDynamic()[entryLenthKey];
+                        Lengths.EntryLength = (int)config[entryLenthKey];
 
                         // Second argument (AllowedLengthArg) may be omitted
                         if (kvp.Value.Length < Enum.GetNames(typeof(StringAttrArgs)).Length)
@@ -62,13 +63,11 @@ namespace SitrusBerryFactory._managers._recordManager
                         }
 
                         string AllowedLengthKey = kvp.Value[(int)StringAttrArgs.AllowedLengthArg];
-                        Lengths.AllowedLength = (int)_sharedData.Config.AsDynamic()[AllowedLengthKey];
+                        Lengths.AllowedLength = (int)config[AllowedLengthKey];
                         continue;
 
                     case AttrKind.Bit:
-                        var config = _sharedData.Config.AsDynamic();
                         int currentPos = 0;
-
                         foreach (var bitLengthKey in kvp.Value)
                         {
                             int bitLength = (int)config[bitLengthKey];
