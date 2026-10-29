@@ -15,17 +15,17 @@ namespace SitrusBerryFactory._managers
         /// <summary>
         /// Maps configuration names to file paths.
         /// </summary>
-        public Dictionary<string, string> Configs { get; }
+        public Dictionary<string, string> Dict { get; }
 
         public ConfigManager(string folderPath)
         {
             var searchExt = $"*.{ExtConstants.IniExt}";
-            Configs = new Dictionary<string, string>();
+            Dict = new Dictionary<string, string>();
 
             foreach (string filePath in Directory.EnumerateFiles(folderPath, searchExt))
             {
                 string name = Path.GetFileNameWithoutExtension(filePath);
-                Configs[name] = filePath;
+                Dict[name] = filePath;
             }
         }
 
@@ -33,7 +33,7 @@ namespace SitrusBerryFactory._managers
         {
             ClearDict();
 
-            if (!Configs.TryGetValue(configName, out string filePath))
+            if (!Dict.TryGetValue(configName, out string filePath))
             {
                 return;
             }

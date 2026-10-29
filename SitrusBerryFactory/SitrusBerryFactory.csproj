@@ -60,7 +60,7 @@
     <Compile Include="_helpers\IoHelper.cs" />
     <Compile Include="_managers\CharmapManager.cs" />
     <Compile Include="_managers\ConfigManager.cs" />
-    <Compile Include="_managers\_recordManager\ConvData.cs" />
+    <Compile Include="_managers\_historyManager\HistoryManager.cs" />
     <Compile Include="_managers\_recordManager\MetadataDefinitions.cs" />
     <Compile Include="_managers\_recordManager\FieldValueConv.cs" />
     <Compile Include="_managers\_recordManager\FieldValueHolder.cs" />
@@ -86,8 +86,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="cfg\charmap.tbl" />
-    <None Include="cfg\default.ini" />
+    <None Include="charmap.tbl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ini\default.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

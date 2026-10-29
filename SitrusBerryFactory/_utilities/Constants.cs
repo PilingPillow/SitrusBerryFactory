@@ -47,6 +47,20 @@
         public const string InvalidStr = "Invalid";
     }
 
+    public static class FilterConstants
+    {
+        public const string RomFileFilter = "ROM Files|*.gba";
+        public const string ImageImportFilter = "Image Files (*.png;*.bmp)|*.png;*.bmp";
+        public const string ImageExportFilter = "PNG Image (*.png)|*.png|BMP Image (*.bmp)|*.bmp";
+        public const string BinImportExportFilter = "BIN Files (*.bin)|*.bin";
+    }
+
+    public enum SaveMode
+    {
+        SaveOver = 0,
+        SaveAs = 1,
+    }
+
     public enum PartName
     {
         Key = 0,
