@@ -35,6 +35,16 @@ namespace SitrusBerryFactory._utilities
             result = _values.TryGetValue(binder.Name, out T value)
                 ? value
                 : default(T);
+
+            return true;
+        }
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            _values[binder.Name] = value is T typedValue
+                ? typedValue
+                : default(T);
+
             return true;
         }
 
@@ -46,6 +56,19 @@ namespace SitrusBerryFactory._utilities
             result = indexes[0] is string key && _values.TryGetValue(key, out T value)
                 ? value
                 : default(T);
+
+            return true;
+        }
+
+        public override bool TrySetIndex(
+            SetIndexBinder binder,
+            object[] indexes,
+            object value)
+        {
+            _values[(string)indexes[0]] = value is T typedValue
+                ? typedValue
+                : default(T);
+
             return true;
         }
     }
