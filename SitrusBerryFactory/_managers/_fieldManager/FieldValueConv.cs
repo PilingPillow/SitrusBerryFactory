@@ -25,8 +25,7 @@ namespace SitrusBerryFactory._managers._fieldManager
         public static ConvData<T> BytesToModelConv<T>(
             FieldValueHolder fieldValue,
             ValueInterpretations interp,
-            CharmapManager charmap,
-            string bitKey = InvalidConstants.InvalidStr)
+            CharmapManager charmap)
         {
             var entryLength = fieldValue.Lengths.EntryLength;
             var binaryData = fieldValue.BinaryData;
@@ -54,13 +53,6 @@ namespace SitrusBerryFactory._managers._fieldManager
                     ? (T)Convert.ChangeType(InvalidConstants.InvalidValue, typeof(T))
                     : (T)Convert.ChangeType(rawFieldValue - BinaryConstants.BaseAddr, typeof(T));
                 return new ConvData<T>(primaryData);
-            }
-
-            // Add the fake BitDefinition to the list
-            if (interp.BitMapping.Count == 0)
-            {
-                interp.BitMapping.Add(
-                    new BitDefinition(bitKey, 0, entryLength * BinaryConstants.BitsPerByte));
             }
 
             // Temporary ConvData
