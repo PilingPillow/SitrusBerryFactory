@@ -10,6 +10,7 @@ namespace SitrusBerryFactory._managers._fieldManager
         public string Key { get; }
         public int Offset { get; set; }
         public FieldLength Lengths { get; }
+        public ValueInterpretations Interps { get; }
         public byte[] BinaryData
         {
             get
@@ -27,14 +28,14 @@ namespace SitrusBerryFactory._managers._fieldManager
         }
 
         private SharedData _sharedData = null;
-        private bool _isSigned = false;
-        private bool _isPointer = false;
-        private List<BitAttrDefinition> _bitSequence = null;
 
         public FieldValueHolder(FieldMetadata metadata, SharedData sharedData)
         {
             _sharedData = sharedData;
-            _isSigned = metadata.Field.IsSigned();
+            Interps = new ValueInterpretations();
+            Interps.IsSigned = metadata.Field.IsSigned();
+            Interps.IsPointer = metadata.Attrs.ContainsKey(AttrKind.Pointer);
+            Interps.BitSequence = new List<BitAttrDefinition>();
 
             // set the key
             Key = metadata.Key;
@@ -54,7 +55,7 @@ namespace SitrusBerryFactory._managers._fieldManager
                         Lengths.EntryLength = (int)_sharedData.Config.AsDynamic()[entryLenthKey];
 
                         // Second argument (AllowedLengthArg) may be omitted
-                        if (kvp.Value.Length < Enum.GetNames(typeof(AttrKind)).Length)
+                        if (kvp.Value.Length < Enum.GetNames(typeof(StringAttrArgs)).Length)
                         {
                             continue;
                         }
@@ -63,19 +64,14 @@ namespace SitrusBerryFactory._managers._fieldManager
                         Lengths.AllowedLength = (int)_sharedData.Config.AsDynamic()[AllowedLengthKey];
                         continue;
 
-                    case AttrKind.Pointer:
-                        _isPointer = true;
-                        continue;
-
                     case AttrKind.Bit:
-                        _bitSequence = new List<BitAttrDefinition>();
                         var inc = Enum.GetNames(typeof(PartName)).Length;
 
                         for (int i = 0; i < kvp.Value.Length; i += inc)
                         {
                             string name = kvp.Value[i + (int)PartName.Key];
                             int length = kvp.Value[i + (int)PartName.Value].ParseStringToInt();
-                            _bitSequence.Add(new BitAttrDefinition(name, length));
+                            Interps.BitSequence.Add(new BitAttrDefinition(name, length));
                         }
                         continue;
                 }
@@ -87,5 +83,12 @@ namespace SitrusBerryFactory._managers._fieldManager
     {
         public int EntryLength { get; set; }
         public int AllowedLength { get; set; }
+    }
+
+    public sealed class ValueInterpretations
+    {
+        public bool IsSigned { get; set; }
+        public bool IsPointer { get; set; }
+        public List<BitAttrDefinition> BitSequence { get; set; }
     }
 }
