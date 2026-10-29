@@ -57,6 +57,7 @@ namespace SitrusBerryFactory._managers._fieldManager
                         // Second argument (AllowedLengthArg) may be omitted
                         if (kvp.Value.Length < Enum.GetNames(typeof(StringAttrArgs)).Length)
                         {
+                            Lengths.AllowedLength = Lengths.EntryLength;
                             continue;
                         }
 
