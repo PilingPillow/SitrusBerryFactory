@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Text;
 using SitrusBerryFactory._utilities;
 
@@ -35,9 +34,7 @@ namespace SitrusBerryFactory._helpers
                 return BinaryConstants.InvalidValue;
             }
 
-            return int.TryParse(str.RemoveSpace(), NumberStyles.HexNumber, null, out int value)
-                    ? value
-                    : BinaryConstants.InvalidValue;
+            return Convert.ToInt32(str.RemoveSpace(), BinaryConstants.HexBase);
         }
 
         public static string ParseIntToString(
