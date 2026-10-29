@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._utilities;
 
@@ -28,12 +27,14 @@ namespace SitrusBerryFactory._managers._fieldManager
         }
 
         private SharedData _sharedData = null;
-        private bool _isPointer = false;
         private bool _isSigned = false;
+        private bool _isPointer = false;
+        private List<BitAttrDefinition> _bitSequence = null;
 
         public FieldValueHolder(FieldMetadata metadata, SharedData sharedData)
         {
             _sharedData = sharedData;
+            _isSigned = metadata.Field.IsSigned();
 
             // set the key
             Key = metadata.Key;
@@ -67,7 +68,15 @@ namespace SitrusBerryFactory._managers._fieldManager
                         continue;
 
                     case AttrKind.Bit:
-                        // 
+                        _bitSequence = new List<BitAttrDefinition>();
+                        var inc = Enum.GetNames(typeof(PartName)).Length;
+
+                        for (int i = 0; i < kvp.Value.Length; i += inc)
+                        {
+                            string name = kvp.Value[i + (int)PartName.Key];
+                            int length = kvp.Value[i + (int)PartName.Value].ParseStringToInt();
+                            _bitSequence.Add(new BitAttrDefinition(name, length));
+                        }
                         continue;
                 }
             }

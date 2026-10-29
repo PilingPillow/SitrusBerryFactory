@@ -13,7 +13,7 @@ namespace SitrusBerryFactory._managers._fieldManager
         Variable,
     }
 
-    public static class AttrDefinitions
+    public static class FieldExtensions
     {
         /// <summary>
         /// Gets the length of the field type.
@@ -46,19 +46,5 @@ namespace SitrusBerryFactory._managers._fieldManager
             kind is FieldKind.SByte ||
             kind is FieldKind.Int16 ||
             kind is FieldKind.Int32;
-    }
-
-    public enum AttrKind
-    {
-        String,
-        Pointer,
-        Bit,
-        Unknown,
-    }
-
-    public enum StringAttrArgs
-    {
-        EntryLengthArg,
-        AllowedLengthArg,
     }
 }
