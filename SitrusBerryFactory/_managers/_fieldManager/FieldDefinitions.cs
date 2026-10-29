@@ -55,4 +55,10 @@ namespace SitrusBerryFactory._managers._fieldManager
         Bit,
         Unknown,
     }
+
+    public enum StringAttrArgs
+    {
+        EntryLengthArg,
+        AllowedLengthArg,
+    }
 }

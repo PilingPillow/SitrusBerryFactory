@@ -37,5 +37,16 @@ namespace SitrusBerryFactory._utilities
                 : default(T);
             return true;
         }
+
+        public override bool TryGetIndex(
+            GetIndexBinder binder,
+            object[] indexes,
+            out object result)
+        {
+            result = indexes[0] is string key && _values.TryGetValue(key, out T value)
+                ? value
+                : default(T);
+            return true;
+        }
     }
 }

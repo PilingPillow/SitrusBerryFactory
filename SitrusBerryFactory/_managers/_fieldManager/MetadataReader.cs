@@ -27,11 +27,11 @@ namespace SitrusBerryFactory._managers._fieldManager
 
         public FieldMetadata(
             string key,
-            FieldKind kind,
+            FieldKind field,
             Dictionary<AttrKind, string[]> attrs)
         {
             Key = key;
-            Field = kind;
+            Field = field;
             Attrs = attrs;
         }
     }
