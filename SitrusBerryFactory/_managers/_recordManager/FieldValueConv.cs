@@ -7,8 +7,7 @@ namespace SitrusBerryFactory._managers._recordManager
     public static class FieldValueConv
     {
         public static ConvData<T> ConvBytesToModel<T>(
-            FieldValueHolder fieldValue,
-            ValueInterpretations interp,
+            this FieldValueHolder fieldValue,
             CharmapManager charmap)
         {
             var entryLength = fieldValue.Lengths.EntryLength;
@@ -27,10 +26,10 @@ namespace SitrusBerryFactory._managers._recordManager
                 0,
                 entryLength,
                 isLittleEndian: true,
-                isSigned: interp.IsSigned);
+                isSigned: fieldValue.Interps.IsSigned);
 
             // Pointer
-            if (interp.IsPointer)
+            if (fieldValue.Interps.IsPointer)
             {
                 var primaryData = rawFieldValue == 0L
                     ? (T)Convert.ChangeType(InvalidConstants.InvalidValue, typeof(T))
@@ -42,13 +41,21 @@ namespace SitrusBerryFactory._managers._recordManager
             var convData = new ConvData<T>((T)Convert.ChangeType(rawFieldValue, typeof(T)));
 
             // Adding Bit Values
-            foreach (var bitDef in interp.BitMapping)
+            foreach (var bitDef in fieldValue.Interps.BitMapping)
             {
                 long rawBitValue = binaryData.GetBitValue(0, entryLength, bitDef);
                 convData.Register(bitDef.Name, rawBitValue);
             }
 
             return convData;
+        }
+
+        public static byte[] ConvModelToBytes<T>(
+            this T value,
+            FieldValueHolder fieldValue,
+            CharmapManager charmap)
+        {
+
         }
     }
 }

@@ -31,7 +31,7 @@
             return (packedValue >> definition.StartBit) & mask;
         }
 
-        public static void SetBits(
+        public static void SetBitValue(
             this byte[] source,
             int offset,
             int byteLength,
