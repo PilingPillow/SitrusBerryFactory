@@ -27,55 +27,51 @@ namespace SitrusBerryFactory._managers._recordManager
             }
         }
 
-        private SharedData _sharedData = null;
+        private readonly SharedData _sharedData = null;
 
         public FieldValueHolder(FieldMetadata metadata, SharedData sharedData)
         {
             _sharedData = sharedData;
-            Interps = new ValueInterpretations();
-            Interps.IsSigned = metadata.Field.IsSigned();
-            Interps.IsPointer = metadata.Attrs.ContainsKey(AttrKind.Pointer);
-            Interps.BitMapping = new List<BitDefinition>();
-
-            // set the key
-            Key = metadata.Key;
             var config = _sharedData.Config.AsDynamic();
 
-            // Set temporary lengths
-            Lengths = new FieldLength();
-            Lengths.EntryLength = metadata.Field.GetFieldSize();
-            Lengths.AllowedLength = InvalidConstants.InvalidValue;
+            Key = metadata.Key;
 
-            // check attributes
-            foreach (KeyValuePair<AttrKind, string[]> kvp in metadata.Attrs)
+            // Check StringAttr
+            if (metadata.Attrs.TryGetValue(AttrKind.String, out string[] lengths))
             {
-                switch (kvp.Key)
+                string entryLenthKey = lengths[(int)StringAttrArgs.EntryLengthArg];
+                int entryLength = (int)config[entryLenthKey];
+                int allowedLength = entryLength;
+
+                // Second argument (AllowedLengthArg) may be omitted
+                if (lengths.Length == Enum.GetNames(typeof(StringAttrArgs)).Length)
                 {
-                    case AttrKind.String:
-                        string entryLenthKey = kvp.Value[(int)StringAttrArgs.EntryLengthArg];
-                        Lengths.EntryLength = (int)config[entryLenthKey];
+                    string AllowedLengthKey = lengths[(int)StringAttrArgs.AllowedLengthArg];
+                    allowedLength = (int)config[AllowedLengthKey];
+                }
 
-                        // Second argument (AllowedLengthArg) may be omitted
-                        if (kvp.Value.Length < Enum.GetNames(typeof(StringAttrArgs)).Length)
-                        {
-                            Lengths.AllowedLength = Lengths.EntryLength;
-                            continue;
-                        }
+                Lengths = new FieldLength(entryLength, allowedLength);
+            }
+            else
+            {
+                Lengths = new FieldLength(metadata.Field.GetFieldSize());
+            }
 
-                        string AllowedLengthKey = kvp.Value[(int)StringAttrArgs.AllowedLengthArg];
-                        Lengths.AllowedLength = (int)config[AllowedLengthKey];
-                        continue;
+            // Check Others
+            Interps = new ValueInterpretations(
+                metadata.Field.IsSigned(),
+                metadata.Attrs.ContainsKey(AttrKind.Pointer),
+                new List<BitDefinition>());
 
-                    case AttrKind.Bit:
-                        int currentPos = 0;
-                        foreach (var bitLengthKey in kvp.Value)
-                        {
-                            int bitLength = (int)config[bitLengthKey];
-                            Interps.BitMapping.Add(new BitDefinition(bitLengthKey, currentPos, bitLength));
-                            currentPos += bitLength;
-                        }
-
-                        continue;
+            // check BitAttr
+            if (metadata.Attrs.TryGetValue(AttrKind.Bit, out string[] args))
+            {
+                int currentPos = 0;
+                foreach (var bitLengthKey in args)
+                {
+                    int bitLength = (int)config[bitLengthKey];
+                    Interps.BitMapping.Add(new BitDefinition(bitLengthKey, currentPos, bitLength));
+                    currentPos += bitLength;
                 }
             }
         }
@@ -83,14 +79,32 @@ namespace SitrusBerryFactory._managers._recordManager
 
     public sealed class FieldLength
     {
-        public int EntryLength { get; set; }
-        public int AllowedLength { get; set; }
+        public int EntryLength { get; }
+        public int AllowedLength { get; }
+
+        public FieldLength(
+            int entryLength, 
+            int allowedLength = InvalidConstants.InvalidValue)
+        {
+            EntryLength = entryLength;
+            AllowedLength = allowedLength;
+        }
     }
 
     public sealed class ValueInterpretations
     {
-        public bool IsSigned { get; set; }
-        public bool IsPointer { get; set; }
-        public List<BitDefinition> BitMapping { get; set; }
+        public bool IsSigned { get; }
+        public bool IsPointer { get; }
+        public List<BitDefinition> BitMapping { get; }
+
+        public ValueInterpretations(
+            bool isSigned, 
+            bool isPointer,
+            List<BitDefinition> bitMapping)
+        {
+            IsSigned = isSigned;
+            IsPointer = isPointer;
+            BitMapping = bitMapping;
+        }
     }
 }

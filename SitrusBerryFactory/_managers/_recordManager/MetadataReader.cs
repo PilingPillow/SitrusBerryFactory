@@ -112,7 +112,7 @@ namespace SitrusBerryFactory._managers._recordManager
                         .ToArray();
 
                     // Store the attribute and its arguments
-                    attrs.Add(attrKind, argParts);
+                    attrs[attrKind] = argParts;
                 }
 
                 // Store the field metadata
