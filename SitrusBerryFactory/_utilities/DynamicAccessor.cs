@@ -46,8 +46,7 @@ namespace SitrusBerryFactory._utilities
                 GetMemberBinder binder,
                 out object result)
             {
-                result = _owner._values.TryGetValue(
-                    binder.Name, out T value)
+                result = _owner._values.TryGetValue(binder.Name, out T value)
                     ? value
                     : default(T);
 
@@ -58,8 +57,7 @@ namespace SitrusBerryFactory._utilities
                 SetMemberBinder binder,
                 object value)
             {
-                _owner._values[binder.Name] =
-                    value is T typedValue
+                _owner._values[binder.Name] = value is T typedValue
                         ? typedValue
                         : default(T);
 
@@ -71,20 +69,11 @@ namespace SitrusBerryFactory._utilities
                 object[] indexes,
                 out object result)
             {
-                if (indexes != null &&
-                    indexes.Length == 1 &&
-                    indexes[0] is string key)
-                {
-                    result = _owner._values.TryGetValue(
-                        key, out T value)
-                        ? value
-                        : default(T);
+                result = _owner._values.TryGetValue((string)indexes[0], out T value)
+                    ? value
+                    : default(T);
 
-                    return true;
-                }
-
-                result = default(T);
-                return false;
+                return true;
             }
 
             public override bool TrySetIndex(
@@ -92,63 +81,12 @@ namespace SitrusBerryFactory._utilities
                 object[] indexes,
                 object value)
             {
-                if (indexes == null ||
-                    indexes.Length != 1 ||
-                    !(indexes[0] is string key))
-                {
-                    return false;
-                }
-
-                _owner._values[key] =
-                    value is T typedValue
+                _owner._values[(string)indexes[0]] = value is T typedValue
                         ? typedValue
                         : default(T);
 
                 return true;
             }
-        }
-    }
-
-    public override bool TryGetMember(GetMemberBinder binder, out object result)
-        {
-            result = _values.TryGetValue(binder.Name, out T value)
-                ? value
-                : default(T);
-
-            return true;
-        }
-
-        public override bool TrySetMember(SetMemberBinder binder, object value)
-        {
-            _values[binder.Name] = value is T typedValue
-                ? typedValue
-                : default(T);
-
-            return true;
-        }
-
-        public override bool TryGetIndex(
-            GetIndexBinder binder,
-            object[] indexes,
-            out object result)
-        {
-            result = indexes[0] is string key && _values.TryGetValue(key, out T value)
-                ? value
-                : default(T);
-
-            return true;
-        }
-
-        public override bool TrySetIndex(
-            SetIndexBinder binder,
-            object[] indexes,
-            object value)
-        {
-            _values[(string)indexes[0]] = value is T typedValue
-                ? typedValue
-                : default(T);
-
-            return true;
         }
     }
 }
