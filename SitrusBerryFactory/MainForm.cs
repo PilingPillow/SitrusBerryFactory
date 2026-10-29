@@ -67,7 +67,6 @@ namespace SitrusBerryFactory
                 {
                     using (var ofd = new OpenFileDialog())
                     {
-                        // Store configuration keys
                         var configKeys = _sharedData.Config.Dict.Keys.ToList();
 
                         // Build the file filter
@@ -79,7 +78,7 @@ namespace SitrusBerryFactory
                         _romPath = ofd.FileName;
                         _sharedData.LoadRom(File.ReadAllBytes(_romPath));
 
-                        // Get the selected configuration
+                        // Get the selected configurations
                         int selectedIndex = ofd.FilterIndex - 1;
                         string selectedKey = configKeys[selectedIndex];
                         _sharedData.Config.LoadConfig(selectedKey, _sharedData.RomData);
@@ -277,7 +276,7 @@ namespace SitrusBerryFactory
                 lstChangeLog.BeginUpdate();
                 lstChangeLog.Items.Clear();
 
-                foreach (var command in _commandManager.History)
+                foreach (var command in _sharedData.History.History)
                 {
                     lstChangeLog.Items.Add(command);
                 }
@@ -294,7 +293,7 @@ namespace SitrusBerryFactory
             if (e.Index < 0 || e.Index >= lstChangeLog.Items.Count) return;
             if (!(lstChangeLog.Items[e.Index] is ICommand command)) return;
 
-            bool isFuture = e.Index >= _commandManager.CurrentIndex;
+            bool isFuture = e.Index >= _sharedData.History.CurrentIndex;
             e.DrawBackground();
             Color textColor = GetHistoryTextColor();
 
