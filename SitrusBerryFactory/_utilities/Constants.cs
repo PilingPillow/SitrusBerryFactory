@@ -19,9 +19,6 @@
         public const uint BaseAddr = 0x08000000U;
         public const uint EndAddr = 0x0FFFFFFFU;
 
-        // Invalid value
-        public const int InvalidValue = -1;
-
         // String bytes
         public const byte PaddingByte = 0x0;
         public const byte FreeSpaceByte = 0xFF;
@@ -42,6 +39,12 @@
         public const string BmpExt = "bmp";
         public const string DefExt = "def";
         public const string IniExt = "ini";
+    }
+
+    public static class InvalidConstants
+    {
+        public const int InvalidValue = -1;
+        public const string InvalidStr = "Invalid";
     }
 
     public enum PartName

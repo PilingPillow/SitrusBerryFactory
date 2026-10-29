@@ -1,4 +1,6 @@
-﻿namespace SitrusBerryFactory._managers._fieldManager
+﻿using SitrusBerryFactory._utilities;
+
+namespace SitrusBerryFactory._managers._fieldManager
 {
     public enum AttrKind
     {
@@ -16,13 +18,15 @@
 
     public sealed class BitAttrDefinition
     {
-        public string Name { get; }
-        public int Length { get; }
+        public int StartBit { get; }
+        public int EndBit { get; }
 
-        public BitAttrDefinition(string name, int length)
+        public BitAttrDefinition(int startBit, int endBit)
         {
-            Name = name;
-            Length = length;
+            StartBit = startBit;
+            EndBit = endBit;
         }
     }
+
+    public sealed class BitAttrMapiing : DynamicAccessor<BitAttrDefinition> { }
 }

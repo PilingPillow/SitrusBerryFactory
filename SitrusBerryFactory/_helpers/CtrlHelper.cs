@@ -47,7 +47,7 @@ namespace SitrusBerryFactory._helpers
                         nud.Value = Math.Max(nud.Minimum, 0);
                         break;
                     case ComboBox comboBox:
-                        comboBox.SelectedIndex = BinaryConstants.InvalidValue;
+                        comboBox.SelectedIndex = InvalidConstants.InvalidValue;
                         break;
                     case CheckBox checkBox:
                         checkBox.Checked = false;
@@ -124,7 +124,7 @@ namespace SitrusBerryFactory._helpers
                 cmb.Items.AddRange(items);
 
                 cmb.SelectedIndex = items.Length == 0
-                    ? BinaryConstants.InvalidValue
+                    ? InvalidConstants.InvalidValue
                     : defaultIndex;
             }
             finally

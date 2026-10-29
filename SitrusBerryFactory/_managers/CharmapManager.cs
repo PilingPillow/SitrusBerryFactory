@@ -148,7 +148,7 @@ namespace SitrusBerryFactory._managers
         public byte[] StringToBytes(
             string text,
             bool appendTerminator = true,
-            int targetLength = BinaryConstants.InvalidValue,
+            int targetLength = InvalidConstants.InvalidValue,
             byte paddingByte = BinaryConstants.PaddingByte)
         {
             text = text ?? string.Empty;

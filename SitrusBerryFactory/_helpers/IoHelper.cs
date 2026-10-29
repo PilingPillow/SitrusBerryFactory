@@ -77,14 +77,14 @@ namespace SitrusBerryFactory._helpers
             // Null pointer
             if (rawAddr == 0U)
             {
-                resultOffset = BinaryConstants.InvalidValue;
+                resultOffset = InvalidConstants.InvalidValue;
                 return true;
             }
 
             // Out of range
             if (rawAddr < BinaryConstants.BaseAddr || BinaryConstants.EndAddr < rawAddr )
             {
-                resultOffset = BinaryConstants.InvalidValue;
+                resultOffset = InvalidConstants.InvalidValue;
                 return false;
             }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using SitrusBerryFactory._managers;
+using SitrusBerryFactory._managers._fieldManager;
 using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._helpers
@@ -31,7 +33,7 @@ namespace SitrusBerryFactory._helpers
             // Check for null or empty
             if (string.IsNullOrWhiteSpace(str))
             {
-                return BinaryConstants.InvalidValue;
+                return InvalidConstants.InvalidValue;
             }
 
             return Convert.ToInt32(str.RemoveSpace(), BinaryConstants.HexBase);
@@ -41,7 +43,7 @@ namespace SitrusBerryFactory._helpers
             this int value,
             int digits = BinaryConstants.OffsetDigits)
         {
-            return value != BinaryConstants.InvalidValue
+            return value != InvalidConstants.InvalidValue
                 ? value.ToString($"X{digits}")
                 : string.Empty;
         }
@@ -68,6 +70,45 @@ namespace SitrusBerryFactory._helpers
             }
 
             return result;
+        }
+
+        public static T BytesToModelConv<T>(
+            FieldValueHolder fieldValue,
+            ValueInterpretations interp,
+            CharmapManager charmap,
+            string bitKey = InvalidConstants.InvalidStr)
+        {
+            var entryLength = fieldValue.Lengths.EntryLength;
+            var binaryData = fieldValue.BinaryData;
+
+            // string
+            if (fieldValue.Lengths.AllowedLength > 0)
+            {
+                return (T)Convert.ChangeType
+                    (charmap.BytesToString(binaryData, 0, entryLength),
+                    typeof(T));
+            }
+
+            long rawValue = IoHelper.ReadBytesAsLong(
+                binaryData,
+                0,
+                entryLength,
+                isLittleEndian: true,
+                isSigned: interp.IsSigned);
+
+            // pointer
+            if (interp.IsPointer)
+            {
+                return rawValue == 0L
+                    ? (T)Convert.ChangeType(InvalidConstants.InvalidValue, typeof(T))
+                    : (T)Convert.ChangeType(rawValue - BinaryConstants.BaseAddr, typeof(T));
+            }
+
+            // add the fake to the list
+            if (bitKey == InvalidConstants.InvalidStr)
+            {
+                interp.BitSequence.Register(bitKey, new BitAttrDefinition(0, ));
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ namespace SitrusBerryFactory._managers._fieldManager
             Interps = new ValueInterpretations();
             Interps.IsSigned = metadata.Field.IsSigned();
             Interps.IsPointer = metadata.Attrs.ContainsKey(AttrKind.Pointer);
-            Interps.BitSequence = new List<BitAttrDefinition>();
+            Interps.BitSequence = new BitAttrMapiing();
 
             // set the key
             Key = metadata.Key;
@@ -43,7 +43,7 @@ namespace SitrusBerryFactory._managers._fieldManager
             // Set temporary lengths
             Lengths = new FieldLength();
             Lengths.EntryLength = metadata.Field.GetFieldSize();
-            Lengths.AllowedLength = BinaryConstants.InvalidValue;
+            Lengths.AllowedLength = InvalidConstants.InvalidValue;
 
             // check attributes
             foreach (KeyValuePair<AttrKind, string[]> kvp in metadata.Attrs)
@@ -66,14 +66,21 @@ namespace SitrusBerryFactory._managers._fieldManager
                         continue;
 
                     case AttrKind.Bit:
-                        var inc = Enum.GetNames(typeof(PartName)).Length;
+                        var config = _sharedData.Config.AsDynamic();
+                        int currentPos = 0;
 
-                        for (int i = 0; i < kvp.Value.Length; i += inc)
+                        foreach (var bitLengthKey in kvp.Value)
                         {
-                            string name = kvp.Value[i + (int)PartName.Key];
-                            int length = kvp.Value[i + (int)PartName.Value].ParseStringToInt();
-                            Interps.BitSequence.Add(new BitAttrDefinition(name, length));
+                            int bitLength = (int)config[bitLengthKey];
+                            int nextPos = currentPos + bitLength;
+
+                            Interps.BitSequence.Register(
+                                bitLengthKey,
+                                new BitAttrDefinition(currentPos, nextPos));
+
+                            currentPos = nextPos;
                         }
+
                         continue;
                 }
             }
@@ -90,6 +97,6 @@ namespace SitrusBerryFactory._managers._fieldManager
     {
         public bool IsSigned { get; set; }
         public bool IsPointer { get; set; }
-        public List<BitAttrDefinition> BitSequence { get; set; }
+        public BitAttrMapiing BitSequence { get; set; }
     }
 }

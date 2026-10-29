@@ -35,7 +35,7 @@ namespace SitrusBerryFactory._managers._fieldManager
                     return sizeof(uint);
 
                 default:
-                    return BinaryConstants.InvalidValue;
+                    return InvalidConstants.InvalidValue;
             }
         }
 
