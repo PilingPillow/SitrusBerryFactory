@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._utilities;
 
-namespace SitrusBerryFactory._managers._fieldManager
+namespace SitrusBerryFactory._managers._recordManager
 {
     public sealed class FieldValueHolder
     {

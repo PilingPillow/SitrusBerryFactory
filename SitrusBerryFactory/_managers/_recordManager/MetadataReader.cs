@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._utilities;
 
-namespace SitrusBerryFactory._managers._fieldManager
+namespace SitrusBerryFactory._managers._recordManager
 {
     /// <summary>
     /// The order of separated values in each line.
