@@ -25,7 +25,7 @@ namespace SitrusBerryFactory._managers._recordManager
             long rawFieldValue = binaryData.ReadBytesAsLong(
                 0,
                 entryLength,
-                isLittleEndian: true,
+                isLittleEndian: false,
                 isSigned: fieldValue.Interps.IsSigned);
 
             // Pointer
@@ -40,7 +40,7 @@ namespace SitrusBerryFactory._managers._recordManager
             // Temporary ConvData
             var convData = new ConvData<T>((T)Convert.ChangeType(rawFieldValue, typeof(T)));
 
-            // Adding Bit Values
+            // Adding bit values
             foreach (var bitDef in fieldValue.Interps.BitMapping)
             {
                 long rawBitValue = binaryData.GetBitValue(0, entryLength, bitDef);
@@ -51,11 +51,59 @@ namespace SitrusBerryFactory._managers._recordManager
         }
 
         public static byte[] ConvModelToBytes<T>(
-            this T value,
+            this ConvData<T> convData,
             FieldValueHolder fieldValue,
             CharmapManager charmap)
         {
+            int entryLength = fieldValue.Lengths.EntryLength;
 
+            // To merge
+            byte[] result = new byte[entryLength];
+            Array.Copy(fieldValue.BinaryData, result, entryLength);
+
+            // String
+            if (fieldValue.Lengths.AllowedLength > 0)
+            {
+                // AllowedLength
+                byte[] bytes = charmap.StringToBytes(
+                    Convert.ToString(convData.PrimaryData),
+                    appendTerminator: true,
+                    targetLength: fieldValue.Lengths.AllowedLength);
+
+                // EntryLength
+                Array.Copy(bytes, result, Math.Min(bytes.Length, entryLength));
+
+                return result;
+            }
+
+            long rawValue = Convert.ToInt64(convData.PrimaryData);
+
+            // Pointer
+            if (fieldValue.Interps.IsPointer)
+            {
+                rawValue = rawValue == InvalidConstants.InvalidValue
+                    ? 0L
+                    : rawValue + BinaryConstants.BaseAddr;
+            }
+
+            result.WriteLongAsBytes(
+                0,
+                entryLength,
+                rawValue,
+                isLittleEndian: false);
+
+            // Change bit values
+            foreach (var bitDef in fieldValue.Interps.BitMapping)
+            {
+                BitCalcHelper.SetBitValue(
+                    result,
+                    0,
+                    entryLength,
+                    bitDef,
+                    convData.AsDynamic());
+            }
+
+            return result;
         }
     }
 }
