@@ -5,7 +5,7 @@ using SitrusBerryFactory._utilities;
 namespace SitrusBerryFactory._managers._fieldManager
 {
     /// <summary>
-    /// Includes Bit Values.
+    /// Includes bit values.
     /// </summary>
     public sealed class ConvData<T> : DynamicAccessor<long>
     {
@@ -22,7 +22,7 @@ namespace SitrusBerryFactory._managers._fieldManager
 
     public static class FieldValueConv
     {
-        public static ConvData<T> BytesToModelConv<T>(
+        public static ConvData<T> ConvBytesToModel<T>(
             FieldValueHolder fieldValue,
             ValueInterpretations interp,
             CharmapManager charmap)
@@ -39,8 +39,7 @@ namespace SitrusBerryFactory._managers._fieldManager
                 return new ConvData<T>(primaryData);
             }
 
-            long rawFieldValue = IoHelper.ReadBytesAsLong(
-                binaryData,
+            long rawFieldValue = binaryData.ReadBytesAsLong(
                 0,
                 entryLength,
                 isLittleEndian: true,
@@ -61,7 +60,7 @@ namespace SitrusBerryFactory._managers._fieldManager
             // Adding Bit Values
             foreach (var bitDef in interp.BitMapping)
             {
-                long rawBitValue = BitCalcHelper.GetBits(binaryData, 0, entryLength, bitDef);
+                long rawBitValue = binaryData.GetBitValue(0, entryLength, bitDef);
                 convData.Register(bitDef.Name, rawBitValue);
             }
 
