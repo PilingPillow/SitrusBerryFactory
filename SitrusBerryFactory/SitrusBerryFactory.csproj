@@ -60,7 +60,7 @@
     <Compile Include="_helpers\IoHelper.cs" />
     <Compile Include="_managers\CharmapManager.cs" />
     <Compile Include="_managers\ConfigManager.cs" />
-    <Compile Include="_managers\_fieldManager\FieldDefinitions.cs" />
+    <Compile Include="_managers\_fieldManager\MetadataDefinitions.cs" />
     <Compile Include="_managers\_fieldManager\FieldValueConv.cs" />
     <Compile Include="_managers\_fieldManager\FieldValueHolder.cs" />
     <Compile Include="_managers\_fieldManager\MetadataReader.cs" />
