@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using SitrusBerryFactory._helpers;
+using SitrusBerryFactory._helpers._matchHelper;
 using SitrusBerryFactory._managers._formGroupManager;
 using SitrusBerryFactory._managers._historyManager;
 using SitrusBerryFactory._managers._recordManager;
@@ -87,8 +87,8 @@ namespace SitrusBerryFactory._editors
             var pattern = new List<TokenData>()
             {
                 TokenData.Wildcard(2),
-                TokenData.Exact((int)DataSize.Byte, exactValues: 0x0),
-                TokenData.Exact((int)DataSize.Byte, exactValues: 0x0)
+                TokenData.Exact(sizeof(byte), exactValues: 0x0),
+                TokenData.Exact(sizeof(byte), exactValues: 0x0)
             };
             entryCount = PatternMatcher.TryCountByPattern(pattern, _sharedData.RomData, tableOffset);
             _prizeMultiEntry = new EntryManager("TrainerClassPrizeMultiEntry", tableOffset, entryCount, _sharedData);

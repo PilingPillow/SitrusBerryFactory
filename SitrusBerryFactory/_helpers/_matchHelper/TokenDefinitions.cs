@@ -138,6 +138,7 @@ namespace SitrusBerryFactory._helpers._matchHelper
         }
 
         // Always returns true
-        public bool IsValid(byte[] buffer, int offset) => true;
+        public bool IsValid(byte[] buffer, int offset) 
+            => true;
     }
 }

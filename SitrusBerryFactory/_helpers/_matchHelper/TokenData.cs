@@ -51,6 +51,7 @@
         /// <summary>
         /// Gets the token length.
         /// </summary>
-        public int GetLength() => Def.Length;
+        public int GetLength()
+            => Def.Length;
     }
 }
