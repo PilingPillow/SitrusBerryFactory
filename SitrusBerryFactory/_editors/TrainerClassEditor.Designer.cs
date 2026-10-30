@@ -34,7 +34,6 @@ namespace SitrusBerryFactory._editors
             this.cmbClassNameIndex = new System.Windows.Forms.ComboBox();
             this.grpClassData = new System.Windows.Forms.GroupBox();
             this.lblClassNameStr = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudClassNameIndex)).BeginInit();
             this.grpClassData.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +67,6 @@ namespace SitrusBerryFactory._editors
             // 
             // grpClassData
             // 
-            this.grpClassData.Controls.Add(this.textBox1);
             this.grpClassData.Controls.Add(this.lblClassNameStr);
             this.grpClassData.Location = new System.Drawing.Point(20, 54);
             this.grpClassData.Margin = new System.Windows.Forms.Padding(0);
@@ -87,13 +85,6 @@ namespace SitrusBerryFactory._editors
             this.lblClassNameStr.Size = new System.Drawing.Size(73, 15);
             this.lblClassNameStr.TabIndex = 0;
             this.lblClassNameStr.Text = "Class Name :";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(104, 28);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 23);
-            this.textBox1.TabIndex = 1;
             // 
             // TrainerClassEditor
             // 
@@ -123,7 +114,6 @@ namespace SitrusBerryFactory._editors
         private System.Windows.Forms.NumericUpDown nudClassNameIndex;
         private System.Windows.Forms.ComboBox cmbClassNameIndex;
         private System.Windows.Forms.GroupBox grpClassData;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lblClassNameStr;
     }
 }
