@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._helpers._matchHelper;
 using SitrusBerryFactory._managers._formGroupManager;
 using SitrusBerryFactory._managers._historyManager;
@@ -36,16 +37,10 @@ namespace SitrusBerryFactory._editors
             _eventBinder = new EventBinder();
 
             InitializeEntries();
-            // InitializeControls();
+            InitializeControls();
             // InitializeEventHandlers();
 
             RefreshUI();
-        }
-
-        public void RefreshUI()
-        {
-            LoadDataToUI(_currentClassNameIndex);
-            UpdateClassNameComboBox();
         }
 
         private void InitializeEntries()
@@ -100,16 +95,75 @@ namespace SitrusBerryFactory._editors
             _prizeMultiEntry = new EntryTable("TrainerClassPrizeMultiEntry", tableOffset, entryCount, _sharedData);
         }
 
-
-
-        private void UpdateClassNameComboBox()
+        private void InitializeControls()
         {
+            nudClassNameIndex.ReadOnly = true;
+            nudClassNameIndex.Increment = 0;
+            nudClassNameIndex.Maximum = (decimal)byte.MaxValue;
 
+            // Just in case
+            UpdateClassNameComboBox();
+
+            // txtClassNameStr
+            txtClassNameStr.CharmapManager = _sharedData.Charmap;
+            txtClassNameStr.AllowedLength = _classNameEntryLength;
+            txtClassNameStr.NeedTerminator = true;
+
+            nudPrizeMulti.Maximum = (decimal)byte.MaxValue;
+
+            // Extra data
+            grpExtraData.SetControlsEnabled(false);
+            if (!_isEncMusicEnabled &&
+                !_isBattleMusicEnabled &&
+                !_isPokeBallEnabled &&
+                !_isBaseIvEnabled)
+            {
+                return;
+            }
+
+            grpExtraData.Enabled = true;
+            if (_isEncMusicEnabled)
+            {
+                lblEncMusicIndex.Enabled = true;
+                nudEncMusicIndex.Enabled = true;
+                nudEncMusicIndex.Maximum = (decimal)ushort.MaxValue;
+            }
+            if (_isBattleMusicEnabled)
+            {
+                lblBattleMusicIndex.Enabled = true;
+                nudBattleMusicIndex.Enabled = true;
+                nudBattleMusicIndex.Maximum = (decimal)ushort.MaxValue;
+            }
+            if (_isPokeBallEnabled)
+            {
+                lblPokeBallIndex.Enabled = true;
+                nudPokeBallIndex.Enabled = true;
+                nudPokeBallIndex.Maximum = (decimal)byte.MaxValue;
+            }
+            if (_isBaseIvEnabled)
+            {
+                lblBaseIvValue.Enabled = true;
+                nudBaseIvValue.Enabled = true;
+                nudBaseIvValue.Maximum = (decimal)byte.MaxValue;
+            }
+        }
+
+        public void RefreshUI()
+        {
+            LoadDataToUI(_currentClassNameIndex);
+            UpdateClassNameComboBox();
         }
 
         private void LoadDataToUI(int index)
         {
 
         }
+
+        private void UpdateClassNameComboBox()
+        {
+
+        }
+
+
     }
 }

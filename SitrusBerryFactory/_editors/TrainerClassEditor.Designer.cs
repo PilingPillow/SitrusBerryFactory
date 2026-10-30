@@ -33,27 +33,27 @@ namespace SitrusBerryFactory._editors
             this.nudClassNameIndex = new System.Windows.Forms.NumericUpDown();
             this.cmbClassNameIndex = new System.Windows.Forms.ComboBox();
             this.grpClassData = new System.Windows.Forms.GroupBox();
-            this.lblClassNameStr = new System.Windows.Forms.Label();
+            this.nudPrizeMulti = new System.Windows.Forms.NumericUpDown();
             this.txtClassNameStr = new SitrusBerryFactory._utilities._customCtrls.StrTextBox();
             this.lblPrizeMulti = new System.Windows.Forms.Label();
-            this.nudPrizeMulti = new System.Windows.Forms.NumericUpDown();
+            this.lblClassNameStr = new System.Windows.Forms.Label();
             this.grpExtraData = new System.Windows.Forms.GroupBox();
-            this.nudEncMusicIndex = new System.Windows.Forms.NumericUpDown();
-            this.lblEncMusicIndex = new System.Windows.Forms.Label();
-            this.nudBattleMusicIndex = new System.Windows.Forms.NumericUpDown();
-            this.lblBattleMusicIndex = new System.Windows.Forms.Label();
+            this.nudBaseIvValue = new System.Windows.Forms.NumericUpDown();
+            this.lblBaseIvValue = new System.Windows.Forms.Label();
             this.nudPokeBallIndex = new System.Windows.Forms.NumericUpDown();
             this.lblPokeBallIndex = new System.Windows.Forms.Label();
-            this.nudBaseIv = new System.Windows.Forms.NumericUpDown();
-            this.lblBaseIv = new System.Windows.Forms.Label();
+            this.nudBattleMusicIndex = new System.Windows.Forms.NumericUpDown();
+            this.lblBattleMusicIndex = new System.Windows.Forms.Label();
+            this.nudEncMusicIndex = new System.Windows.Forms.NumericUpDown();
+            this.lblEncMusicIndex = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudClassNameIndex)).BeginInit();
             this.grpClassData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPrizeMulti)).BeginInit();
             this.grpExtraData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudEncMusicIndex)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudBattleMusicIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBaseIvValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPokeBallIndex)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudBaseIv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBattleMusicIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEncMusicIndex)).BeginInit();
             this.SuspendLayout();
             // 
             // lblClassNameIndex
@@ -98,15 +98,13 @@ namespace SitrusBerryFactory._editors
             this.grpClassData.TabStop = false;
             this.grpClassData.Text = "Class Data";
             // 
-            // lblClassNameStr
+            // nudPrizeMulti
             // 
-            this.lblClassNameStr.AutoSize = true;
-            this.lblClassNameStr.Location = new System.Drawing.Point(20, 32);
-            this.lblClassNameStr.Margin = new System.Windows.Forms.Padding(0);
-            this.lblClassNameStr.Name = "lblClassNameStr";
-            this.lblClassNameStr.Size = new System.Drawing.Size(73, 15);
-            this.lblClassNameStr.TabIndex = 0;
-            this.lblClassNameStr.Text = "Class Name :";
+            this.nudPrizeMulti.Location = new System.Drawing.Point(104, 58);
+            this.nudPrizeMulti.Margin = new System.Windows.Forms.Padding(0);
+            this.nudPrizeMulti.Name = "nudPrizeMulti";
+            this.nudPrizeMulti.Size = new System.Drawing.Size(56, 23);
+            this.nudPrizeMulti.TabIndex = 2;
             // 
             // txtClassNameStr
             // 
@@ -126,18 +124,20 @@ namespace SitrusBerryFactory._editors
             this.lblPrizeMulti.TabIndex = 0;
             this.lblPrizeMulti.Text = "Prize Multi :";
             // 
-            // nudPrizeMulti
+            // lblClassNameStr
             // 
-            this.nudPrizeMulti.Location = new System.Drawing.Point(104, 58);
-            this.nudPrizeMulti.Margin = new System.Windows.Forms.Padding(0);
-            this.nudPrizeMulti.Name = "nudPrizeMulti";
-            this.nudPrizeMulti.Size = new System.Drawing.Size(56, 23);
-            this.nudPrizeMulti.TabIndex = 2;
+            this.lblClassNameStr.AutoSize = true;
+            this.lblClassNameStr.Location = new System.Drawing.Point(20, 32);
+            this.lblClassNameStr.Margin = new System.Windows.Forms.Padding(0);
+            this.lblClassNameStr.Name = "lblClassNameStr";
+            this.lblClassNameStr.Size = new System.Drawing.Size(73, 15);
+            this.lblClassNameStr.TabIndex = 0;
+            this.lblClassNameStr.Text = "Class Name :";
             // 
             // grpExtraData
             // 
-            this.grpExtraData.Controls.Add(this.nudBaseIv);
-            this.grpExtraData.Controls.Add(this.lblBaseIv);
+            this.grpExtraData.Controls.Add(this.nudBaseIvValue);
+            this.grpExtraData.Controls.Add(this.lblBaseIvValue);
             this.grpExtraData.Controls.Add(this.nudPokeBallIndex);
             this.grpExtraData.Controls.Add(this.lblPokeBallIndex);
             this.grpExtraData.Controls.Add(this.nudBattleMusicIndex);
@@ -153,41 +153,23 @@ namespace SitrusBerryFactory._editors
             this.grpExtraData.TabStop = false;
             this.grpExtraData.Text = "Extra Data";
             // 
-            // nudEncMusicIndex
+            // nudBaseIvValue
             // 
-            this.nudEncMusicIndex.Location = new System.Drawing.Point(128, 28);
-            this.nudEncMusicIndex.Margin = new System.Windows.Forms.Padding(0);
-            this.nudEncMusicIndex.Name = "nudEncMusicIndex";
-            this.nudEncMusicIndex.Size = new System.Drawing.Size(72, 23);
-            this.nudEncMusicIndex.TabIndex = 4;
+            this.nudBaseIvValue.Location = new System.Drawing.Point(128, 118);
+            this.nudBaseIvValue.Margin = new System.Windows.Forms.Padding(0);
+            this.nudBaseIvValue.Name = "nudBaseIvValue";
+            this.nudBaseIvValue.Size = new System.Drawing.Size(56, 23);
+            this.nudBaseIvValue.TabIndex = 10;
             // 
-            // lblEncMusicIndex
+            // lblBaseIvValue
             // 
-            this.lblEncMusicIndex.AutoSize = true;
-            this.lblEncMusicIndex.Location = new System.Drawing.Point(20, 32);
-            this.lblEncMusicIndex.Margin = new System.Windows.Forms.Padding(0);
-            this.lblEncMusicIndex.Name = "lblEncMusicIndex";
-            this.lblEncMusicIndex.Size = new System.Drawing.Size(95, 15);
-            this.lblEncMusicIndex.TabIndex = 3;
-            this.lblEncMusicIndex.Text = "Encouter Music :";
-            // 
-            // nudBattleMusicIndex
-            // 
-            this.nudBattleMusicIndex.Location = new System.Drawing.Point(128, 58);
-            this.nudBattleMusicIndex.Margin = new System.Windows.Forms.Padding(0);
-            this.nudBattleMusicIndex.Name = "nudBattleMusicIndex";
-            this.nudBattleMusicIndex.Size = new System.Drawing.Size(72, 23);
-            this.nudBattleMusicIndex.TabIndex = 6;
-            // 
-            // lblBattleMusicIndex
-            // 
-            this.lblBattleMusicIndex.AutoSize = true;
-            this.lblBattleMusicIndex.Location = new System.Drawing.Point(20, 62);
-            this.lblBattleMusicIndex.Margin = new System.Windows.Forms.Padding(0);
-            this.lblBattleMusicIndex.Name = "lblBattleMusicIndex";
-            this.lblBattleMusicIndex.Size = new System.Drawing.Size(78, 15);
-            this.lblBattleMusicIndex.TabIndex = 5;
-            this.lblBattleMusicIndex.Text = "Battle Music :";
+            this.lblBaseIvValue.AutoSize = true;
+            this.lblBaseIvValue.Location = new System.Drawing.Point(20, 122);
+            this.lblBaseIvValue.Margin = new System.Windows.Forms.Padding(0);
+            this.lblBaseIvValue.Name = "lblBaseIvValue";
+            this.lblBaseIvValue.Size = new System.Drawing.Size(50, 15);
+            this.lblBaseIvValue.TabIndex = 9;
+            this.lblBaseIvValue.Text = "Base IV :";
             // 
             // nudPokeBallIndex
             // 
@@ -207,23 +189,41 @@ namespace SitrusBerryFactory._editors
             this.lblPokeBallIndex.TabIndex = 7;
             this.lblPokeBallIndex.Text = "PokeBall ID :";
             // 
-            // nudBaseIv
+            // nudBattleMusicIndex
             // 
-            this.nudBaseIv.Location = new System.Drawing.Point(128, 118);
-            this.nudBaseIv.Margin = new System.Windows.Forms.Padding(0);
-            this.nudBaseIv.Name = "nudBaseIv";
-            this.nudBaseIv.Size = new System.Drawing.Size(56, 23);
-            this.nudBaseIv.TabIndex = 10;
+            this.nudBattleMusicIndex.Location = new System.Drawing.Point(128, 58);
+            this.nudBattleMusicIndex.Margin = new System.Windows.Forms.Padding(0);
+            this.nudBattleMusicIndex.Name = "nudBattleMusicIndex";
+            this.nudBattleMusicIndex.Size = new System.Drawing.Size(72, 23);
+            this.nudBattleMusicIndex.TabIndex = 6;
             // 
-            // lblBaseIv
+            // lblBattleMusicIndex
             // 
-            this.lblBaseIv.AutoSize = true;
-            this.lblBaseIv.Location = new System.Drawing.Point(20, 122);
-            this.lblBaseIv.Margin = new System.Windows.Forms.Padding(0);
-            this.lblBaseIv.Name = "lblBaseIv";
-            this.lblBaseIv.Size = new System.Drawing.Size(50, 15);
-            this.lblBaseIv.TabIndex = 9;
-            this.lblBaseIv.Text = "Base IV :";
+            this.lblBattleMusicIndex.AutoSize = true;
+            this.lblBattleMusicIndex.Location = new System.Drawing.Point(20, 62);
+            this.lblBattleMusicIndex.Margin = new System.Windows.Forms.Padding(0);
+            this.lblBattleMusicIndex.Name = "lblBattleMusicIndex";
+            this.lblBattleMusicIndex.Size = new System.Drawing.Size(78, 15);
+            this.lblBattleMusicIndex.TabIndex = 5;
+            this.lblBattleMusicIndex.Text = "Battle Music :";
+            // 
+            // nudEncMusicIndex
+            // 
+            this.nudEncMusicIndex.Location = new System.Drawing.Point(128, 28);
+            this.nudEncMusicIndex.Margin = new System.Windows.Forms.Padding(0);
+            this.nudEncMusicIndex.Name = "nudEncMusicIndex";
+            this.nudEncMusicIndex.Size = new System.Drawing.Size(72, 23);
+            this.nudEncMusicIndex.TabIndex = 4;
+            // 
+            // lblEncMusicIndex
+            // 
+            this.lblEncMusicIndex.AutoSize = true;
+            this.lblEncMusicIndex.Location = new System.Drawing.Point(20, 32);
+            this.lblEncMusicIndex.Margin = new System.Windows.Forms.Padding(0);
+            this.lblEncMusicIndex.Name = "lblEncMusicIndex";
+            this.lblEncMusicIndex.Size = new System.Drawing.Size(95, 15);
+            this.lblEncMusicIndex.TabIndex = 3;
+            this.lblEncMusicIndex.Text = "Encouter Music :";
             // 
             // TrainerClassEditor
             // 
@@ -246,10 +246,10 @@ namespace SitrusBerryFactory._editors
             ((System.ComponentModel.ISupportInitialize)(this.nudPrizeMulti)).EndInit();
             this.grpExtraData.ResumeLayout(false);
             this.grpExtraData.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudEncMusicIndex)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudBattleMusicIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBaseIvValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPokeBallIndex)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudBaseIv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBattleMusicIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEncMusicIndex)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,8 +266,8 @@ namespace SitrusBerryFactory._editors
         private _utilities._customCtrls.StrTextBox txtClassNameStr;
         private System.Windows.Forms.Label lblPrizeMulti;
         private System.Windows.Forms.GroupBox grpExtraData;
-        private System.Windows.Forms.NumericUpDown nudBaseIv;
-        private System.Windows.Forms.Label lblBaseIv;
+        private System.Windows.Forms.NumericUpDown nudBaseIvValue;
+        private System.Windows.Forms.Label lblBaseIvValue;
         private System.Windows.Forms.NumericUpDown nudPokeBallIndex;
         private System.Windows.Forms.Label lblPokeBallIndex;
         private System.Windows.Forms.NumericUpDown nudBattleMusicIndex;
