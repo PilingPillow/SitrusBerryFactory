@@ -36,10 +36,16 @@ namespace SitrusBerryFactory._editors
             _eventBinder = new EventBinder();
 
             InitializeEntries();
-            InitializeControls();
-            InitializeEventHandlers();
+            // InitializeControls();
+            // InitializeEventHandlers();
 
             RefreshUI();
+        }
+
+        public void RefreshUI()
+        {
+            LoadDataToUI(_currentClassNameIndex);
+            UpdateClassNameComboBox();
         }
 
         private void InitializeEntries()
@@ -49,7 +55,7 @@ namespace SitrusBerryFactory._editors
             // Create trainer class name table
             var tableOffset = _sharedData.Config.AsDynamic().TrainerClassNameTableOffset;
             var entryCount = PatternMatcher.TryCountByTerminator(_sharedData.RomData, _classNameEntryLength, tableOffset);
-            _classNameEntry = new EntryManager("TrainerClassNameEntry", tableOffset, entryCount, _sharedData);
+            _classNameEntry = new EntryTable("TrainerClassNameEntry", tableOffset, entryCount, _sharedData);
 
             // Check which additional data features are enabled
             _isEncMusicEnabled = _sharedData.Config.AsDynamic().EnableTrainerClassEncMusic;
@@ -60,25 +66,25 @@ namespace SitrusBerryFactory._editors
             if (_isEncMusicEnabled)
             {
                 tableOffset = _sharedData.Config.AsDynamic().TrainerClassEncMusicTableOffset;
-                _encMusicEntry = new EntryManager("TrainerClassEncMusicEntry", tableOffset, entryCount, _sharedData);
+                _encMusicEntry = new EntryTable("TrainerClassEncMusicEntry", tableOffset, entryCount, _sharedData);
             }
 
             if (_isBattleMusicEnabled)
             {
                 tableOffset = _sharedData.Config.AsDynamic().TrainerClassBattleMusicTableOffset;
-                _battleMusicEntry = new EntryManager("TrainerClassBattleMusicEntry", tableOffset, entryCount, _sharedData);
+                _battleMusicEntry = new EntryTable("TrainerClassBattleMusicEntry", tableOffset, entryCount, _sharedData);
             }
 
             if (_isPokeBallEnabled)
             {
                 tableOffset = _sharedData.Config.AsDynamic().TrainerClassPokeBallTableOffset;
-                _pokeBallEntry = new EntryManager("TrainerClassPokeBallEntry", tableOffset, entryCount, _sharedData);
+                _pokeBallEntry = new EntryTable("TrainerClassPokeBallEntry", tableOffset, entryCount, _sharedData);
             }
 
             if (_isBaseIvEnabled)
             {
                 tableOffset = _sharedData.Config.AsDynamic().TrainerClassBaseIVTableOffset;
-                _baseIvEntry = new EntryManager("TrainerClassBaseIvEntry", tableOffset, entryCount, _sharedData);
+                _baseIvEntry = new EntryTable("TrainerClassBaseIvEntry", tableOffset, entryCount, _sharedData);
             }
 
             // Create prize multi table
@@ -91,7 +97,19 @@ namespace SitrusBerryFactory._editors
                 TokenData.Exact(sizeof(byte), exactValues: 0x0)
             };
             entryCount = PatternMatcher.TryCountByPattern(pattern, _sharedData.RomData, tableOffset);
-            _prizeMultiEntry = new EntryManager("TrainerClassPrizeMultiEntry", tableOffset, entryCount, _sharedData);
+            _prizeMultiEntry = new EntryTable("TrainerClassPrizeMultiEntry", tableOffset, entryCount, _sharedData);
+        }
+
+
+
+        private void UpdateClassNameComboBox()
+        {
+
+        }
+
+        private void LoadDataToUI(int index)
+        {
+
         }
     }
 }
