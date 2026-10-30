@@ -15,7 +15,7 @@ namespace SitrusBerryFactory._editors
         private SharedData _sharedData = null;
         private EventBinder _eventBinder = null;
 
-        private dynamic _classNameEntry = null;
+        private EntryTable _classNameEntry = null;
         private dynamic _prizeMultiEntry = null;
         private dynamic _encMusicEntry = null;
         private dynamic _battleMusicEntry = null;
@@ -37,10 +37,13 @@ namespace SitrusBerryFactory._editors
             _eventBinder = new EventBinder();
 
             InitializeEntries();
-            InitializeControls();
-            // InitializeEventHandlers();
+            //InitializeControls();
+            //InitializeEventHandlers();
 
-            RefreshUI();
+            //RefreshUI();
+
+            txtClassNameStr.Text =
+                (string)FieldValueConv.ConvBytesToModel<string>(_classNameEntry.Entries[0].AsDynamic().ClassNameStr, sharedData.Charmap);
         }
 
         private void InitializeEntries()
@@ -109,7 +112,7 @@ namespace SitrusBerryFactory._editors
             txtClassNameStr.AllowedLength = _classNameEntryLength;
             txtClassNameStr.NeedTerminator = true;
 
-            nudPrizeMulti.Maximum = (decimal)byte.MaxValue;
+            nudClassPrizeMultiValue.Maximum = (decimal)byte.MaxValue;
 
             // Extra data
             grpExtraData.SetControlsEnabled(false);
@@ -148,6 +151,112 @@ namespace SitrusBerryFactory._editors
             }
         }
 
+        private void InitializeEventHandlers()
+        {
+            // Class Name
+            _eventBinder.BindCtrl(
+                h => cmbClassNameIndex.SelectedIndexChanged += h,
+                h => cmbClassNameIndex.SelectedIndexChanged -= h,
+                (_, __) =>
+                {
+                    var newIndex = cmbClassNameIndex.SelectedIndex;
+                    LoadDataToUI(newIndex);
+                });
+            _eventBinder.BindCtrl(
+                h => txtClassNameStr.Validated += h,
+                h => txtClassNameStr.Validated -= h,
+                (sender, e) =>
+                {
+                    var ctrl = (TextBox)sender;
+                    var text = ctrl.Text;
+                    var desc = $"[{this.Text}]Class Name(ID:{_currentClassNameIndex:D4})";
+                    _classNameEntry.Entries[_currentClassNameIndex].AsDynamic().ClassNameStr
+                        .UpdateData(_sharedData.History, text, desc);
+                });
+
+            // Prize Multi
+            _eventBinder.BindCtrl(
+                h => nudClassPrizeMultiValue.ValueChanged += h,
+                h => nudClassPrizeMultiValue.ValueChanged -= h,
+                (sender, e) =>
+                {
+                    var ctrl = (NumericUpDown)sender;
+                    var value = ctrl.Value;
+
+                    // calculate the proper index
+                    var calcIndex = CalcClassPrizeMultiIndex(_currentClassNameIndex);
+
+                    var desc = $"[{this.Text}]Prize Multi(ID:{_currentClassNameIndex:D4})";
+                    _prizeMultiEntry.Entries[calcIndex].ClassPrizeMultiValue
+                        .UpdateData(_sharedData.History, value, desc);
+                });
+
+            // Extra Data
+            if (_isEncMusicEnabled)
+            {
+                _eventBinder.BindCtrl(
+                    h => nudEncMusicIndex.ValueChanged += h,
+                    h => nudEncMusicIndex.ValueChanged -= h,
+                    (sender, e) =>
+                    {
+                        var ctrl = (NumericUpDown)sender;
+                        var value = ctrl.Value;
+                        var desc = $"[{this.Text}]Encoutner Music(ID:{_currentClassNameIndex:D4})";
+                        _encMusicEntry.Entries[_currentClassNameIndex].EncounterMusicIndex
+                            .UpdateData(_sharedData.History, value, desc);
+                    });
+            }
+
+            if (_isBattleMusicEnabled)
+            {
+                _eventBinder.BindCtrl(
+                    h => nudBattleMusicIndex.ValueChanged += h,
+                    h => nudBattleMusicIndex.ValueChanged -= h,
+                    (sender, e) =>
+                    {
+                        var ctrl = (NumericUpDown)sender;
+                        var value = ctrl.Value;
+                        var desc = $"[{this.Text}]Battle Music(ID:{_currentClassNameIndex:D4})";
+                        _battleMusicEntry.Entries[_currentClassNameIndex].BattleMusicIndex
+                            .UpdateData(_sharedData.History, value, desc);
+                    });
+            }
+
+            if (_isPokeBallEnabled)
+            {
+                _eventBinder.BindCtrl(
+                    h => nudPokeBallIndex.ValueChanged += h,
+                    h => nudPokeBallIndex.ValueChanged -= h,
+                    (sender, e) =>
+                    {
+                        var ctrl = (NumericUpDown)sender;
+                        var value = ctrl.Value;
+                        var desc = $"[{this.Text}]PokeBall ID(ID:{_currentClassNameIndex:D4})";
+                        _pokeBallEntry.Entries[_currentClassNameIndex].PokeBallIndex
+                            .UpdateData(_sharedData.History, value, desc);
+                    });
+            }
+
+            if (_isBaseIvEnabled)
+            {
+                _eventBinder.BindCtrl(
+                    h => nudBaseIvValue.ValueChanged += h,
+                    h => nudBaseIvValue.ValueChanged -= h,
+                    (sender, e) =>
+                    {
+                        var ctrl = (NumericUpDown)sender;
+                        var value = ctrl.Value;
+                        var desc = $"[{this.Text}]Base IV(ID:{_currentClassNameIndex:D4})";
+                        _baseIvEntry.Entries[_currentClassNameIndex].BaseIvValue
+                            .UpdateData(_sharedData.History, value, desc);
+                    });
+            }
+
+            _eventBinder.BindCtrl(
+                h => this.Disposed += h,
+                h => this.Disposed -= h);
+        }
+
         public void RefreshUI()
         {
             LoadDataToUI(_currentClassNameIndex);
@@ -156,14 +265,91 @@ namespace SitrusBerryFactory._editors
 
         private void LoadDataToUI(int index)
         {
+            // Update the current index
+            _currentClassNameIndex = index;
+            cmbClassNameIndex.SelectedIndex = index;
+            nudClassNameIndex.Value = (decimal)index;
 
+            // Class Name
+            txtClassNameStr.Text =
+                _classNameEntry.Entries[index].AsDynamic().ClassNameStr.GetData<string>();
+
+            // Prize Multi, need to calculate the proper index
+            int calcIndex = CalcClassPrizeMultiIndex(index);
+            nudClassPrizeMultiValue.Value =
+                (decimal)_prizeMultiEntry.Entries[calcIndex].ClassPrizeMultiValue.GetData<int>();
+
+            // Extra Data
+            if (_isEncMusicEnabled)
+            {
+                nudEncMusicIndex.Value =
+                    (decimal)_encMusicEntry.Entries[index].EncounterMusicIndex.GetData<int>();
+            }
+            if (_isBattleMusicEnabled)
+            {
+                nudBattleMusicIndex.Value =
+                    (decimal)_battleMusicEntry.Entries[index].BattleMusicIndex.GetData<int>();
+            }
+            if (_isPokeBallEnabled)
+            {
+                nudPokeBallIndex.Value =
+                    (decimal)_pokeBallEntry.Entries[index].PokeBallIndex.GetData<int>();
+            }
+            if (_isBaseIvEnabled)
+            {
+                nudBaseIvValue.Value =
+                    (decimal)_baseIvEntry.Entries[index].BaseIvValue.GetData<int>();
+            }
         }
 
         private void UpdateClassNameComboBox()
         {
+            try
+            {
+                cmbClassNameIndex.BeginUpdate();
+                cmbClassNameIndex.Items.Clear();
 
+                foreach (var entry in _classNameEntry.Entries)
+                {
+                    var className = entry.AsDynamic().ClassNameStr.GetData<string>();
+                    cmbClassNameIndex.Items.Add(className);
+                }
+            }
+            finally
+            {
+                cmbClassNameIndex.EndUpdate();
+            }
+
+            // To reselect
+            if (cmbClassNameIndex.Items.Count > 0)
+            {
+                cmbClassNameIndex.SelectedIndex = _currentClassNameIndex;
+            }
         }
 
+        private int CalcClassPrizeMultiIndex(int index)
+        {
+            int fallbackIndex = 0;
+            var entries = _prizeMultiEntry.Entries;
 
+            for (int i = 0; i < entries.Count; i++)
+            {
+                int currentClassNameIndex = entries[i].ClassNameIndex.GetData<int>();
+
+                // If exists
+                if (currentClassNameIndex == index)
+                {
+                    return i;
+                }
+
+                // If ID_0xFF
+                if (currentClassNameIndex == 0xFF)
+                {
+                    fallbackIndex = i;
+                }
+            }
+
+            return fallbackIndex;
+        }
     }
 }

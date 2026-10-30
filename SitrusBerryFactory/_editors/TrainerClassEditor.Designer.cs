@@ -33,9 +33,8 @@ namespace SitrusBerryFactory._editors
             this.nudClassNameIndex = new System.Windows.Forms.NumericUpDown();
             this.cmbClassNameIndex = new System.Windows.Forms.ComboBox();
             this.grpClassData = new System.Windows.Forms.GroupBox();
-            this.nudPrizeMulti = new System.Windows.Forms.NumericUpDown();
-            this.txtClassNameStr = new SitrusBerryFactory._utilities._customCtrls.StrTextBox();
-            this.lblPrizeMulti = new System.Windows.Forms.Label();
+            this.nudClassPrizeMultiValue = new System.Windows.Forms.NumericUpDown();
+            this.lblClassPrizeMultiValue = new System.Windows.Forms.Label();
             this.lblClassNameStr = new System.Windows.Forms.Label();
             this.grpExtraData = new System.Windows.Forms.GroupBox();
             this.nudBaseIvValue = new System.Windows.Forms.NumericUpDown();
@@ -46,9 +45,10 @@ namespace SitrusBerryFactory._editors
             this.lblBattleMusicIndex = new System.Windows.Forms.Label();
             this.nudEncMusicIndex = new System.Windows.Forms.NumericUpDown();
             this.lblEncMusicIndex = new System.Windows.Forms.Label();
+            this.txtClassNameStr = new SitrusBerryFactory._utilities._customCtrls.StrTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudClassNameIndex)).BeginInit();
             this.grpClassData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPrizeMulti)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudClassPrizeMultiValue)).BeginInit();
             this.grpExtraData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudBaseIvValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPokeBallIndex)).BeginInit();
@@ -85,9 +85,9 @@ namespace SitrusBerryFactory._editors
             // 
             // grpClassData
             // 
-            this.grpClassData.Controls.Add(this.nudPrizeMulti);
+            this.grpClassData.Controls.Add(this.nudClassPrizeMultiValue);
             this.grpClassData.Controls.Add(this.txtClassNameStr);
-            this.grpClassData.Controls.Add(this.lblPrizeMulti);
+            this.grpClassData.Controls.Add(this.lblClassPrizeMultiValue);
             this.grpClassData.Controls.Add(this.lblClassNameStr);
             this.grpClassData.Location = new System.Drawing.Point(20, 54);
             this.grpClassData.Margin = new System.Windows.Forms.Padding(0);
@@ -98,31 +98,23 @@ namespace SitrusBerryFactory._editors
             this.grpClassData.TabStop = false;
             this.grpClassData.Text = "Class Data";
             // 
-            // nudPrizeMulti
+            // nudClassPrizeMultiValue
             // 
-            this.nudPrizeMulti.Location = new System.Drawing.Point(104, 58);
-            this.nudPrizeMulti.Margin = new System.Windows.Forms.Padding(0);
-            this.nudPrizeMulti.Name = "nudPrizeMulti";
-            this.nudPrizeMulti.Size = new System.Drawing.Size(56, 23);
-            this.nudPrizeMulti.TabIndex = 2;
+            this.nudClassPrizeMultiValue.Location = new System.Drawing.Point(104, 58);
+            this.nudClassPrizeMultiValue.Margin = new System.Windows.Forms.Padding(0);
+            this.nudClassPrizeMultiValue.Name = "nudClassPrizeMultiValue";
+            this.nudClassPrizeMultiValue.Size = new System.Drawing.Size(56, 23);
+            this.nudClassPrizeMultiValue.TabIndex = 2;
             // 
-            // txtClassNameStr
+            // lblClassPrizeMultiValue
             // 
-            this.txtClassNameStr.Location = new System.Drawing.Point(104, 28);
-            this.txtClassNameStr.Margin = new System.Windows.Forms.Padding(0);
-            this.txtClassNameStr.Name = "txtClassNameStr";
-            this.txtClassNameStr.Size = new System.Drawing.Size(160, 23);
-            this.txtClassNameStr.TabIndex = 1;
-            // 
-            // lblPrizeMulti
-            // 
-            this.lblPrizeMulti.AutoSize = true;
-            this.lblPrizeMulti.Location = new System.Drawing.Point(20, 62);
-            this.lblPrizeMulti.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPrizeMulti.Name = "lblPrizeMulti";
-            this.lblPrizeMulti.Size = new System.Drawing.Size(69, 15);
-            this.lblPrizeMulti.TabIndex = 0;
-            this.lblPrizeMulti.Text = "Prize Multi :";
+            this.lblClassPrizeMultiValue.AutoSize = true;
+            this.lblClassPrizeMultiValue.Location = new System.Drawing.Point(20, 62);
+            this.lblClassPrizeMultiValue.Margin = new System.Windows.Forms.Padding(0);
+            this.lblClassPrizeMultiValue.Name = "lblClassPrizeMultiValue";
+            this.lblClassPrizeMultiValue.Size = new System.Drawing.Size(69, 15);
+            this.lblClassPrizeMultiValue.TabIndex = 0;
+            this.lblClassPrizeMultiValue.Text = "Prize Multi :";
             // 
             // lblClassNameStr
             // 
@@ -225,6 +217,14 @@ namespace SitrusBerryFactory._editors
             this.lblEncMusicIndex.TabIndex = 3;
             this.lblEncMusicIndex.Text = "Encouter Music :";
             // 
+            // txtClassNameStr
+            // 
+            this.txtClassNameStr.Location = new System.Drawing.Point(104, 28);
+            this.txtClassNameStr.Margin = new System.Windows.Forms.Padding(0);
+            this.txtClassNameStr.Name = "txtClassNameStr";
+            this.txtClassNameStr.Size = new System.Drawing.Size(160, 23);
+            this.txtClassNameStr.TabIndex = 1;
+            // 
             // TrainerClassEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -243,7 +243,7 @@ namespace SitrusBerryFactory._editors
             ((System.ComponentModel.ISupportInitialize)(this.nudClassNameIndex)).EndInit();
             this.grpClassData.ResumeLayout(false);
             this.grpClassData.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPrizeMulti)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudClassPrizeMultiValue)).EndInit();
             this.grpExtraData.ResumeLayout(false);
             this.grpExtraData.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudBaseIvValue)).EndInit();
@@ -262,9 +262,9 @@ namespace SitrusBerryFactory._editors
         private System.Windows.Forms.ComboBox cmbClassNameIndex;
         private System.Windows.Forms.GroupBox grpClassData;
         private System.Windows.Forms.Label lblClassNameStr;
-        private System.Windows.Forms.NumericUpDown nudPrizeMulti;
+        private System.Windows.Forms.NumericUpDown nudClassPrizeMultiValue;
         private _utilities._customCtrls.StrTextBox txtClassNameStr;
-        private System.Windows.Forms.Label lblPrizeMulti;
+        private System.Windows.Forms.Label lblClassPrizeMultiValue;
         private System.Windows.Forms.GroupBox grpExtraData;
         private System.Windows.Forms.NumericUpDown nudBaseIvValue;
         private System.Windows.Forms.Label lblBaseIvValue;
