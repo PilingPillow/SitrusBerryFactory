@@ -16,7 +16,7 @@ namespace SitrusBerryFactory._managers._recordManager
             PrimaryData = primaryData;
         }
 
-        public static explicit operator T(ConvData<T> convData)
+        public static implicit operator T(ConvData<T> convData)
             => convData.PrimaryData;
     }
 

@@ -16,11 +16,11 @@ namespace SitrusBerryFactory._editors
         private EventBinder _eventBinder = null;
 
         private EntryTable _classNameEntry = null;
-        private dynamic _prizeMultiEntry = null;
-        private dynamic _encMusicEntry = null;
-        private dynamic _battleMusicEntry = null;
-        private dynamic _pokeBallEntry = null;
-        private dynamic _baseIvEntry = null;
+        private EntryTable _prizeMultiEntry = null;
+        private EntryTable _encMusicEntry = null;
+        private EntryTable _battleMusicEntry = null;
+        private EntryTable _pokeBallEntry = null;
+        private EntryTable _baseIvEntry = null;
 
         private int _currentClassNameIndex = 0;
         private int _classNameEntryLength = 0;
@@ -37,13 +37,10 @@ namespace SitrusBerryFactory._editors
             _eventBinder = new EventBinder();
 
             InitializeEntries();
-            //InitializeControls();
-            //InitializeEventHandlers();
+            InitializeControls();
+            // InitializeEventHandlers();
 
-            //RefreshUI();
-
-            txtClassNameStr.Text =
-                (string)FieldValueConv.ConvBytesToModel<string>(_classNameEntry.Entries[0].AsDynamic().ClassNameStr, sharedData.Charmap);
+            RefreshUI();
         }
 
         private void InitializeEntries()
@@ -187,7 +184,7 @@ namespace SitrusBerryFactory._editors
                     var calcIndex = CalcClassPrizeMultiIndex(_currentClassNameIndex);
 
                     var desc = $"[{this.Text}]Prize Multi(ID:{_currentClassNameIndex:D4})";
-                    _prizeMultiEntry.Entries[calcIndex].ClassPrizeMultiValue
+                    _prizeMultiEntry.Entries[calcIndex].AsDynamic().ClassPrizeMultiValue
                         .UpdateData(_sharedData.History, value, desc);
                 });
 
@@ -202,7 +199,7 @@ namespace SitrusBerryFactory._editors
                         var ctrl = (NumericUpDown)sender;
                         var value = ctrl.Value;
                         var desc = $"[{this.Text}]Encoutner Music(ID:{_currentClassNameIndex:D4})";
-                        _encMusicEntry.Entries[_currentClassNameIndex].EncounterMusicIndex
+                        _encMusicEntry.Entries[_currentClassNameIndex].AsDynamic().EncounterMusicIndex
                             .UpdateData(_sharedData.History, value, desc);
                     });
             }
@@ -217,7 +214,7 @@ namespace SitrusBerryFactory._editors
                         var ctrl = (NumericUpDown)sender;
                         var value = ctrl.Value;
                         var desc = $"[{this.Text}]Battle Music(ID:{_currentClassNameIndex:D4})";
-                        _battleMusicEntry.Entries[_currentClassNameIndex].BattleMusicIndex
+                        _battleMusicEntry.Entries[_currentClassNameIndex].AsDynamic().BattleMusicIndex
                             .UpdateData(_sharedData.History, value, desc);
                     });
             }
@@ -232,7 +229,7 @@ namespace SitrusBerryFactory._editors
                         var ctrl = (NumericUpDown)sender;
                         var value = ctrl.Value;
                         var desc = $"[{this.Text}]PokeBall ID(ID:{_currentClassNameIndex:D4})";
-                        _pokeBallEntry.Entries[_currentClassNameIndex].PokeBallIndex
+                        _pokeBallEntry.Entries[_currentClassNameIndex].AsDynamic().PokeBallIndex
                             .UpdateData(_sharedData.History, value, desc);
                     });
             }
@@ -247,7 +244,7 @@ namespace SitrusBerryFactory._editors
                         var ctrl = (NumericUpDown)sender;
                         var value = ctrl.Value;
                         var desc = $"[{this.Text}]Base IV(ID:{_currentClassNameIndex:D4})";
-                        _baseIvEntry.Entries[_currentClassNameIndex].BaseIvValue
+                        _baseIvEntry.Entries[_currentClassNameIndex].AsDynamic().BaseIvValue
                             .UpdateData(_sharedData.History, value, desc);
                     });
             }
@@ -277,28 +274,28 @@ namespace SitrusBerryFactory._editors
             // Prize Multi, need to calculate the proper index
             int calcIndex = CalcClassPrizeMultiIndex(index);
             nudClassPrizeMultiValue.Value =
-                (decimal)_prizeMultiEntry.Entries[calcIndex].ClassPrizeMultiValue.GetData<int>();
+                (decimal)_prizeMultiEntry.Entries[calcIndex].AsDynamic().ClassPrizeMultiValue.GetData<int>();
 
             // Extra Data
             if (_isEncMusicEnabled)
             {
                 nudEncMusicIndex.Value =
-                    (decimal)_encMusicEntry.Entries[index].EncounterMusicIndex.GetData<int>();
+                    (decimal)_encMusicEntry.Entries[index].AsDynamic().EncounterMusicIndex.GetData<int>();
             }
             if (_isBattleMusicEnabled)
             {
                 nudBattleMusicIndex.Value =
-                    (decimal)_battleMusicEntry.Entries[index].BattleMusicIndex.GetData<int>();
+                    (decimal)_battleMusicEntry.Entries[index].AsDynamic().BattleMusicIndex.GetData<int>();
             }
             if (_isPokeBallEnabled)
             {
                 nudPokeBallIndex.Value =
-                    (decimal)_pokeBallEntry.Entries[index].PokeBallIndex.GetData<int>();
+                    (decimal)_pokeBallEntry.Entries[index].AsDynamic().PokeBallIndex.GetData<int>();
             }
             if (_isBaseIvEnabled)
             {
                 nudBaseIvValue.Value =
-                    (decimal)_baseIvEntry.Entries[index].BaseIvValue.GetData<int>();
+                    (decimal)_baseIvEntry.Entries[index].AsDynamic().BaseIvValue.GetData<int>();
             }
         }
 
@@ -311,7 +308,7 @@ namespace SitrusBerryFactory._editors
 
                 foreach (var entry in _classNameEntry.Entries)
                 {
-                    var className = entry.AsDynamic().ClassNameStr.GetData<string>();
+                    string className = entry.AsDynamic().ClassNameStr.GetData<string>();
                     cmbClassNameIndex.Items.Add(className);
                 }
             }
@@ -334,7 +331,7 @@ namespace SitrusBerryFactory._editors
 
             for (int i = 0; i < entries.Count; i++)
             {
-                int currentClassNameIndex = entries[i].ClassNameIndex.GetData<int>();
+                int currentClassNameIndex = entries[i].AsDynamic().ClassNameIndex.GetData<int>();
 
                 // If exists
                 if (currentClassNameIndex == index)

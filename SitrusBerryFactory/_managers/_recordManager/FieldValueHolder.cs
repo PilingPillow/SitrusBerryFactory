@@ -75,6 +75,13 @@ namespace SitrusBerryFactory._managers._recordManager
                 }
             }
         }
+
+        public ConvData<T> GetData<T>(Func<FieldValueHolder, CharmapManager, ConvData<T>> converter = null)
+        {
+            return converter != null
+                ? converter(this, _sharedData.Charmap)
+                : FieldValueConv.ConvBytesToModel<T>(this, _sharedData.Charmap);
+        }
     }
 
     public sealed class FieldLength
