@@ -4,12 +4,13 @@ using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._managers._recordManager
 {
-    /// <summary>
-    /// Includes bit values.
-    /// </summary>
+    /// <remarks>
+    /// Cast bit values to long when assigning them.
+    /// </remarks>
     public sealed class ConvData<T> : DynamicAccessor<long>
     {
         public T PrimaryData { get; }
+        public dynamic BitValues => AsDynamic();
 
         public ConvData(T primaryData)
         {
@@ -109,14 +110,17 @@ namespace SitrusBerryFactory._managers._recordManager
                 isLittleEndian: false);
 
             // Change bit values
+            dynamic bits = convData.AsDynamic();
             foreach (var bitDef in fieldValue.Interps.BitMapping)
             {
+                long bitValue = (long)bits[bitDef.Name];
+
                 BitCalcHelper.SetBitValue(
                     result,
                     0,
                     entryLength,
                     bitDef,
-                    convData.AsDynamic());
+                    bitValue);
             }
 
             return result;

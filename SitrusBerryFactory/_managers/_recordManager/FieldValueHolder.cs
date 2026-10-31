@@ -72,7 +72,11 @@ namespace SitrusBerryFactory._managers._recordManager
                 foreach (var bitLengthKey in args)
                 {
                     int bitLength = (int)config[bitLengthKey];
-                    Interps.BitMapping.Add(new BitDefinition(bitLengthKey, currentPos, bitLength));
+                    int startBit = Lengths.EntryLength * BinaryConstants.BitsPerByte - currentPos - bitLength;
+
+                    Interps.BitMapping.Add(
+                        new BitDefinition(bitLengthKey, startBit, bitLength));
+
                     currentPos += bitLength;
                 }
             }
