@@ -13,7 +13,7 @@ namespace SitrusBerryFactory._managers._formGroupManager
         public EventHandler Closed { get; set; } // Updates the main UI state
 
         private Form _ownerForm = null;
-        private List<Form> _forms = null;
+        private List<Form> _editorForms = null;
 
         public FormGroupRegister(
             Form ownerForm,
@@ -21,7 +21,7 @@ namespace SitrusBerryFactory._managers._formGroupManager
             SharedData sharedData)
         {
             _ownerForm = ownerForm;
-            _forms = new List<Form>();
+            _editorForms = new List<Form>();
 
             // Find forms in the group and sort them by order
             var formInfos = Assembly.GetExecutingAssembly()
@@ -33,7 +33,7 @@ namespace SitrusBerryFactory._managers._formGroupManager
                     Attribute = t.GetCustomAttribute<FormGroupAttribute>()
                 })
                 .Where(x => x.Attribute?.Group == group)
-                .OrderBy(x => x.Attribute.Order)
+                .OrderBy(x => x.Attribute.Order) // sorting
                 .ToList();
 
             // Create group data when the group has multiple forms
@@ -50,13 +50,13 @@ namespace SitrusBerryFactory._managers._formGroupManager
                     : (Form)Activator.CreateInstance(info.Type, sharedData);
 
                 form.FormClosed += SingleForm_FormClosed;
-                _forms.Add(form);
+                _editorForms.Add(form);
             }
         }
 
         public void ShowFormGroup()
         {
-            foreach (var form in _forms)
+            foreach (var form in _editorForms)
             {
                 form.Show(_ownerForm);
             }
@@ -67,7 +67,7 @@ namespace SitrusBerryFactory._managers._formGroupManager
         /// </summary>
         private void SingleForm_FormClosed(object sender, EventArgs e)
         {
-            foreach (var form in _forms)
+            foreach (var form in _editorForms)
             {
                 if (ReferenceEquals(form, sender)) continue; // Skip the closed form
 
@@ -77,8 +77,8 @@ namespace SitrusBerryFactory._managers._formGroupManager
                     form.Close();
                 }
             }
-            _forms.Clear();
-            _forms = null;
+            _editorForms.Clear();
+            _editorForms = null;
             GroupData?.ClearDict();
             GroupData = null;
 
@@ -92,13 +92,11 @@ namespace SitrusBerryFactory._managers._formGroupManager
         /// </summary>
         public void RefreshForms(object sender = null, Form excludeForm = null)
         {
-            foreach (var form in _forms)
+            foreach (var form in _editorForms)
             {
-                // Skip disposed forms
-                if (form.IsDisposed) continue;
-
                 // Skip the excluded form to prevent unnecessary refreshes
-                if (excludeForm != null && ReferenceEquals(form, excludeForm)) continue;
+                if (excludeForm != null && 
+                    ReferenceEquals(form, excludeForm)) continue;
 
                 if (form is IEditorRefresh refreshable)
                 {

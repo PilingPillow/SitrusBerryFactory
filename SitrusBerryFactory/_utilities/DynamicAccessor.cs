@@ -8,7 +8,7 @@ namespace SitrusBerryFactory._utilities
     /// </summary>
     public abstract class DynamicAccessor<T> : DynamicObject
     {
-        protected readonly Dictionary<string, T> _values = null;
+        protected Dictionary<string, T> _values = null;
 
         protected DynamicAccessor()
         {
@@ -26,67 +26,27 @@ namespace SitrusBerryFactory._utilities
         }
 
         /// <summary>
-        /// Returns a dynamic proxy for this instance.
+        /// Returns this instance as a dynamic object.
         /// </summary>
-        public dynamic AsDynamic()
+        public dynamic AsDynamic() => this;
+
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            return new DynamicProxy(this);
+            result = _values.TryGetValue(binder.Name, out T value)
+                ? value
+                : default(T);
+            return true;
         }
 
-        private sealed class DynamicProxy : DynamicObject
+        public override bool TryGetIndex(
+            GetIndexBinder binder,
+            object[] indexes,
+            out object result)
         {
-            private readonly DynamicAccessor<T> _owner;
-
-            public DynamicProxy(DynamicAccessor<T> owner)
-            {
-                _owner = owner;
-            }
-
-            public override bool TryGetMember(
-                GetMemberBinder binder,
-                out object result)
-            {
-                result = _owner._values.TryGetValue(binder.Name, out T value)
-                    ? value
-                    : default(T);
-
-                return true;
-            }
-
-            public override bool TrySetMember(
-                SetMemberBinder binder,
-                object value)
-            {
-                _owner._values[binder.Name] = value is T typedValue
-                        ? typedValue
-                        : default(T);
-
-                return true;
-            }
-
-            public override bool TryGetIndex(
-                GetIndexBinder binder,
-                object[] indexes,
-                out object result)
-            {
-                result = _owner._values.TryGetValue((string)indexes[0], out T value)
-                    ? value
-                    : default(T);
-
-                return true;
-            }
-
-            public override bool TrySetIndex(
-                SetIndexBinder binder,
-                object[] indexes,
-                object value)
-            {
-                _owner._values[(string)indexes[0]] = value is T typedValue
-                        ? typedValue
-                        : default(T);
-
-                return true;
-            }
+            result = indexes[0] is string key && _values.TryGetValue(key, out T value)
+                ? value
+                : default(T);
+            return true;
         }
     }
 }
