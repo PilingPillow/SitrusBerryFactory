@@ -11,7 +11,7 @@ namespace SitrusBerryFactory._managers._recordManager
     {
         public string Key { get; }
         public int Offset { get; set; }
-        public FieldLength Lengths { get; set; }
+        public FieldLength Lengths { get; }
         public ValueInterpretations Interps { get; }
         public byte[] BinaryData
         {
@@ -38,6 +38,12 @@ namespace SitrusBerryFactory._managers._recordManager
 
             Key = metadata.Key;
 
+            // Create Interps
+            Interps = new ValueInterpretations(
+                metadata.Field.IsSigned(),
+                metadata.Attrs.ContainsKey(AttrKind.Pointer),
+                new BitMapping());
+
             // Check StringAttr
             if (metadata.Attrs.TryGetValue(AttrKind.String, out string[] lengths))
             {
@@ -59,13 +65,7 @@ namespace SitrusBerryFactory._managers._recordManager
                 Lengths = new FieldLength(metadata.Field.GetFieldSize());
             }
 
-            // Check Others
-            Interps = new ValueInterpretations(
-                metadata.Field.IsSigned(),
-                metadata.Attrs.ContainsKey(AttrKind.Pointer),
-                new List<BitDefinition>());
-
-            // check BitAttr
+            // Check BitAttr
             if (metadata.Attrs.TryGetValue(AttrKind.Bit, out string[] args))
             {
                 int currentPos = 0;
@@ -73,16 +73,14 @@ namespace SitrusBerryFactory._managers._recordManager
                 {
                     int bitLength = (int)config[bitLengthKey];
                     int startBit = Lengths.EntryLength * BinaryConstants.BitsPerByte - currentPos - bitLength;
-
-                    Interps.BitMapping.Add(
-                        new BitDefinition(bitLengthKey, startBit, bitLength));
+                    Interps.Bits.Register(bitLengthKey, new BitDefinition(startBit, bitLength));
 
                     currentPos += bitLength;
                 }
             }
         }
 
-        public ConvData<T> GetData<T>(Func<FieldValueHolder, CharmapManager, ConvData<T>> converter = null)
+        public T GetData<T>(Func<FieldValueHolder, CharmapManager, T> converter = null)
         {
             return converter != null
                 ? converter(this, _sharedData.Charmap)
@@ -90,12 +88,12 @@ namespace SitrusBerryFactory._managers._recordManager
         }
 
         public void SetData<T>(
-            ConvData<T> newData,
-            Func<ConvData<T>, FieldValueHolder, CharmapManager, byte[]> converter = null)
+            T newValue,
+            Func<T, FieldValueHolder, CharmapManager, byte[]> converter = null)
         {
             BinaryData = converter != null
-                    ? converter(newData, this, _sharedData.Charmap)
-                    : FieldValueConv.ConvModelToBytes(newData, this, _sharedData.Charmap);
+                    ? converter(newValue, this, _sharedData.Charmap)
+                    : FieldValueConv.ConvModelToBytes(newValue, this, _sharedData.Charmap);
         }
 
         /// <summary>
@@ -103,10 +101,10 @@ namespace SitrusBerryFactory._managers._recordManager
         /// </summary>
         public void UpdateData<T>(
             HistoryManager commandManager,
-            ConvData<T> newData,
+            T newValue,
             string desc)
         {
-            var command = CreateUpdateCommand(newData, desc);
+            var command = CreateUpdateCommand(newValue, desc);
 
             if (command != null)
             {
@@ -115,11 +113,11 @@ namespace SitrusBerryFactory._managers._recordManager
         }
 
         public ICommand CreateUpdateCommand<T>(
-            ConvData<T> data, 
+            T newValue, 
             string desc)
         {
             byte[] oldBinary = BinaryData;
-            SetData(data);
+            SetData(newValue);
             byte[] newBinary = BinaryData;
 
             // Ignores if the same
@@ -151,16 +149,16 @@ namespace SitrusBerryFactory._managers._recordManager
     {
         public bool IsSigned { get; }
         public bool IsPointer { get; }
-        public List<BitDefinition> BitMapping { get; }
+        public BitMapping Bits { get; }
 
         public ValueInterpretations(
             bool isSigned, 
             bool isPointer,
-            List<BitDefinition> bitMapping)
+            BitMapping bits)
         {
             IsSigned = isSigned;
             IsPointer = isPointer;
-            BitMapping = bitMapping;
+            Bits = bits;
         }
     }
 }

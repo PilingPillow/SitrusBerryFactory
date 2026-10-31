@@ -1,14 +1,16 @@
-﻿namespace SitrusBerryFactory._helpers
+﻿using SitrusBerryFactory._utilities;
+
+namespace SitrusBerryFactory._helpers
 {
+    public sealed class BitMapping : DynamicAccessor<BitDefinition> { }
+
     public sealed class BitDefinition
     {
-        public string Name { get; }
         public int StartBit { get; }
         public int BitLength { get; }
 
-        public BitDefinition(string name, int startBit, int bitLength)
+        public BitDefinition(int startBit, int bitLength)
         {
-            Name = name;
             StartBit = startBit;
             BitLength = bitLength;
         }

@@ -4,26 +4,9 @@ using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._managers._recordManager
 {
-    /// <remarks>
-    /// Cast bit values to long when assigning them.
-    /// </remarks>
-    public sealed class ConvData<T> : DynamicAccessor<int>
-    {
-        public T PrimaryData { get; }
-        public dynamic BitValues => AsDynamic();
-
-        public ConvData(T primaryData)
-        {
-            PrimaryData = primaryData;
-        }
-
-        public static implicit operator T(ConvData<T> convData)
-            => convData.PrimaryData;
-    }
-
     public static class FieldValueConv
     {
-        public static ConvData<T> ConvBytesToModel<T>(
+        public static T ConvBytesToModel<T>(
             this FieldValueHolder fieldValue,
             CharmapManager charmap)
         {
@@ -33,10 +16,9 @@ namespace SitrusBerryFactory._managers._recordManager
             // String
             if (fieldValue.Lengths.AllowedLength > 0)
             {
-                var primaryData = (T)Convert.ChangeType(
+                return (T)Convert.ChangeType(
                     charmap.BytesToString(binaryData, 0, entryLength),
                     typeof(T));
-                return new ConvData<T>(primaryData);
             }
 
             long rawFieldValue = binaryData.ReadBytesAsLong(
@@ -48,27 +30,16 @@ namespace SitrusBerryFactory._managers._recordManager
             // Pointer
             if (fieldValue.Interps.IsPointer)
             {
-                var primaryData = rawFieldValue == 0L
+                return rawFieldValue == 0L
                     ? (T)Convert.ChangeType(InvalidConstants.InvalidValue, typeof(T))
                     : (T)Convert.ChangeType(rawFieldValue - BinaryConstants.BaseAddr, typeof(T));
-                return new ConvData<T>(primaryData);
             }
 
-            // Temporary ConvData
-            var convData = new ConvData<T>((T)Convert.ChangeType(rawFieldValue, typeof(T)));
-
-            // Adding bit values
-            foreach (var bitDef in fieldValue.Interps.BitMapping)
-            {
-                var rawBitValue = binaryData.GetBitValue(0, entryLength, bitDef);
-                convData.Register(bitDef.Name, rawBitValue);
-            }
-
-            return convData;
+            return (T)Convert.ChangeType(rawFieldValue, typeof(T));
         }
 
         public static byte[] ConvModelToBytes<T>(
-            this ConvData<T> convData,
+            this T value,
             FieldValueHolder fieldValue,
             CharmapManager charmap)
         {
@@ -83,7 +54,7 @@ namespace SitrusBerryFactory._managers._recordManager
             {
                 // AllowedLength
                 byte[] bytes = charmap.StringToBytes(
-                    Convert.ToString(convData.PrimaryData),
+                    Convert.ToString(value),
                     appendTerminator: true,
                     targetLength: fieldValue.Lengths.AllowedLength);
 
@@ -93,7 +64,7 @@ namespace SitrusBerryFactory._managers._recordManager
                 return result;
             }
 
-            long rawValue = Convert.ToInt64(convData.PrimaryData);
+            long rawValue = Convert.ToInt64(value);
 
             // Pointer
             if (fieldValue.Interps.IsPointer)
@@ -108,18 +79,6 @@ namespace SitrusBerryFactory._managers._recordManager
                 entryLength,
                 rawValue,
                 isLittleEndian: false);
-
-            // Change bit values
-            dynamic bits = convData.AsDynamic();
-            foreach (var bitDef in fieldValue.Interps.BitMapping)
-            {
-                BitCalcHelper.SetBitValue(
-                    result,
-                    0,
-                    entryLength,
-                    bitDef,
-                    bits[bitDef.Name]);
-            }
 
             return result;
         }
