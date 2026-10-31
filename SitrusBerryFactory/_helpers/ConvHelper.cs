@@ -6,7 +6,7 @@ namespace SitrusBerryFactory._helpers
 {
     public static class ConvHelper
     {
-        public static string RemoveSpace(this string str)
+        public static string RemoveSpace(this string str, bool spaceIfEmpty = false)
         {
             if (str == null)
             {
@@ -21,6 +21,11 @@ namespace SitrusBerryFactory._helpers
                 {
                     sb.Append(c);
                 }
+            }
+
+            if (spaceIfEmpty && sb.Length == 0)
+            {
+                return " ";
             }
 
             return sb.ToString();

@@ -35,7 +35,7 @@ namespace SitrusBerryFactory._managers
                 }
 
                 string hexKey = parts[(int)PartName.Key].RemoveSpace();
-                string value = parts[(int)PartName.Value].RemoveSpace();
+                string value = parts[(int)PartName.Value].RemoveSpace(spaceIfEmpty: true);
 
                 int byteLen = hexKey.Length / BinaryConstants.HexCharsPerByte;
                 byte[] bytes = new byte[byteLen];

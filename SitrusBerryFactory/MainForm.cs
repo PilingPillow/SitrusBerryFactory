@@ -52,6 +52,7 @@ namespace SitrusBerryFactory
 
         private void InitializeControls()
         {
+            lstChangeLog.DrawMode = DrawMode.OwnerDrawFixed;
             CtrlHelper.EnableDoubleBuffering(lstChangeLog);
 
             tsmiSaveOver.Tag = SaveMode.SaveOver;

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SitrusBerryFactory._helpers;
+using SitrusBerryFactory._managers._historyManager;
 using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._managers._recordManager
@@ -81,6 +83,49 @@ namespace SitrusBerryFactory._managers._recordManager
             return converter != null
                 ? converter(this, _sharedData.Charmap)
                 : FieldValueConv.ConvBytesToModel<T>(this, _sharedData.Charmap);
+        }
+
+        public void SetData<T>(
+            ConvData<T> newData,
+            Func<ConvData<T>, FieldValueHolder, CharmapManager, byte[]> converter = null)
+        {
+            BinaryData = converter != null
+                    ? converter(newData, this, _sharedData.Charmap)
+                    : FieldValueConv.ConvModelToBytes(newData, this, _sharedData.Charmap);
+        }
+
+        /// <summary>
+        /// For not variable data.
+        /// </summary>
+        public void UpdateData<T>(
+            HistoryManager commandManager,
+            ConvData<T> newData,
+            string desc)
+        {
+            var command = CreateUpdateCommand(newData, desc);
+
+            if (command != null)
+            {
+                commandManager.PushCommand(command);
+            }
+        }
+
+        public ICommand CreateUpdateCommand<T>(
+            ConvData<T> data, 
+            string desc)
+        {
+            byte[] oldBinary = BinaryData;
+            SetData(data);
+            byte[] newBinary = BinaryData;
+
+            // Ignores if the same
+            if (oldBinary.SequenceEqual(newBinary)) return null;
+
+            return new FieldValueChangeCommand(
+                this,
+                oldBinary,
+                newBinary,
+                desc);
         }
     }
 

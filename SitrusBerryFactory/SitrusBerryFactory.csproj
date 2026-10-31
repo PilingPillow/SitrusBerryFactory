@@ -69,6 +69,7 @@
     <Compile Include="_helpers\_matchHelper\TokenDefinitions.cs" />
     <Compile Include="_managers\CharmapManager.cs" />
     <Compile Include="_managers\ConfigManager.cs" />
+    <Compile Include="_managers\_historyManager\FieldValueChangeCommand.cs" />
     <Compile Include="_managers\_historyManager\HistoryManager.cs" />
     <Compile Include="_managers\_recordManager\EntryManager.cs" />
     <Compile Include="_managers\_recordManager\MetadataDefinitions.cs" />

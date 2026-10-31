@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._helpers._matchHelper;
 using SitrusBerryFactory._managers._formGroupManager;
-using SitrusBerryFactory._managers._historyManager;
 using SitrusBerryFactory._managers._recordManager;
 using SitrusBerryFactory._utilities;
 
@@ -38,7 +37,7 @@ namespace SitrusBerryFactory._editors
 
             InitializeEntries();
             InitializeControls();
-            // InitializeEventHandlers();
+            InitializeEventHandlers();
 
             RefreshUI();
         }
@@ -168,7 +167,7 @@ namespace SitrusBerryFactory._editors
                     var text = ctrl.Text;
                     var desc = $"[{this.Text}]Class Name(ID:{_currentClassNameIndex:D4})";
                     _classNameEntry.Entries[_currentClassNameIndex].AsDynamic().ClassNameStr
-                        .UpdateData(_sharedData.History, text, desc);
+                        .UpdateData(_sharedData.History, new ConvData<string>(text), desc);
                 });
 
             // Prize Multi
@@ -178,14 +177,14 @@ namespace SitrusBerryFactory._editors
                 (sender, e) =>
                 {
                     var ctrl = (NumericUpDown)sender;
-                    var value = ctrl.Value;
+                    var value = (int)ctrl.Value;
 
                     // calculate the proper index
                     var calcIndex = CalcClassPrizeMultiIndex(_currentClassNameIndex);
 
                     var desc = $"[{this.Text}]Prize Multi(ID:{_currentClassNameIndex:D4})";
                     _prizeMultiEntry.Entries[calcIndex].AsDynamic().ClassPrizeMultiValue
-                        .UpdateData(_sharedData.History, value, desc);
+                        .UpdateData(_sharedData.History, new ConvData<int>(value), desc);
                 });
 
             // Extra Data
@@ -197,10 +196,10 @@ namespace SitrusBerryFactory._editors
                     (sender, e) =>
                     {
                         var ctrl = (NumericUpDown)sender;
-                        var value = ctrl.Value;
+                        var value = (int)ctrl.Value;
                         var desc = $"[{this.Text}]Encoutner Music(ID:{_currentClassNameIndex:D4})";
                         _encMusicEntry.Entries[_currentClassNameIndex].AsDynamic().EncounterMusicIndex
-                            .UpdateData(_sharedData.History, value, desc);
+                            .UpdateData(_sharedData.History, new ConvData<int>(value), desc);
                     });
             }
 
@@ -212,10 +211,10 @@ namespace SitrusBerryFactory._editors
                     (sender, e) =>
                     {
                         var ctrl = (NumericUpDown)sender;
-                        var value = ctrl.Value;
+                        var value = (int)ctrl.Value;
                         var desc = $"[{this.Text}]Battle Music(ID:{_currentClassNameIndex:D4})";
                         _battleMusicEntry.Entries[_currentClassNameIndex].AsDynamic().BattleMusicIndex
-                            .UpdateData(_sharedData.History, value, desc);
+                            .UpdateData(_sharedData.History, new ConvData<int>(value), desc);
                     });
             }
 
@@ -227,10 +226,10 @@ namespace SitrusBerryFactory._editors
                     (sender, e) =>
                     {
                         var ctrl = (NumericUpDown)sender;
-                        var value = ctrl.Value;
+                        var value = (int)ctrl.Value;
                         var desc = $"[{this.Text}]PokeBall ID(ID:{_currentClassNameIndex:D4})";
                         _pokeBallEntry.Entries[_currentClassNameIndex].AsDynamic().PokeBallIndex
-                            .UpdateData(_sharedData.History, value, desc);
+                            .UpdateData(_sharedData.History, new ConvData<int>(value), desc);
                     });
             }
 
@@ -242,10 +241,10 @@ namespace SitrusBerryFactory._editors
                     (sender, e) =>
                     {
                         var ctrl = (NumericUpDown)sender;
-                        var value = ctrl.Value;
+                        var value = (int)ctrl.Value;
                         var desc = $"[{this.Text}]Base IV(ID:{_currentClassNameIndex:D4})";
                         _baseIvEntry.Entries[_currentClassNameIndex].AsDynamic().BaseIvValue
-                            .UpdateData(_sharedData.History, value, desc);
+                            .UpdateData(_sharedData.History, new ConvData<int>(value), desc);
                     });
             }
 
