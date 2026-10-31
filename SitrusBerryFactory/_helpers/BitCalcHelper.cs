@@ -16,37 +16,38 @@
 
     public static class BitCalcHelper
     {
-        public static int GetBitValue(
+        public static long GetBitValue(
             this byte[] source,
             int offset,
             int byteLength,
             BitDefinition definition)
         {
-            int packedValue = (int)source.ReadBytesAsLong(
+            // Read as long to inclule signed values
+            long packedValue = source.ReadBytesAsLong(
                 offset,
                 byteLength,
                 isLittleEndian: false);
 
-            int mask = (int)((1U << definition.BitLength) - 1);
+            long mask = (1L << definition.BitLength) - 1L;
             return (packedValue >> definition.StartBit) & mask;
         }
 
         public static void SetBitValue(
-                    this byte[] source,
-                    int offset,
-                    int byteLength,
-                    BitDefinition definition,
-                    int value)
+            this byte[] source,
+            int offset,
+            int byteLength,
+            BitDefinition definition,
+            long value)
         {
-            int packedValue = (int)source.ReadBytesAsLong(
+            long packedValue = source.ReadBytesAsLong(
                 offset,
                 byteLength,
                 isLittleEndian: false);
 
-            int originalMask = (int)((1U << definition.BitLength) - 1);
-            int shiftedMask = originalMask << definition.StartBit;
+            long originalMask = (1L << definition.BitLength) - 1L;
+            long shiftedMask = originalMask << definition.StartBit;
 
-            // Clear the target bits and set the new value
+            // Clear target bits and apply the new value
             packedValue = (packedValue & ~shiftedMask)
                        | ((value & originalMask) << definition.StartBit);
 
