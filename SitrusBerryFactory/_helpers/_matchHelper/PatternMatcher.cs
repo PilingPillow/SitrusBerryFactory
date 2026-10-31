@@ -9,7 +9,7 @@ namespace SitrusBerryFactory._helpers._matchHelper
         /// Attempts a single pattern match.
         /// </summary>
         public static bool TryMatch(
-            List<TokenData> tokens,
+            List<TokenData> tokens, // There is an example in TokenData.cs
             byte[] buffer,
             int offset = 0,
             bool allowNullPointer = false)
@@ -23,12 +23,6 @@ namespace SitrusBerryFactory._helpers._matchHelper
                 // Number of bytes occupied
                 int length = token.GetLength();
 
-                // Check buffer bounds
-                if (currentPos + length > buffer.Length)
-                {
-                    return false;
-                }
-
                 // Validate the token
                 if (!token.IsMatch(buffer, currentPos))
                 {
@@ -37,7 +31,7 @@ namespace SitrusBerryFactory._helpers._matchHelper
 
                 // Reject null pointers if not allowed
                 if (!allowNullPointer &&
-                    token.Def is PointerToken pToken &&
+                    token.Definition is PointerToken pToken &&
                     pToken.IsNullPointer)
                 {
                     return false;
@@ -82,7 +76,7 @@ namespace SitrusBerryFactory._helpers._matchHelper
         /// <summary>
         /// Calculates the total length of the tokens.
         /// </summary>
-        public static int GetPatternLength(List<TokenData> tokens)
+        private static int GetPatternLength(List<TokenData> tokens)
         {
             int length = 0;
             for (int i = 0; i < tokens.Count; i++)
@@ -109,13 +103,15 @@ namespace SitrusBerryFactory._helpers._matchHelper
             int endPos = offset + entryLength - 1;
             int currentPos = endPos;
 
-            while (offset <= currentPos && buffer[currentPos] == paddingByte)
+            while (offset <= currentPos && 
+                buffer[currentPos] == paddingByte)
             {
                 currentPos--;
             }
 
             // Check whether the current position is valid and contains the terminator
-            if (currentPos < offset || buffer[currentPos] != terminatorByte)
+            if (currentPos < offset 
+                || buffer[currentPos] != terminatorByte)
             {
                 return false;
             }
@@ -179,7 +175,7 @@ namespace SitrusBerryFactory._helpers._matchHelper
         /// </summary>
         public static bool TrySearch(
             byte[] buffer,
-            byte[] pattern,
+            byte[] pattern, // not token data
             int offset,
             int length,
             int expectedCount = 1)
@@ -195,7 +191,6 @@ namespace SitrusBerryFactory._helpers._matchHelper
             {
                 bool isMatch = true;
 
-                // Check for a byte-by-byte match
                 for (int i = 0; i < pattern.Length; i++)
                 {
                     if (buffer[currentPos + i] != pattern[i])

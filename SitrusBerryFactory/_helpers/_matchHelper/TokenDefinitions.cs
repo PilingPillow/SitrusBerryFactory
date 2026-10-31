@@ -3,25 +3,14 @@ using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._helpers._matchHelper
 {
-    public enum TokenType
-    {
-        Exact,
-        Pointer,
-        Range,
-        Wildcard,
-    }
-
-    /// <summary>
-    /// Defines the information a token must provide.
-    /// </summary>
     public interface IToken
     {
-        int Length { get; }
+        int Length { get; } // The token length in bytes
         bool IsValid(byte[] buffer, int offset);
     }
 
     /// <summary>
-    /// Matches one or more specified values.
+    /// Needs to Match specified values.
     /// </summary>
     public sealed class ExactToken : IToken
     {
@@ -47,7 +36,7 @@ namespace SitrusBerryFactory._helpers._matchHelper
                 buffer,
                 offset,
                 Length,
-                isLittleEndian: true,
+                isLittleEndian: true, // Always little endian
                 isSigned: IsSigned);
 
             // Check whether the value is included
@@ -60,17 +49,17 @@ namespace SitrusBerryFactory._helpers._matchHelper
     /// </summary>
     public sealed class PointerToken : IToken
     {
-        public int Offset { get; private set; }
+        public int Offset { get; private set; } // you can get the pointer offset
         public int Length { get; }
 
         public PointerToken()
         {
-            Length = sizeof(uint);
+            Length = sizeof(uint); // 4 bytes
         }
 
         public bool IsValid(byte[] buffer, int offset)
         {
-            // Read the pointer
+            // Read as a pointer
             var result = IoHelper.TryReadPointer(
                 buffer,
                 offset,
@@ -112,12 +101,11 @@ namespace SitrusBerryFactory._helpers._matchHelper
 
         public bool IsValid(byte[] buffer, int offset)
         {
-            // Read as little-endian
             long value = IoHelper.ReadBytesAsLong(
                 buffer,
                 offset,
                 Length,
-                isLittleEndian: true,
+                isLittleEndian: true, // Always little endian
                 isSigned: IsSigned);
 
             // Check the range

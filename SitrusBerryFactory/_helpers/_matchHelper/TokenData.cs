@@ -1,14 +1,28 @@
 ﻿namespace SitrusBerryFactory._helpers._matchHelper
 {
+    /*
+        example:
+
+        var pattern = new List<TokenData>()
+        {
+            TokenData.Exact(sizeof(byte), exactValues: 0xFF),
+            TokenData.Pointer(),
+            TokenData.Range(byte.MinValue, byte.MaxValue, sizeof(byte)),
+            TokenData.Wildcard(2)
+        };
+    */
+
     public sealed class TokenData
     {
-        public TokenType Type { get; }
-        public IToken Def { get; }
+        public IToken Definition { get; }
 
-        private TokenData(TokenType type, IToken def)
+        /// <summary>
+        /// This constructor is private.
+        /// Use the static factory methods instead.
+        /// </summary>
+        private TokenData(IToken definition)
         {
-            Type = type;
-            Def = def;
+            Definition = definition;
         }
 
         public static TokenData Exact(
@@ -17,13 +31,13 @@
             params long[] exactValues)
         {
             var tokenDef = new ExactToken(length, isSigned, exactValues);
-            return new TokenData(TokenType.Exact, tokenDef);
+            return new TokenData(tokenDef);
         }
 
         public static TokenData Pointer()
         {
             var tokenDef = new PointerToken();
-            return new TokenData(TokenType.Pointer, tokenDef);
+            return new TokenData(tokenDef);
         }
 
         public static TokenData Range(
@@ -33,25 +47,25 @@
             bool isSigned = false)
         {
             var tokenDef = new RangeToken(min, max, length, isSigned);
-            return new TokenData(TokenType.Range, tokenDef);
+            return new TokenData(tokenDef);
         }
 
         public static TokenData Wildcard(int length)
         {
             var tokenDef = new WildcardToken(length);
-            return new TokenData(TokenType.Wildcard, tokenDef);
+            return new TokenData(tokenDef);
         }
 
         /// <summary>
-        /// Checks whether the token matches its configured values.
+        /// Checks whether the token meets the conditions.
         /// </summary>
         public bool IsMatch(byte[] buffer, int offset)
-            => Def.IsValid(buffer, offset);
+            => Definition.IsValid(buffer, offset);
 
         /// <summary>
-        /// Gets the token length.
+        /// Gets the byte length of the token.
         /// </summary>
         public int GetLength()
-            => Def.Length;
+            => Definition.Length;
     }
 }
