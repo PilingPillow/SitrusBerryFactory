@@ -7,7 +7,7 @@ namespace SitrusBerryFactory._managers._recordManager
     /// <remarks>
     /// Cast bit values to long when assigning them.
     /// </remarks>
-    public sealed class ConvData<T> : DynamicAccessor<long>
+    public sealed class ConvData<T> : DynamicAccessor<int>
     {
         public T PrimaryData { get; }
         public dynamic BitValues => AsDynamic();
@@ -60,7 +60,7 @@ namespace SitrusBerryFactory._managers._recordManager
             // Adding bit values
             foreach (var bitDef in fieldValue.Interps.BitMapping)
             {
-                long rawBitValue = binaryData.GetBitValue(0, entryLength, bitDef);
+                var rawBitValue = binaryData.GetBitValue(0, entryLength, bitDef);
                 convData.Register(bitDef.Name, rawBitValue);
             }
 
@@ -113,14 +113,12 @@ namespace SitrusBerryFactory._managers._recordManager
             dynamic bits = convData.AsDynamic();
             foreach (var bitDef in fieldValue.Interps.BitMapping)
             {
-                long bitValue = (long)bits[bitDef.Name];
-
                 BitCalcHelper.SetBitValue(
                     result,
                     0,
                     entryLength,
                     bitDef,
-                    bitValue);
+                    bits[bitDef.Name]);
             }
 
             return result;
