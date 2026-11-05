@@ -40,7 +40,7 @@ namespace SitrusBerryFactory._managers._recordManager
             Interps = new ValueInterpretations(
                 fieldData.Field.IsSigned(),
                 fieldData.Attrs.ContainsKey(AttrKind.Pointer),
-                new BitValueMapping()); // not null
+                new BitValueMapping(this));
 
             // Check StringAttr
             if (fieldData.Attrs.TryGetValue(AttrKind.String, out string[] lengths))
@@ -71,7 +71,7 @@ namespace SitrusBerryFactory._managers._recordManager
                 {
                     int bitLength = (int)config[bitLengthKey]; // get from config
                     int startBit = Lengths.EntryLength * BinaryConstants.BitsPerByte - currentPos - bitLength;
-                    Interps.BitValues.Register(bitLengthKey, new BitValueDefinition(startBit, bitLength));
+                    Interps.BitValues.Register(bitLengthKey, new BitthreshHold(startBit, bitLength));
 
                     currentPos += bitLength;
                 }
