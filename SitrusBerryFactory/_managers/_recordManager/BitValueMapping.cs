@@ -4,19 +4,19 @@ using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._managers._recordManager
 {
-    public sealed class BitthreshHold
+    public sealed class BitThreshHold
     {
         public int StartBit { get; }
         public int BitLength { get; }
 
-        public BitthreshHold(int startBit, int bitLength)
+        public BitThreshHold(int startBit, int bitLength)
         {
             StartBit = startBit;
             BitLength = bitLength;
         }
     }
 
-    public sealed class BitValueMapping : DynamicAccessor<BitthreshHold>
+    public sealed class BitValueMapping : DynamicAccessor<BitThreshHold>
     {
         private readonly FieldValueHolder _owner = null;
 

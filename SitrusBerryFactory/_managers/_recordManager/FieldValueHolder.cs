@@ -71,7 +71,7 @@ namespace SitrusBerryFactory._managers._recordManager
                 {
                     int bitLength = (int)config[bitLengthKey]; // get from config
                     int startBit = Lengths.EntryLength * BinaryConstants.BitsPerByte - currentPos - bitLength;
-                    Interps.BitValues.Register(bitLengthKey, new BitthreshHold(startBit, bitLength));
+                    Interps.BitValues.Register(bitLengthKey, new BitThreshHold(startBit, bitLength));
 
                     currentPos += bitLength;
                 }
