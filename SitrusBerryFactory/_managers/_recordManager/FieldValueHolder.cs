@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._managers._historyManager;
 using SitrusBerryFactory._utilities;
 
@@ -41,7 +40,7 @@ namespace SitrusBerryFactory._managers._recordManager
             Interps = new ValueInterpretations(
                 fieldData.Field.IsSigned(),
                 fieldData.Attrs.ContainsKey(AttrKind.Pointer),
-                new BitMapping()); // not null
+                new BitValueMapping()); // not null
 
             // Check StringAttr
             if (fieldData.Attrs.TryGetValue(AttrKind.String, out string[] lengths))
@@ -72,7 +71,7 @@ namespace SitrusBerryFactory._managers._recordManager
                 {
                     int bitLength = (int)config[bitLengthKey]; // get from config
                     int startBit = Lengths.EntryLength * BinaryConstants.BitsPerByte - currentPos - bitLength;
-                    Interps.Bits.Register(bitLengthKey, new BitDefinition(startBit, bitLength));
+                    Interps.BitValues.Register(bitLengthKey, new BitValueDefinition(startBit, bitLength));
 
                     currentPos += bitLength;
                 }
@@ -151,16 +150,16 @@ namespace SitrusBerryFactory._managers._recordManager
     {
         public bool IsSigned { get; }
         public bool IsPointer { get; }
-        public BitMapping Bits { get; }
+        public BitValueMapping BitValues { get; }
 
         public ValueInterpretations(
             bool isSigned, 
             bool isPointer,
-            BitMapping bits)
+            BitValueMapping bitValues)
         {
             IsSigned = isSigned;
             IsPointer = isPointer;
-            Bits = bits;
+            BitValues = bitValues;
         }
     }
 }

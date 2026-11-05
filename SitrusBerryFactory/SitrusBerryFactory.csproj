@@ -60,7 +60,6 @@
     <Compile Include="_editors\TrainerClassEditor.Designer.cs">
       <DependentUpon>TrainerClassEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="_helpers\BitCalcHelper.cs" />
     <Compile Include="_helpers\ConvHelper.cs" />
     <Compile Include="_helpers\CtrlHelper.cs" />
     <Compile Include="_helpers\IoHelper.cs" />
@@ -71,6 +70,7 @@
     <Compile Include="_managers\ConfigManager.cs" />
     <Compile Include="_managers\_historyManager\FieldValueChangeCommand.cs" />
     <Compile Include="_managers\_historyManager\HistoryManager.cs" />
+    <Compile Include="_managers\_recordManager\BitValueMapping.cs" />
     <Compile Include="_managers\_recordManager\EntryManager.cs" />
     <Compile Include="_managers\_recordManager\FieldKindDefinitions.cs" />
     <Compile Include="_managers\_recordManager\FieldValueConv.cs" />

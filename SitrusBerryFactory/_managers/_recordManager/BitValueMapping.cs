@@ -1,28 +1,33 @@
-﻿using SitrusBerryFactory._utilities;
+﻿using System.Dynamic;
+using SitrusBerryFactory._helpers;
+using SitrusBerryFactory._utilities;
 
-namespace SitrusBerryFactory._helpers
+namespace SitrusBerryFactory._managers._recordManager
 {
-    public sealed class BitMapping : DynamicAccessor<BitDefinition> { }
-
-    public sealed class BitDefinition
+    public sealed class BitValueDefinition
     {
         public int StartBit { get; }
         public int BitLength { get; }
 
-        public BitDefinition(int startBit, int bitLength)
+        public BitValueDefinition(int startBit, int bitLength)
         {
             StartBit = startBit;
             BitLength = bitLength;
         }
     }
 
-    public static class BitCalcHelper
+    public sealed class BitValueMapping : DynamicAccessor<BitValueDefinition>
+    {
+
+    }
+
+    public static class BitValueAnalyzer
     {
         public static long GetBitValue(
             this byte[] source,
             int offset,
             int byteLength,
-            BitDefinition definition)
+            BitValueDefinition definition)
         {
             // Read as long to inclule signed values
             long packedValue = source.ReadBytesAsLong(
@@ -30,7 +35,7 @@ namespace SitrusBerryFactory._helpers
                 byteLength,
                 isLittleEndian: false);
 
-            long mask = (1L << definition.BitLength) - 1L;
+            long mask = (1L << definition.BitLength) - 1;
             return (packedValue >> definition.StartBit) & mask;
         }
 
@@ -38,7 +43,7 @@ namespace SitrusBerryFactory._helpers
             this byte[] source,
             int offset,
             int byteLength,
-            BitDefinition definition,
+            BitValueDefinition definition,
             long value)
         {
             long packedValue = source.ReadBytesAsLong(
@@ -46,7 +51,7 @@ namespace SitrusBerryFactory._helpers
                 byteLength,
                 isLittleEndian: false);
 
-            long originalMask = (1L << definition.BitLength) - 1L;
+            long originalMask = (1L << definition.BitLength) - 1;
             long shiftedMask = originalMask << definition.StartBit;
 
             // Clear target bits and apply the new value
