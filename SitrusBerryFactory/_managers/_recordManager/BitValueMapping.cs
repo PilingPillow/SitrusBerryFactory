@@ -44,7 +44,7 @@ namespace SitrusBerryFactory._managers._recordManager
             this byte[] source,
             int offset,
             int byteLength,
-            BitthreshHold bitthreshHold)
+            BitThreshHold bitthreshHold)
         {
             // Read as long to inclule signed values
             long packedValue = source.ReadBytesAsLong(
@@ -60,7 +60,7 @@ namespace SitrusBerryFactory._managers._recordManager
             this byte[] source,
             int offset,
             int byteLength,
-            BitthreshHold bitthreshHold,
+            BitThreshHold bitthreshHold,
             long value)
         {
             long packedValue = source.ReadBytesAsLong(
