@@ -12,20 +12,20 @@ namespace SitrusBerryFactory._managers._recordManager
     /// <summary>
     /// The order of separated values in each line.
     /// </summary>
-    public enum MetadataOrder
+    public enum FieldDataOrder
     {
         Key,
         Field,
         Attr,
     }
 
-    public sealed class FieldMetadata
+    public sealed class FieldData
     {
         public string Key { get; }
         public FieldKind Field { get; }
         public Dictionary<AttrKind, string[]> Attrs { get; }
 
-        public FieldMetadata(
+        public FieldData(
             string key,
             FieldKind field,
             Dictionary<AttrKind, string[]> attrs)
@@ -36,12 +36,12 @@ namespace SitrusBerryFactory._managers._recordManager
         }
     }
 
-    public static class MetadataReader
+    public static class FieldDataReader
     {
         /// <summary>
         /// Parses a file and returns a list of FieldMetadata.
         /// </summary>
-        public static List<FieldMetadata> Create(string fileName)
+        public static List<FieldData> Create(string fileName)
         {
             var splitLines = ReadFile(fileName);
             return ReadFields(splitLines);
@@ -79,24 +79,24 @@ namespace SitrusBerryFactory._managers._recordManager
             return splitLines;
         }
 
-        private static List<FieldMetadata> ReadFields(List<string[]> splitLines)
+        private static List<FieldData> ReadFields(List<string[]> splitLines)
         {
-            var metaDataList = new List<FieldMetadata>();
+            var metaDataList = new List<FieldData>();
 
             foreach (var line in splitLines)
             {
-                string key = line[(int)MetadataOrder.Key];
+                string key = line[(int)FieldDataOrder.Key];
 
-                string fieldStr = line[(int)MetadataOrder.Field];
+                string fieldStr = line[(int)FieldDataOrder.Field];
                 var fieldKind = (FieldKind)Enum.Parse(typeof(FieldKind), fieldStr);
 
                 // Read the attribute
                 var attrs = new Dictionary<AttrKind, string[]>();
-                for (int i = (int)MetadataOrder.Attr; i < line.Length; i++)
+                for (int i = (int)FieldDataOrder.Attr; i < line.Length; i++)
                 {
                     string attrStr = line[i];
 
-                    // Find the parentheses
+                    // Find the parentheses ( must have )
                     var openParenIndex = attrStr.IndexOf('(');
                     var closeParenIndex = attrStr.LastIndexOf(')');
 
@@ -116,7 +116,7 @@ namespace SitrusBerryFactory._managers._recordManager
                 }
 
                 // Store the field metadata
-                metaDataList.Add(new FieldMetadata(key, fieldKind, attrs));
+                metaDataList.Add(new FieldData(key, fieldKind, attrs));
             }
 
             return metaDataList;

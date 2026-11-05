@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._managers._historyManager;
@@ -31,47 +30,47 @@ namespace SitrusBerryFactory._managers._recordManager
 
         private readonly SharedData _sharedData = null;
 
-        public FieldValueHolder(FieldMetadata metadata, SharedData sharedData)
+        public FieldValueHolder(FieldData fieldData, SharedData sharedData)
         {
             _sharedData = sharedData;
             var config = _sharedData.Config.AsDynamic();
 
-            Key = metadata.Key;
+            Key = fieldData.Key;
 
             // Create Interps
             Interps = new ValueInterpretations(
-                metadata.Field.IsSigned(),
-                metadata.Attrs.ContainsKey(AttrKind.Pointer),
-                new BitMapping());
+                fieldData.Field.IsSigned(),
+                fieldData.Attrs.ContainsKey(AttrKind.Pointer),
+                new BitMapping()); // not null
 
             // Check StringAttr
-            if (metadata.Attrs.TryGetValue(AttrKind.String, out string[] lengths))
+            if (fieldData.Attrs.TryGetValue(AttrKind.String, out string[] lengths))
             {
                 string entryLenthKey = lengths[(int)StringAttrArgs.EntryLengthArg];
-                int entryLength = (int)config[entryLenthKey];
-                int allowedLength = entryLength;
+                int entryLength = (int)config[entryLenthKey]; // get from config
+                int allowedLength = entryLength; // temporarily
 
                 // Second argument (AllowedLengthArg) may be omitted
                 if (lengths.Length == Enum.GetNames(typeof(StringAttrArgs)).Length)
                 {
                     string AllowedLengthKey = lengths[(int)StringAttrArgs.AllowedLengthArg];
-                    allowedLength = (int)config[AllowedLengthKey];
+                    allowedLength = (int)config[AllowedLengthKey]; // overwrite
                 }
 
                 Lengths = new FieldLength(entryLength, allowedLength);
             }
             else
             {
-                Lengths = new FieldLength(metadata.Field.GetFieldSize());
+                Lengths = new FieldLength(fieldData.Field.GetFieldSize());
             }
 
             // Check BitAttr
-            if (metadata.Attrs.TryGetValue(AttrKind.Bit, out string[] args))
+            if (fieldData.Attrs.TryGetValue(AttrKind.Bit, out string[] args))
             {
                 int currentPos = 0;
                 foreach (var bitLengthKey in args)
                 {
-                    int bitLength = (int)config[bitLengthKey];
+                    int bitLength = (int)config[bitLengthKey]; // get from config
                     int startBit = Lengths.EntryLength * BinaryConstants.BitsPerByte - currentPos - bitLength;
                     Interps.Bits.Register(bitLengthKey, new BitDefinition(startBit, bitLength));
 
@@ -80,7 +79,8 @@ namespace SitrusBerryFactory._managers._recordManager
             }
         }
 
-        public T GetData<T>(Func<FieldValueHolder, CharmapManager, T> converter = null)
+        public T GetData<T>(
+            Func<FieldValueHolder, CharmapManager, T> converter = null)
         {
             return converter != null
                 ? converter(this, _sharedData.Charmap)
@@ -116,7 +116,9 @@ namespace SitrusBerryFactory._managers._recordManager
             T newValue, 
             string desc)
         {
+            // Store the old data
             byte[] oldBinary = BinaryData;
+
             SetData(newValue);
             byte[] newBinary = BinaryData;
 

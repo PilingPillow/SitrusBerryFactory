@@ -43,8 +43,8 @@ namespace SitrusBerryFactory._managers._recordManager
         {
             Entries = new List<SingleEntry>();
 
-            // Analyzes the def file
-            var fieldMetaDataList = MetadataReader.Create(defFileName);
+            // Analyzes the .def file
+            var fieldDataList = FieldDataReader.Create(defFileName);
 
             // For each Entry
             for (int i = 0; i < entryCount; i++)
@@ -52,10 +52,10 @@ namespace SitrusBerryFactory._managers._recordManager
                 var entryFields = new List<FieldValueHolder>();
 
                 // For each Field
-                for (int j = 0; j < fieldMetaDataList.Count; j++)
+                for (int j = 0; j < fieldDataList.Count; j++)
                 {
                     var fieldValue = new FieldValueHolder(
-                        fieldMetaDataList[j],
+                        fieldDataList[j],
                         sharedData);
                     entryFields.Add(fieldValue);
                 }

@@ -53,6 +53,7 @@ namespace SitrusBerryFactory._managers._recordManager
         String,
         Pointer,
         Bit,
+        Unknown,
     }
 
     public enum StringAttrArgs

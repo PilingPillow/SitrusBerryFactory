@@ -72,10 +72,10 @@
     <Compile Include="_managers\_historyManager\FieldValueChangeCommand.cs" />
     <Compile Include="_managers\_historyManager\HistoryManager.cs" />
     <Compile Include="_managers\_recordManager\EntryManager.cs" />
-    <Compile Include="_managers\_recordManager\MetadataDefinitions.cs" />
+    <Compile Include="_managers\_recordManager\FieldKindDefinitions.cs" />
     <Compile Include="_managers\_recordManager\FieldValueConv.cs" />
     <Compile Include="_managers\_recordManager\FieldValueHolder.cs" />
-    <Compile Include="_managers\_recordManager\MetadataReader.cs" />
+    <Compile Include="_managers\_recordManager\FieldDataReader.cs" />
     <Compile Include="_managers\_formGroupManager\FormGroupData.cs" />
     <Compile Include="_managers\_formGroupManager\FormGroupDefinitions.cs" />
     <Compile Include="_managers\_formGroupManager\FormGroupRegister.cs" />
