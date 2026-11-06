@@ -78,8 +78,7 @@ namespace SitrusBerryFactory._managers._recordManager
             }
         }
 
-        public T GetData<T>(
-            Func<FieldValueHolder, CharmapManager, T> converter = null)
+        public T GetData<T>(Func<FieldValueHolder, CharmapManager, T> converter = null)
         {
             return converter != null
                 ? converter(this, _sharedData.Charmap)
@@ -93,6 +92,14 @@ namespace SitrusBerryFactory._managers._recordManager
             BinaryData = converter != null
                     ? converter(newValue, this, _sharedData.Charmap)
                     : FieldValueConv.ConvModelToBytes(newValue, this, _sharedData.Charmap);
+        }
+
+        /// <summary>
+        /// Change the bit, you need to execute UpdateData.
+        /// </summary>
+        public BitValueMapping ReadBit()
+        {
+            return Interps.BitValues;
         }
 
         /// <summary>

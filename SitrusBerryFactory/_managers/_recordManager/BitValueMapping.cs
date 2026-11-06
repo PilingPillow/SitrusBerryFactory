@@ -1,4 +1,5 @@
-﻿using System.Dynamic;
+﻿using System;
+using System.Dynamic;
 using SitrusBerryFactory._helpers;
 using SitrusBerryFactory._utilities;
 
@@ -35,6 +36,20 @@ namespace SitrusBerryFactory._managers._recordManager
             }
 
             return base.TryGetMember(binder, out result);
+        }
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            if (_values.TryGetValue(binder.Name, out var threshold))
+            {
+                byte[] binary = _owner.BinaryData;
+                binary.SetBitValue(0, binary.Length, threshold, Convert.ToInt64(value));
+
+                _owner.BinaryData = binary;
+                return true;
+            }
+
+            return base.TrySetMember(binder, value);
         }
     }
 
