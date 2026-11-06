@@ -105,9 +105,10 @@ namespace SitrusBerryFactory._editors
 
             // txtClassNameStr
             txtClassNameStr.CharmapManager = _sharedData.Charmap;
-            txtClassNameStr.AllowedLength = _classNameEntryLength;
+            txtClassNameStr.AllowedLength = _classNameEntryLength; // same
             txtClassNameStr.NeedTerminator = true;
 
+            // nudClassPrizeMultiValue
             nudClassPrizeMultiValue.Maximum = (decimal)byte.MaxValue;
 
             // Extra data
