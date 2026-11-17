@@ -63,7 +63,7 @@ namespace SitrusBerryFactory._helpers
             byte[] dest = new byte[newLength];
             Buffer.BlockCopy(vaildArray, 0, dest, 0, vaildArray.Length);
 
-            // if padding char is not default
+            // If padding char is not default
             if (pad != CharConstant.Padding)
             {
                 for (int i = vaildArray.Length; i < newLength; i++)

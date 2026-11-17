@@ -1,4 +1,5 @@
-﻿using SitrusBerryFactory._utilities;
+﻿using System;
+using SitrusBerryFactory._utilities;
 
 namespace SitrusBerryFactory._helpers
 {
@@ -15,7 +16,7 @@ namespace SitrusBerryFactory._helpers
             bool isLittleEndian = true,
             bool isSigned = false)
         {
-            var slice = new ArraySlicer<byte>(source, offset, length);
+            var slice = new ArraySlicer<byte>(source ?? Array.Empty<byte>(), offset, length);
             int result = 0;
 
             for (int i = 0; i < slice.Length; i++)
@@ -45,7 +46,7 @@ namespace SitrusBerryFactory._helpers
             int value,
             bool isLittleEndian = true)
         {
-            var slicer = new ArraySlicer<byte>(source, offset, length);
+            var slicer = new ArraySlicer<byte>(source ?? Array.Empty<byte>(), offset, length);
             for (int i = 0; i < slicer.Length; i++)
             {
                 int shift = BinaryConstant.BitsPerByte * (isLittleEndian ? i : slicer.Length - 1 - i);

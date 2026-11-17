@@ -1,4 +1,6 @@
-﻿namespace SitrusBerryFactory._utilities
+﻿using System.Collections.Generic;
+
+namespace SitrusBerryFactory._utilities
 {
     public ref struct ArraySlicer<T>
     {
@@ -19,6 +21,20 @@
         }
 
         public int Length => _length;
+
+        public int IndexOf(T value)
+        {
+            var comparer = EqualityComparer<T>.Default;
+            for (int i = 0; i < _length; i++)
+            {
+                if (comparer.Equals(_array[_start + i], value))
+                {
+                    return i;
+                }
+            }
+
+            return InvalidConstant.Val;
+        }
 
         /// <summary>
         /// Can call this recursively.
