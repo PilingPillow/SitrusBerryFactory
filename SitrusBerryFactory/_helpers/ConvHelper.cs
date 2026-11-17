@@ -66,7 +66,7 @@ namespace SitrusBerryFactory._helpers
             // if padding char is not default
             if (pad != CharConstant.Padding)
             {
-                for (int i = source.Length; i < newLength; i++)
+                for (int i = vaildArray.Length; i < newLength; i++)
                 {
                     dest[i] = pad;
                 }
