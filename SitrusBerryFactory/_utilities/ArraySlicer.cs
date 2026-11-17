@@ -27,7 +27,7 @@ namespace SitrusBerryFactory._utilities
             var comparer = EqualityComparer<T>.Default;
             for (int i = 0; i < _length; i++)
             {
-                if (comparer.Equals(_array[i], value))
+                if (comparer.Equals(_array[_start + i], value))
                 {
                     return i;
                 }
