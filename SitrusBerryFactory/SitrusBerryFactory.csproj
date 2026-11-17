@@ -56,7 +56,10 @@
     </Compile>
     <Compile Include="_helpers\ConvHelper.cs" />
     <Compile Include="_helpers\CtrlHelper.cs" />
+    <Compile Include="_helpers\DrawExternalBorder.cs" />
     <Compile Include="_helpers\IoHelper.cs" />
+    <Compile Include="_helpers\LinkNudToBtns.cs" />
+    <Compile Include="_helpers\LinkRbToCtrl.cs" />
     <Compile Include="_utilities\ArraySlicer.cs" />
     <Compile Include="_utilities\Constants.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
