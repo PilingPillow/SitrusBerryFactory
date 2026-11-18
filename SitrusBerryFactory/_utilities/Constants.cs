@@ -59,9 +59,10 @@
         public const string ImageExport = "PNG Image (*.png)|*.png|BMP Image (*.bmp)|*.bmp";
     }
 
-    public enum Kvp
+    public static class KvpConstant
     {
-        Key = 0,
-        Val = 1,
+        public const int Key = 0;
+        public const int Val = 1;
+        public const int PartsCount = 2;
     }
 }

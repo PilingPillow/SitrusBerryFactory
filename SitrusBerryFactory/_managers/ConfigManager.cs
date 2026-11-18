@@ -14,9 +14,6 @@ namespace SitrusBerryFactory._managers
         /// </summary>
         public Dictionary<string, string> NamesToPaths{ get; }
 
-        // Calculate In advance
-        private static readonly int PartsCount = Enum.GetValues(typeof(Kvp)).Length;
-
         // Cached by loadconfig
         private readonly Dictionary<string, int> _intCache = null;
         private readonly Dictionary<string, bool> _boolCache = null;
@@ -92,13 +89,13 @@ namespace SitrusBerryFactory._managers
 
             // Split at '='
             string[] parts = line.Split('=');
-            if (parts.Length != PartsCount)
+            if (parts.Length != KvpConstant.PartsCount)
             {
                 return false;
             }
 
-            key = parts[(int)Kvp.Key].RemoveSpace();
-            rawValue = parts[(int)Kvp.Val].RemoveSpace();
+            key = parts[KvpConstant.Key].RemoveSpace();
+            rawValue = parts[KvpConstant.Val].RemoveSpace();
             return true;
         }
 
