@@ -62,6 +62,7 @@
     <Compile Include="_helpers\LinkRbToCtrl.cs" />
     <Compile Include="_managers\CharmapManager.cs" />
     <Compile Include="_managers\ConfigManager.cs" />
+    <Compile Include="_managers\_formGroup\FormGroupDefinitions.cs" />
     <Compile Include="_utilities\ArraySlicer.cs" />
     <Compile Include="_utilities\Constants.cs" />
     <Compile Include="_utilities\EventBinder.cs" />

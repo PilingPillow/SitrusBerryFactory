@@ -109,7 +109,6 @@ namespace SitrusBerryFactory._helpers
             }
         }
 
-
         /// <summary>
         /// Sets ComboBox items and selects the default item.
         /// </summary>

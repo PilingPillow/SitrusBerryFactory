@@ -1,0 +1,41 @@
+﻿using System;
+
+namespace SitrusBerryFactory._managers._formGroup
+{
+    /// <summary>
+    /// Refreshes the UI after undo/redo.
+    /// </summary>
+    public interface IFormRefresh
+    {
+        void RefreshUI();
+    }
+
+    /// <summary>
+    /// Defines form group and display order.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class FormGroupAttribute : Attribute
+    {
+        public FormGroup Group { get; }
+        public int Order { get; }
+
+        // Use the default when order is irrelevant
+        public FormGroupAttribute(FormGroup group, int order = -1)
+        {
+            Group = group;
+            Order = order;
+        }
+    }
+
+    /// <summary>
+    /// Defines form groups.
+    /// </summary>
+    public enum FormGroup
+    {
+        Map,
+        Tileset,
+
+        TrainerClass,
+        TrainerSprite,
+    }
+}
