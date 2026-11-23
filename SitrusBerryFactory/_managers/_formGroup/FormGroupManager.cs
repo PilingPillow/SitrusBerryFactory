@@ -54,8 +54,10 @@ namespace SitrusBerryFactory._managers._formGroup
             foreach (var form in _editors)
             {
                 // Skip the excluded form to prevent unnecessary refreshes
-                if (excludeForm != null &&
-                    ReferenceEquals(form, excludeForm)) continue;
+                if (excludeForm != null && ReferenceEquals(form, excludeForm))
+                {
+                    continue;
+                }
 
                 if (form is IFormRefresh refreshable)
                 {
