@@ -32,7 +32,7 @@ namespace SitrusBerryFactory._forms
             this.msMain = new System.Windows.Forms.MenuStrip();
             this.tsmiLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLoadRom = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsmiClearRom = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiClearRom = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSave = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveOver = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +80,7 @@ namespace SitrusBerryFactory._forms
             // 
             this.tsmiLoad.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiLoadRom,
-            this.TsmiClearRom});
+            this.tsmiClearRom});
             this.tsmiLoad.Name = "tsmiLoad";
             this.tsmiLoad.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiLoad.Size = new System.Drawing.Size(37, 24);
@@ -91,16 +91,16 @@ namespace SitrusBerryFactory._forms
             this.tsmiLoadRom.Name = "tsmiLoadRom";
             this.tsmiLoadRom.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiLoadRom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmiLoadRom.Size = new System.Drawing.Size(172, 20);
+            this.tsmiLoadRom.Size = new System.Drawing.Size(180, 20);
             this.tsmiLoadRom.Text = "Load ROM";
             // 
-            // TsmiClearRom
+            // tsmiClearRom
             // 
-            this.TsmiClearRom.Name = "TsmiClearRom";
-            this.TsmiClearRom.Padding = new System.Windows.Forms.Padding(0);
-            this.TsmiClearRom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.TsmiClearRom.Size = new System.Drawing.Size(172, 20);
-            this.TsmiClearRom.Text = "Clear ROM";
+            this.tsmiClearRom.Name = "tsmiClearRom";
+            this.tsmiClearRom.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiClearRom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.tsmiClearRom.Size = new System.Drawing.Size(180, 20);
+            this.tsmiClearRom.Text = "Clear ROM";
             // 
             // tsmiSave
             // 
@@ -384,7 +384,7 @@ namespace SitrusBerryFactory._forms
         private System.Windows.Forms.MenuStrip msMain;
         private System.Windows.Forms.ToolStripMenuItem tsmiLoad;
         private System.Windows.Forms.ToolStripMenuItem tsmiLoadRom;
-        private System.Windows.Forms.ToolStripMenuItem TsmiClearRom;
+        private System.Windows.Forms.ToolStripMenuItem tsmiClearRom;
         private System.Windows.Forms.ToolStripMenuItem tsmiSave;
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveAs;
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveOver;
