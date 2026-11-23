@@ -1,26 +1,30 @@
-﻿using SitrusBerryFactory._managers;
+﻿using System;
+using SitrusBerryFactory._managers;
 
 namespace SitrusBerryFactory._utilities
 {
-    public sealed class SharedData
+    public static class SharedData
     {
-        private static SharedData _romData = new SharedData();
-        private static ConfigManager _config = null;
-        private static CharmapManager _charmap = null;
-        private SharedData() { }
+        public static byte[] RomData { get; private set; }
+        public static bool IsRomLoaded { get; private set; }
+        public static ConfigManager Config { get; private set; }
+        public static CharmapManager Charmap { get; private set; }
 
-        public static SharedData RomData => _romData;
-        public static ConfigManager Config => _config;
-        public static CharmapManager Charmap => _charmap;
-
-        public void InitializeConfig(string folderPath)
+        public static void Load(
+            byte[] romData,
+            string configFolderPath,
+            string charmapFilePath)
         {
-            _config = new ConfigManager(folderPath);
+            RomData = romData;
+            IsRomLoaded = true;
+            Config = new ConfigManager(configFolderPath);
+            Charmap = new CharmapManager(charmapFilePath);
         }
 
-        public void InitializecharMap(string filePath)
+        public static void Unload()
         {
-            _charmap = new CharmapManager(filePath);
+            RomData = Array.Empty<byte>();
+            IsRomLoaded = false;
         }
     }
 }
