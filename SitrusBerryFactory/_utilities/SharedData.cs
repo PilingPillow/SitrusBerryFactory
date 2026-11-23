@@ -5,26 +5,17 @@ namespace SitrusBerryFactory._utilities
 {
     public static class SharedData
     {
-        public static byte[] RomData { get; private set; }
-        public static bool IsRomLoaded { get; private set; }
-        public static ConfigManager Config { get; private set; }
-        public static CharmapManager Charmap { get; private set; }
+        public static byte[] RomData { get; set; }
+        public static bool IsRomLoaded { get; set; }
+        public static ConfigManager Config { get; set; }
+        public static CharmapManager Charmap { get; set; }
 
-        public static void Load(
-            byte[] romData,
-            string configFolderPath,
-            string charmapFilePath)
-        {
-            RomData = romData;
-            IsRomLoaded = true;
-            Config = new ConfigManager(configFolderPath);
-            Charmap = new CharmapManager(charmapFilePath);
-        }
-
-        public static void Unload()
+        public static void ClearData()
         {
             RomData = Array.Empty<byte>();
             IsRomLoaded = false;
+            Config.ClearCurrentConfig();
+            Charmap.ClearCharmap();
         }
     }
 }

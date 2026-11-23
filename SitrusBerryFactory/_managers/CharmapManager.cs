@@ -10,13 +10,18 @@ namespace SitrusBerryFactory._managers
 {
     public sealed class CharmapManager
     {
-        private readonly ByteTrieNode _byteTrieRoot = null;
-        private readonly StringTrieNode _stringTrieRoot = null;
+        private readonly TrieNode<byte, string> _byteTrieRoot = null;
+        private readonly TrieNode<char, byte[]> _stringTrieRoot = null;
 
-        public CharmapManager(string filePath)
+        public CharmapManager()
         {
-            _byteTrieRoot = new ByteTrieNode();
-            _stringTrieRoot = new StringTrieNode();
+            _byteTrieRoot = new TrieNode<byte, string>();
+            _stringTrieRoot = new TrieNode<char, byte[]>();
+        }
+
+        public void LoadCharmap(string filePath)
+        {
+            ClearCharmap();
 
             foreach (string line in File.ReadLines(filePath, Encoding.UTF8))
             {
@@ -44,12 +49,12 @@ namespace SitrusBerryFactory._managers
                 }
 
                 // Byte node
-                ByteTrieNode byteNode = _byteTrieRoot;
+                TrieNode<byte, string> byteNode = _byteTrieRoot;
                 foreach (byte b in bytes)
                 {
-                    if (!byteNode.Children.TryGetValue(b, out ByteTrieNode next))
+                    if (!byteNode.Children.TryGetValue(b, out TrieNode<byte, string> next))
                     {
-                        next = new ByteTrieNode();
+                        next = new TrieNode<byte, string>();
                         byteNode.Children[b] = next;
                     }
 
@@ -59,12 +64,12 @@ namespace SitrusBerryFactory._managers
                 byteNode.IsTerminal = true;
 
                 // String node
-                StringTrieNode stringNode = _stringTrieRoot;
+                TrieNode<char, byte[]> stringNode = _stringTrieRoot;
                 foreach (char c in value)
                 {
-                    if (!stringNode.Children.TryGetValue(c, out StringTrieNode next))
+                    if (!stringNode.Children.TryGetValue(c, out TrieNode<char, byte[]> next))
                     {
-                        next = new StringTrieNode();
+                        next = new TrieNode<char, byte[]>();
                         stringNode.Children[c] = next;
                     }
 
@@ -72,6 +77,30 @@ namespace SitrusBerryFactory._managers
                 }
                 stringNode.Value = bytes;
                 stringNode.IsTerminal = true;
+            }
+        }
+
+        public void ClearCharmap()
+        {
+            ClearTrie(_byteTrieRoot);
+            ClearTrie(_stringTrieRoot);
+
+            void ClearTrie<TKey, TValue>(TrieNode<TKey, TValue> root)
+            {
+                var stack = new Stack<TrieNode<TKey, TValue>>();
+                stack.Push(root);
+
+                while (stack.Count > 0)
+                {
+                    var node = stack.Pop();
+
+                    foreach (var kvp in node.Children)
+                    {
+                        stack.Push(kvp.Value);
+                    }
+
+                    node.Clear();
+                }
             }
         }
 
@@ -111,12 +140,12 @@ namespace SitrusBerryFactory._managers
 
                 int matchLength = 0;
                 string matchedString = null;
-                ByteTrieNode node = _byteTrieRoot;
+                TrieNode<byte, string> node = _byteTrieRoot;
 
                 for (int j = 0; j < length - i; j++)
                 {
                     byte b = buffer[currentIndex + j];
-                    if (!node.Children.TryGetValue(b, out ByteTrieNode next))
+                    if (!node.Children.TryGetValue(b, out TrieNode<byte, string> next))
                     {
                         break;
                     }
@@ -167,12 +196,12 @@ namespace SitrusBerryFactory._managers
 
                 int matchLength = 0;
                 byte[] matchedBytes = null;
-                StringTrieNode node = _stringTrieRoot;
+                TrieNode<char, byte[]> node = _stringTrieRoot;
 
                 for (int j = 0; j < text.Length - i; j++)
                 {
                     char c = text[i + j];
-                    if (!node.Children.TryGetValue(c, out StringTrieNode next))
+                    if (!node.Children.TryGetValue(c, out TrieNode<char, byte[]> next))
                     {
                         break;
                     }
@@ -248,31 +277,24 @@ namespace SitrusBerryFactory._managers
         }
     }
 
-    public sealed class ByteTrieNode
+    public sealed class TrieNode<TKey, TValue>
     {
-        public Dictionary<byte, ByteTrieNode> Children { get; set; }
-        public string Value { get; set; }
+        public Dictionary<TKey, TrieNode<TKey, TValue>> Children { get; }
+        public TValue Value { get; set; }
         public bool IsTerminal { get; set; }
 
-        public ByteTrieNode(string value = null, bool isTerminal = false)
+        public TrieNode(TValue value = default, bool isTerminal = false)
         {
-            Children = new Dictionary<byte, ByteTrieNode>();
+            Children = new Dictionary<TKey, TrieNode<TKey, TValue>>();
             Value = value;
             IsTerminal = isTerminal;
         }
-    }
 
-    public sealed class StringTrieNode
-    {
-        public Dictionary<char, StringTrieNode> Children { get; set; }
-        public byte[] Value { get; set; }
-        public bool IsTerminal { get; set; }
-
-        public StringTrieNode(byte[] value = null, bool isTerminal = false)
+        public void Clear()
         {
-            Children = new Dictionary<char, StringTrieNode>();
-            Value = value;
-            IsTerminal = isTerminal;
+            Children.Clear();
+            Value = default;
+            IsTerminal = false;
         }
     }
 }

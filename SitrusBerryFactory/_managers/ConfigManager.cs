@@ -11,7 +11,7 @@ namespace SitrusBerryFactory._managers
         /// <summary>
         /// Maps configuration names to file paths.
         /// </summary>
-        public Dictionary<string, string> NamesToPaths{ get; }
+        public Dictionary<string, string> NamesToPaths { get; }
 
         // Cached by loadconfig
         private readonly Dictionary<string, int> _intCache = null;
@@ -44,8 +44,7 @@ namespace SitrusBerryFactory._managers
 
         public void LoadConfig(string configName, byte[] source)
         {
-            _intCache.Clear();
-            _boolCache.Clear();
+            ClearCurrentConfig();
 
             foreach (string line in File.ReadLines(NamesToPaths[configName], Encoding.UTF8))
             {
@@ -108,6 +107,12 @@ namespace SitrusBerryFactory._managers
             }
 
             return int.TryParse(rawValue, out parsedValue);
+        }
+
+        public void ClearCurrentConfig()
+        {
+            _intCache.Clear();
+            _boolCache.Clear();
         }
     }
 }

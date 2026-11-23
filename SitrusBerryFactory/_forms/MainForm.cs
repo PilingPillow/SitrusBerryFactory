@@ -37,6 +37,8 @@ namespace SitrusBerryFactory._forms
 
             InitializeControls();
             InitializeEventHandlers();
+
+            UpdateMainFormUI();
         }
 
         private void InitializeControls()
