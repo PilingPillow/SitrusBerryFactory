@@ -19,6 +19,7 @@ namespace SitrusBerryFactory._forms
         private FormGroupManager _formGroupManager = null;
 
         // File paths
+        private string _romPath = string.Empty;
         private readonly string _iniFolder = Path.Combine(Application.StartupPath, ExtConstant.Ini);
         private readonly string _tblPath = Path.Combine(Application.StartupPath, "charmap.tbl");
 
@@ -31,6 +32,11 @@ namespace SitrusBerryFactory._forms
         public MainForm()
         {
             InitializeComponent();
+
+            // Initialize shared data
+            SharedData.Config = new ConfigManager(_iniFolder);
+            SharedData.Charmap = new CharmapManager();
+            SharedData.Charmap.LoadCharmap(_tblPath);
 
             _eventBinder = new EventBinder();
             _openToolForms = new Dictionary<ToolStripMenuItem, Form>();
@@ -70,7 +76,8 @@ namespace SitrusBerryFactory._forms
                         {
                             return;
                         }
-                        SharedData.Load(File.ReadAllBytes(ofd.FileName), _iniFolder, _tblPath);
+                        _romPath = ofd.FileName;
+                        SharedData.LoadRom(File.ReadAllBytes(_romPath));
 
                         // Get the selected configurations
                         int selectedIndex = ofd.FilterIndex - 1;
@@ -91,7 +98,8 @@ namespace SitrusBerryFactory._forms
                         form.Close();
                     }
 
-                    SharedData.Unload();
+                    _romPath = string.Empty;
+                    SharedData.ClearAll();
                     UpdateMainFormUI();
                 });
 

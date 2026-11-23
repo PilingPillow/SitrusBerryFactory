@@ -5,7 +5,7 @@ namespace SitrusBerryFactory._managers._formGroup
     /// <summary>
     /// Refreshes the UI after undo/redo.
     /// </summary>
-    public interface IFormRefresh
+    public interface IEditorRefresh
     {
         void RefreshUI();
     }

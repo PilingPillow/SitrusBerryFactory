@@ -10,10 +10,21 @@ namespace SitrusBerryFactory._utilities
         public static ConfigManager Config { get; set; }
         public static CharmapManager Charmap { get; set; }
 
-        public static void ClearData()
+        public static void LoadRom(byte[] romData)
+        {
+            RomData = romData;
+            IsRomLoaded = true;
+        }
+
+        public static void ClearRom()
         {
             RomData = Array.Empty<byte>();
             IsRomLoaded = false;
+        }
+
+        public static void ClearAll()
+        {
+            ClearRom();
             Config.ClearCurrentConfig();
             Charmap.ClearCharmap();
         }

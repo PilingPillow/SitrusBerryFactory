@@ -59,7 +59,7 @@ namespace SitrusBerryFactory._managers._formGroup
                     continue;
                 }
 
-                if (form is IFormRefresh refreshable)
+                if (form is IEditorRefresh refreshable)
                 {
                     refreshable.RefreshUI();
                 }
