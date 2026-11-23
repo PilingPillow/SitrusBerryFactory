@@ -68,6 +68,7 @@
     <Compile Include="_utilities\ArraySlicer.cs" />
     <Compile Include="_utilities\Constants.cs" />
     <Compile Include="_utilities\EventBinder.cs" />
+    <Compile Include="_utilities\SharedData.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
