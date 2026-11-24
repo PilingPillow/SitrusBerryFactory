@@ -43,20 +43,28 @@ namespace SitrusBerryFactory._forms
             this.tsmiFreeSpaceFinder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTilesetNoCalculator = new System.Windows.Forms.ToolStripMenuItem();
             this.grpEditors = new System.Windows.Forms.GroupBox();
-            this.btnOpenEditor = new System.Windows.Forms.Button();
-            this.rbTrainer = new System.Windows.Forms.RadioButton();
-            this.cmbTrainer = new System.Windows.Forms.ComboBox();
-            this.rbBattle = new System.Windows.Forms.RadioButton();
-            this.cmbBattle = new System.Windows.Forms.ComboBox();
-            this.rbBag = new System.Windows.Forms.RadioButton();
-            this.cmbBag = new System.Windows.Forms.ComboBox();
-            this.rbField = new System.Windows.Forms.RadioButton();
-            this.cmbField = new System.Windows.Forms.ComboBox();
-            this.rbPokedex = new System.Windows.Forms.RadioButton();
-            this.cmbPokedex = new System.Windows.Forms.ComboBox();
-            this.rbStats = new System.Windows.Forms.RadioButton();
-            this.cmbStats = new System.Windows.Forms.ComboBox();
             this.lstHistory = new System.Windows.Forms.ListBox();
+            this.btnPokemon = new System.Windows.Forms.Button();
+            this.btnNatDex = new System.Windows.Forms.Button();
+            this.btnRegDex = new System.Windows.Forms.Button();
+            this.btnDexHabitat = new System.Windows.Forms.Button();
+            this.btnDexSort = new System.Windows.Forms.Button();
+            this.btnEggMove = new System.Windows.Forms.Button();
+            this.btnTmHmTutor = new System.Windows.Forms.Button();
+            this.btnRoaming = new System.Windows.Forms.Button();
+            this.btnSwarm = new System.Windows.Forms.Button();
+            this.btnWildEnc = new System.Windows.Forms.Button();
+            this.btnAtlas = new System.Windows.Forms.Button();
+            this.btnOverworld = new System.Windows.Forms.Button();
+            this.btnTileset = new System.Windows.Forms.Button();
+            this.btnMap = new System.Windows.Forms.Button();
+            this.btnMailTxt = new System.Windows.Forms.Button();
+            this.btnItem = new System.Windows.Forms.Button();
+            this.btnBattleBg = new System.Windows.Forms.Button();
+            this.btnTrade = new System.Windows.Forms.Button();
+            this.btnTrainerList = new System.Windows.Forms.Button();
+            this.btnTrainerSprite = new System.Windows.Forms.Button();
+            this.btnTrainerClass = new System.Windows.Forms.Button();
             this.msMain.SuspendLayout();
             this.grpEditors.SuspendLayout();
             this.SuspendLayout();
@@ -72,7 +80,7 @@ namespace SitrusBerryFactory._forms
             this.msMain.Location = new System.Drawing.Point(0, 0);
             this.msMain.Name = "msMain";
             this.msMain.Padding = new System.Windows.Forms.Padding(0);
-            this.msMain.Size = new System.Drawing.Size(314, 24);
+            this.msMain.Size = new System.Drawing.Size(490, 24);
             this.msMain.TabIndex = 0;
             this.msMain.Text = "MainMenu";
             // 
@@ -91,7 +99,7 @@ namespace SitrusBerryFactory._forms
             this.tsmiLoadRom.Name = "tsmiLoadRom";
             this.tsmiLoadRom.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiLoadRom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmiLoadRom.Size = new System.Drawing.Size(180, 20);
+            this.tsmiLoadRom.Size = new System.Drawing.Size(172, 20);
             this.tsmiLoadRom.Text = "Load ROM";
             // 
             // tsmiClearRom
@@ -99,7 +107,7 @@ namespace SitrusBerryFactory._forms
             this.tsmiClearRom.Name = "tsmiClearRom";
             this.tsmiClearRom.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiClearRom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.tsmiClearRom.Size = new System.Drawing.Size(180, 20);
+            this.tsmiClearRom.Size = new System.Drawing.Size(172, 20);
             this.tsmiClearRom.Text = "Clear ROM";
             // 
             // tsmiSave
@@ -181,186 +189,262 @@ namespace SitrusBerryFactory._forms
             // 
             // grpEditors
             // 
-            this.grpEditors.Controls.Add(this.btnOpenEditor);
-            this.grpEditors.Controls.Add(this.rbTrainer);
-            this.grpEditors.Controls.Add(this.cmbTrainer);
-            this.grpEditors.Controls.Add(this.rbBattle);
-            this.grpEditors.Controls.Add(this.cmbBattle);
-            this.grpEditors.Controls.Add(this.rbBag);
-            this.grpEditors.Controls.Add(this.cmbBag);
-            this.grpEditors.Controls.Add(this.rbField);
-            this.grpEditors.Controls.Add(this.cmbField);
-            this.grpEditors.Controls.Add(this.rbPokedex);
-            this.grpEditors.Controls.Add(this.cmbPokedex);
-            this.grpEditors.Controls.Add(this.rbStats);
-            this.grpEditors.Controls.Add(this.cmbStats);
+            this.grpEditors.Controls.Add(this.btnBattleBg);
+            this.grpEditors.Controls.Add(this.btnTrade);
+            this.grpEditors.Controls.Add(this.btnTrainerList);
+            this.grpEditors.Controls.Add(this.btnTrainerSprite);
+            this.grpEditors.Controls.Add(this.btnTrainerClass);
+            this.grpEditors.Controls.Add(this.btnMailTxt);
+            this.grpEditors.Controls.Add(this.btnItem);
+            this.grpEditors.Controls.Add(this.btnAtlas);
+            this.grpEditors.Controls.Add(this.btnOverworld);
+            this.grpEditors.Controls.Add(this.btnTileset);
+            this.grpEditors.Controls.Add(this.btnMap);
+            this.grpEditors.Controls.Add(this.btnRoaming);
+            this.grpEditors.Controls.Add(this.btnSwarm);
+            this.grpEditors.Controls.Add(this.btnWildEnc);
+            this.grpEditors.Controls.Add(this.btnEggMove);
+            this.grpEditors.Controls.Add(this.btnTmHmTutor);
+            this.grpEditors.Controls.Add(this.btnDexSort);
+            this.grpEditors.Controls.Add(this.btnDexHabitat);
+            this.grpEditors.Controls.Add(this.btnRegDex);
+            this.grpEditors.Controls.Add(this.btnNatDex);
+            this.grpEditors.Controls.Add(this.btnPokemon);
             this.grpEditors.Location = new System.Drawing.Point(20, 32);
             this.grpEditors.Margin = new System.Windows.Forms.Padding(0);
             this.grpEditors.Name = "grpEditors";
             this.grpEditors.Padding = new System.Windows.Forms.Padding(0);
-            this.grpEditors.Size = new System.Drawing.Size(272, 256);
+            this.grpEditors.Size = new System.Drawing.Size(448, 282);
             this.grpEditors.TabIndex = 1;
             this.grpEditors.TabStop = false;
             this.grpEditors.Text = "Editors";
-            // 
-            // btnOpenEditor
-            // 
-            this.btnOpenEditor.Location = new System.Drawing.Point(20, 212);
-            this.btnOpenEditor.Margin = new System.Windows.Forms.Padding(0);
-            this.btnOpenEditor.Name = "btnOpenEditor";
-            this.btnOpenEditor.Size = new System.Drawing.Size(228, 23);
-            this.btnOpenEditor.TabIndex = 12;
-            this.btnOpenEditor.Text = "Open Selected Editor";
-            this.btnOpenEditor.UseVisualStyleBackColor = true;
-            // 
-            // rbTrainer
-            // 
-            this.rbTrainer.AutoSize = true;
-            this.rbTrainer.Location = new System.Drawing.Point(20, 148);
-            this.rbTrainer.Margin = new System.Windows.Forms.Padding(0);
-            this.rbTrainer.Name = "rbTrainer";
-            this.rbTrainer.Size = new System.Drawing.Size(66, 19);
-            this.rbTrainer.TabIndex = 11;
-            this.rbTrainer.TabStop = true;
-            this.rbTrainer.Text = "Trainer :";
-            this.rbTrainer.UseVisualStyleBackColor = true;
-            // 
-            // cmbTrainer
-            // 
-            this.cmbTrainer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTrainer.FormattingEnabled = true;
-            this.cmbTrainer.Location = new System.Drawing.Point(120, 146);
-            this.cmbTrainer.Margin = new System.Windows.Forms.Padding(0);
-            this.cmbTrainer.Name = "cmbTrainer";
-            this.cmbTrainer.Size = new System.Drawing.Size(128, 23);
-            this.cmbTrainer.TabIndex = 10;
-            // 
-            // rbBattle
-            // 
-            this.rbBattle.AutoSize = true;
-            this.rbBattle.Location = new System.Drawing.Point(20, 178);
-            this.rbBattle.Margin = new System.Windows.Forms.Padding(0);
-            this.rbBattle.Name = "rbBattle";
-            this.rbBattle.Size = new System.Drawing.Size(61, 19);
-            this.rbBattle.TabIndex = 5;
-            this.rbBattle.TabStop = true;
-            this.rbBattle.Text = "Battle :";
-            this.rbBattle.UseVisualStyleBackColor = true;
-            // 
-            // cmbBattle
-            // 
-            this.cmbBattle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBattle.FormattingEnabled = true;
-            this.cmbBattle.Location = new System.Drawing.Point(120, 176);
-            this.cmbBattle.Margin = new System.Windows.Forms.Padding(0);
-            this.cmbBattle.Name = "cmbBattle";
-            this.cmbBattle.Size = new System.Drawing.Size(128, 23);
-            this.cmbBattle.TabIndex = 4;
-            // 
-            // rbBag
-            // 
-            this.rbBag.AutoSize = true;
-            this.rbBag.Location = new System.Drawing.Point(20, 118);
-            this.rbBag.Margin = new System.Windows.Forms.Padding(0);
-            this.rbBag.Name = "rbBag";
-            this.rbBag.Size = new System.Drawing.Size(51, 19);
-            this.rbBag.TabIndex = 9;
-            this.rbBag.TabStop = true;
-            this.rbBag.Text = "Bag :";
-            this.rbBag.UseVisualStyleBackColor = true;
-            // 
-            // cmbBag
-            // 
-            this.cmbBag.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBag.FormattingEnabled = true;
-            this.cmbBag.Location = new System.Drawing.Point(120, 116);
-            this.cmbBag.Margin = new System.Windows.Forms.Padding(0);
-            this.cmbBag.Name = "cmbBag";
-            this.cmbBag.Size = new System.Drawing.Size(128, 23);
-            this.cmbBag.TabIndex = 8;
-            // 
-            // rbField
-            // 
-            this.rbField.AutoSize = true;
-            this.rbField.Location = new System.Drawing.Point(20, 88);
-            this.rbField.Margin = new System.Windows.Forms.Padding(0);
-            this.rbField.Name = "rbField";
-            this.rbField.Size = new System.Drawing.Size(56, 19);
-            this.rbField.TabIndex = 7;
-            this.rbField.TabStop = true;
-            this.rbField.Text = "Field :";
-            this.rbField.UseVisualStyleBackColor = true;
-            // 
-            // cmbField
-            // 
-            this.cmbField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbField.FormattingEnabled = true;
-            this.cmbField.Location = new System.Drawing.Point(120, 86);
-            this.cmbField.Margin = new System.Windows.Forms.Padding(0);
-            this.cmbField.Name = "cmbField";
-            this.cmbField.Size = new System.Drawing.Size(128, 23);
-            this.cmbField.TabIndex = 6;
-            // 
-            // rbPokedex
-            // 
-            this.rbPokedex.AutoSize = true;
-            this.rbPokedex.Location = new System.Drawing.Point(20, 58);
-            this.rbPokedex.Margin = new System.Windows.Forms.Padding(0);
-            this.rbPokedex.Name = "rbPokedex";
-            this.rbPokedex.Size = new System.Drawing.Size(76, 19);
-            this.rbPokedex.TabIndex = 3;
-            this.rbPokedex.TabStop = true;
-            this.rbPokedex.Text = "Pokedex :";
-            this.rbPokedex.UseVisualStyleBackColor = true;
-            // 
-            // cmbPokedex
-            // 
-            this.cmbPokedex.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPokedex.FormattingEnabled = true;
-            this.cmbPokedex.Location = new System.Drawing.Point(120, 56);
-            this.cmbPokedex.Margin = new System.Windows.Forms.Padding(0);
-            this.cmbPokedex.Name = "cmbPokedex";
-            this.cmbPokedex.Size = new System.Drawing.Size(128, 23);
-            this.cmbPokedex.TabIndex = 2;
-            // 
-            // rbStats
-            // 
-            this.rbStats.AutoSize = true;
-            this.rbStats.Location = new System.Drawing.Point(20, 28);
-            this.rbStats.Margin = new System.Windows.Forms.Padding(0);
-            this.rbStats.Name = "rbStats";
-            this.rbStats.Size = new System.Drawing.Size(56, 19);
-            this.rbStats.TabIndex = 1;
-            this.rbStats.TabStop = true;
-            this.rbStats.Text = "Stats :";
-            this.rbStats.UseVisualStyleBackColor = true;
-            // 
-            // cmbStats
-            // 
-            this.cmbStats.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStats.FormattingEnabled = true;
-            this.cmbStats.Location = new System.Drawing.Point(120, 26);
-            this.cmbStats.Margin = new System.Windows.Forms.Padding(0);
-            this.cmbStats.Name = "cmbStats";
-            this.cmbStats.Size = new System.Drawing.Size(128, 23);
-            this.cmbStats.TabIndex = 0;
             // 
             // lstHistory
             // 
             this.lstHistory.FormattingEnabled = true;
             this.lstHistory.ItemHeight = 15;
-            this.lstHistory.Location = new System.Drawing.Point(20, 304);
+            this.lstHistory.Location = new System.Drawing.Point(20, 332);
             this.lstHistory.Margin = new System.Windows.Forms.Padding(0);
             this.lstHistory.Name = "lstHistory";
             this.lstHistory.ScrollAlwaysVisible = true;
-            this.lstHistory.Size = new System.Drawing.Size(272, 124);
+            this.lstHistory.Size = new System.Drawing.Size(448, 124);
             this.lstHistory.TabIndex = 2;
+            // 
+            // btnPokemon
+            // 
+            this.btnPokemon.Location = new System.Drawing.Point(20, 28);
+            this.btnPokemon.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPokemon.Name = "btnPokemon";
+            this.btnPokemon.Size = new System.Drawing.Size(128, 23);
+            this.btnPokemon.TabIndex = 0;
+            this.btnPokemon.Text = "Pokemon";
+            this.btnPokemon.UseVisualStyleBackColor = true;
+            // 
+            // btnNatDex
+            // 
+            this.btnNatDex.Location = new System.Drawing.Point(20, 58);
+            this.btnNatDex.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNatDex.Name = "btnNatDex";
+            this.btnNatDex.Size = new System.Drawing.Size(128, 23);
+            this.btnNatDex.TabIndex = 0;
+            this.btnNatDex.Text = "National Pokedex";
+            this.btnNatDex.UseVisualStyleBackColor = true;
+            // 
+            // btnRegDex
+            // 
+            this.btnRegDex.Location = new System.Drawing.Point(20, 88);
+            this.btnRegDex.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRegDex.Name = "btnRegDex";
+            this.btnRegDex.Size = new System.Drawing.Size(128, 23);
+            this.btnRegDex.TabIndex = 0;
+            this.btnRegDex.Text = "Regional Pokedex";
+            this.btnRegDex.UseVisualStyleBackColor = true;
+            // 
+            // btnDexHabitat
+            // 
+            this.btnDexHabitat.Location = new System.Drawing.Point(20, 118);
+            this.btnDexHabitat.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDexHabitat.Name = "btnDexHabitat";
+            this.btnDexHabitat.Size = new System.Drawing.Size(128, 23);
+            this.btnDexHabitat.TabIndex = 0;
+            this.btnDexHabitat.Text = "Pokedex Habitat";
+            this.btnDexHabitat.UseVisualStyleBackColor = true;
+            // 
+            // btnDexSort
+            // 
+            this.btnDexSort.Location = new System.Drawing.Point(20, 148);
+            this.btnDexSort.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDexSort.Name = "btnDexSort";
+            this.btnDexSort.Size = new System.Drawing.Size(128, 23);
+            this.btnDexSort.TabIndex = 0;
+            this.btnDexSort.Text = "Pokedex Sort";
+            this.btnDexSort.UseVisualStyleBackColor = true;
+            // 
+            // btnEggMove
+            // 
+            this.btnEggMove.Location = new System.Drawing.Point(20, 238);
+            this.btnEggMove.Margin = new System.Windows.Forms.Padding(0);
+            this.btnEggMove.Name = "btnEggMove";
+            this.btnEggMove.Size = new System.Drawing.Size(128, 23);
+            this.btnEggMove.TabIndex = 1;
+            this.btnEggMove.Text = "Egg Move";
+            this.btnEggMove.UseVisualStyleBackColor = true;
+            // 
+            // btnTmHmTutor
+            // 
+            this.btnTmHmTutor.Location = new System.Drawing.Point(20, 208);
+            this.btnTmHmTutor.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTmHmTutor.Name = "btnTmHmTutor";
+            this.btnTmHmTutor.Size = new System.Drawing.Size(128, 23);
+            this.btnTmHmTutor.TabIndex = 2;
+            this.btnTmHmTutor.Text = "TM, HM, Tutor";
+            this.btnTmHmTutor.UseVisualStyleBackColor = true;
+            // 
+            // btnRoaming
+            // 
+            this.btnRoaming.Location = new System.Drawing.Point(160, 88);
+            this.btnRoaming.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRoaming.Name = "btnRoaming";
+            this.btnRoaming.Size = new System.Drawing.Size(128, 23);
+            this.btnRoaming.TabIndex = 3;
+            this.btnRoaming.Text = "Roaming";
+            this.btnRoaming.UseVisualStyleBackColor = true;
+            // 
+            // btnSwarm
+            // 
+            this.btnSwarm.Location = new System.Drawing.Point(160, 58);
+            this.btnSwarm.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSwarm.Name = "btnSwarm";
+            this.btnSwarm.Size = new System.Drawing.Size(128, 23);
+            this.btnSwarm.TabIndex = 4;
+            this.btnSwarm.Text = "Swarm";
+            this.btnSwarm.UseVisualStyleBackColor = true;
+            // 
+            // btnWildEnc
+            // 
+            this.btnWildEnc.Location = new System.Drawing.Point(160, 28);
+            this.btnWildEnc.Margin = new System.Windows.Forms.Padding(0);
+            this.btnWildEnc.Name = "btnWildEnc";
+            this.btnWildEnc.Size = new System.Drawing.Size(128, 23);
+            this.btnWildEnc.TabIndex = 5;
+            this.btnWildEnc.Text = "Wild Encounter";
+            this.btnWildEnc.UseVisualStyleBackColor = true;
+            // 
+            // btnAtlas
+            // 
+            this.btnAtlas.Location = new System.Drawing.Point(160, 238);
+            this.btnAtlas.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAtlas.Name = "btnAtlas";
+            this.btnAtlas.Size = new System.Drawing.Size(128, 23);
+            this.btnAtlas.TabIndex = 6;
+            this.btnAtlas.Text = "Atlas";
+            this.btnAtlas.UseVisualStyleBackColor = true;
+            // 
+            // btnOverworld
+            // 
+            this.btnOverworld.Location = new System.Drawing.Point(160, 208);
+            this.btnOverworld.Margin = new System.Windows.Forms.Padding(0);
+            this.btnOverworld.Name = "btnOverworld";
+            this.btnOverworld.Size = new System.Drawing.Size(128, 23);
+            this.btnOverworld.TabIndex = 7;
+            this.btnOverworld.Text = "Overworld";
+            this.btnOverworld.UseVisualStyleBackColor = true;
+            // 
+            // btnTileset
+            // 
+            this.btnTileset.Location = new System.Drawing.Point(160, 178);
+            this.btnTileset.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTileset.Name = "btnTileset";
+            this.btnTileset.Size = new System.Drawing.Size(128, 23);
+            this.btnTileset.TabIndex = 8;
+            this.btnTileset.Text = "Tileset";
+            this.btnTileset.UseVisualStyleBackColor = true;
+            // 
+            // btnMap
+            // 
+            this.btnMap.Location = new System.Drawing.Point(160, 148);
+            this.btnMap.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMap.Name = "btnMap";
+            this.btnMap.Size = new System.Drawing.Size(128, 23);
+            this.btnMap.TabIndex = 9;
+            this.btnMap.Text = "Map";
+            this.btnMap.UseVisualStyleBackColor = true;
+            // 
+            // btnMailTxt
+            // 
+            this.btnMailTxt.Location = new System.Drawing.Point(300, 58);
+            this.btnMailTxt.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMailTxt.Name = "btnMailTxt";
+            this.btnMailTxt.Size = new System.Drawing.Size(128, 23);
+            this.btnMailTxt.TabIndex = 10;
+            this.btnMailTxt.Text = "Mail Text";
+            this.btnMailTxt.UseVisualStyleBackColor = true;
+            // 
+            // btnItem
+            // 
+            this.btnItem.Location = new System.Drawing.Point(300, 28);
+            this.btnItem.Margin = new System.Windows.Forms.Padding(0);
+            this.btnItem.Name = "btnItem";
+            this.btnItem.Size = new System.Drawing.Size(128, 23);
+            this.btnItem.TabIndex = 11;
+            this.btnItem.Text = "Item";
+            this.btnItem.UseVisualStyleBackColor = true;
+            // 
+            // btnBattleBg
+            // 
+            this.btnBattleBg.Location = new System.Drawing.Point(300, 238);
+            this.btnBattleBg.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBattleBg.Name = "btnBattleBg";
+            this.btnBattleBg.Size = new System.Drawing.Size(128, 23);
+            this.btnBattleBg.TabIndex = 12;
+            this.btnBattleBg.Text = "Battle Background";
+            this.btnBattleBg.UseVisualStyleBackColor = true;
+            // 
+            // btnTrade
+            // 
+            this.btnTrade.Location = new System.Drawing.Point(300, 208);
+            this.btnTrade.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTrade.Name = "btnTrade";
+            this.btnTrade.Size = new System.Drawing.Size(128, 23);
+            this.btnTrade.TabIndex = 13;
+            this.btnTrade.Text = "Trade";
+            this.btnTrade.UseVisualStyleBackColor = true;
+            // 
+            // btnTrainerList
+            // 
+            this.btnTrainerList.Location = new System.Drawing.Point(300, 178);
+            this.btnTrainerList.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTrainerList.Name = "btnTrainerList";
+            this.btnTrainerList.Size = new System.Drawing.Size(128, 23);
+            this.btnTrainerList.TabIndex = 14;
+            this.btnTrainerList.Text = "Trainer List";
+            this.btnTrainerList.UseVisualStyleBackColor = true;
+            // 
+            // btnTrainerSprite
+            // 
+            this.btnTrainerSprite.Location = new System.Drawing.Point(300, 148);
+            this.btnTrainerSprite.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTrainerSprite.Name = "btnTrainerSprite";
+            this.btnTrainerSprite.Size = new System.Drawing.Size(128, 23);
+            this.btnTrainerSprite.TabIndex = 15;
+            this.btnTrainerSprite.Text = "Trainer Sprite";
+            this.btnTrainerSprite.UseVisualStyleBackColor = true;
+            // 
+            // btnTrainerClass
+            // 
+            this.btnTrainerClass.Location = new System.Drawing.Point(300, 118);
+            this.btnTrainerClass.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTrainerClass.Name = "btnTrainerClass";
+            this.btnTrainerClass.Size = new System.Drawing.Size(128, 23);
+            this.btnTrainerClass.TabIndex = 16;
+            this.btnTrainerClass.Text = "Trainer Class";
+            this.btnTrainerClass.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 447);
+            this.ClientSize = new System.Drawing.Size(490, 475);
             this.Controls.Add(this.lstHistory);
             this.Controls.Add(this.grpEditors);
             this.Controls.Add(this.msMain);
@@ -373,7 +457,6 @@ namespace SitrusBerryFactory._forms
             this.msMain.ResumeLayout(false);
             this.msMain.PerformLayout();
             this.grpEditors.ResumeLayout(false);
-            this.grpEditors.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,19 +478,27 @@ namespace SitrusBerryFactory._forms
         private System.Windows.Forms.ToolStripMenuItem tsmiFreeSpaceFinder;
         private System.Windows.Forms.ToolStripMenuItem tsmiTilesetNoCalculator;
         private System.Windows.Forms.GroupBox grpEditors;
-        private System.Windows.Forms.RadioButton rbTrainer;
-        private System.Windows.Forms.ComboBox cmbTrainer;
-        private System.Windows.Forms.RadioButton rbBag;
-        private System.Windows.Forms.ComboBox cmbBag;
-        private System.Windows.Forms.RadioButton rbField;
-        private System.Windows.Forms.ComboBox cmbField;
-        private System.Windows.Forms.RadioButton rbBattle;
-        private System.Windows.Forms.ComboBox cmbBattle;
-        private System.Windows.Forms.RadioButton rbPokedex;
-        private System.Windows.Forms.ComboBox cmbPokedex;
-        private System.Windows.Forms.RadioButton rbStats;
-        private System.Windows.Forms.ComboBox cmbStats;
-        private System.Windows.Forms.Button btnOpenEditor;
         private System.Windows.Forms.ListBox lstHistory;
+        private System.Windows.Forms.Button btnEggMove;
+        private System.Windows.Forms.Button btnTmHmTutor;
+        private System.Windows.Forms.Button btnDexSort;
+        private System.Windows.Forms.Button btnDexHabitat;
+        private System.Windows.Forms.Button btnRegDex;
+        private System.Windows.Forms.Button btnNatDex;
+        private System.Windows.Forms.Button btnPokemon;
+        private System.Windows.Forms.Button btnRoaming;
+        private System.Windows.Forms.Button btnSwarm;
+        private System.Windows.Forms.Button btnWildEnc;
+        private System.Windows.Forms.Button btnAtlas;
+        private System.Windows.Forms.Button btnOverworld;
+        private System.Windows.Forms.Button btnTileset;
+        private System.Windows.Forms.Button btnMap;
+        private System.Windows.Forms.Button btnBattleBg;
+        private System.Windows.Forms.Button btnTrade;
+        private System.Windows.Forms.Button btnTrainerList;
+        private System.Windows.Forms.Button btnTrainerSprite;
+        private System.Windows.Forms.Button btnTrainerClass;
+        private System.Windows.Forms.Button btnMailTxt;
+        private System.Windows.Forms.Button btnItem;
     }
 }

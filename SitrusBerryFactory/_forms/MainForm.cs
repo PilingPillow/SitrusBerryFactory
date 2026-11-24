@@ -18,6 +18,10 @@ namespace SitrusBerryFactory._forms
         private Dictionary<ToolStripMenuItem, Form> _openToolForms = null;
         private FormGroupManager _formGroupManager = null;
 
+        // Rom
+        private string _romPath = string.Empty;
+        private bool _isRomLoaded = false;
+
         // File paths
         private readonly string _iniFolder = Path.Combine(Application.StartupPath, ExtConstant.Ini);
         private readonly string _tblPath = Path.Combine(Application.StartupPath, "charmap.tbl");
@@ -75,9 +79,9 @@ namespace SitrusBerryFactory._forms
                         {
                             return;
                         }
-                        SharedData.LoadRom(
-                            File.ReadAllBytes(SharedData.RomPath),
-                            ofd.FileName);
+                        _romPath = ofd.FileName;
+                        SharedData.RomData = File.ReadAllBytes(_romPath);
+                        _isRomLoaded = true;
 
                         // Get the selected configuration
                         string selectedKey = configKeys[ofd.FilterIndex - 1];
@@ -101,6 +105,8 @@ namespace SitrusBerryFactory._forms
                     }
 
                     SharedData.ClearAll();
+                    _romPath = string.Empty;
+                    _isRomLoaded = false;
                     UpdateMainFormUI();
                 });
 
