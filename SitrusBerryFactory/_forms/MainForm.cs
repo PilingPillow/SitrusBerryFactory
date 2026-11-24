@@ -19,7 +19,6 @@ namespace SitrusBerryFactory._forms
         private FormGroupManager _formGroupManager = null;
 
         // File paths
-        private string _romPath = string.Empty;
         private readonly string _iniFolder = Path.Combine(Application.StartupPath, ExtConstant.Ini);
         private readonly string _tblPath = Path.Combine(Application.StartupPath, "charmap.tbl");
 
@@ -36,7 +35,6 @@ namespace SitrusBerryFactory._forms
             // Initialize shared data
             SharedData.Config = new ConfigManager(_iniFolder);
             SharedData.Charmap = new CharmapManager();
-            SharedData.Charmap.LoadCharmap(_tblPath);
 
             _eventBinder = new EventBinder();
             _openToolForms = new Dictionary<ToolStripMenuItem, Form>();
@@ -72,17 +70,21 @@ namespace SitrusBerryFactory._forms
                             "|",
                             configKeys.Select(key => $"{key}|*.{ExtConstant.Gba}"));
 
+                        // Read the byte array
                         if (ofd.ShowDialog() != DialogResult.OK)
                         {
                             return;
                         }
-                        _romPath = ofd.FileName;
-                        SharedData.LoadRom(File.ReadAllBytes(_romPath));
+                        SharedData.LoadRom(
+                            File.ReadAllBytes(SharedData.RomPath),
+                            ofd.FileName);
 
-                        // Get the selected configurations
-                        int selectedIndex = ofd.FilterIndex - 1;
-                        string selectedKey = configKeys[selectedIndex];
-                        SharedData.Config.LoadConfig(selectedKey, SharedData.RomData);
+                        // Get the selected configuration
+                        string selectedKey = configKeys[ofd.FilterIndex - 1];
+                        SharedData.Config.LoadConfig(selectedKey);
+
+                        // Load Charmap
+                        SharedData.Charmap.LoadCharmap(_tblPath);
 
                         UpdateMainFormUI();
                     }
@@ -98,7 +100,6 @@ namespace SitrusBerryFactory._forms
                         form.Close();
                     }
 
-                    _romPath = string.Empty;
                     SharedData.ClearAll();
                     UpdateMainFormUI();
                 });

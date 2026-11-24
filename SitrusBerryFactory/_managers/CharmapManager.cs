@@ -21,8 +21,6 @@ namespace SitrusBerryFactory._managers
 
         public void LoadCharmap(string filePath)
         {
-            ClearCharmap();
-
             foreach (string line in File.ReadLines(filePath, Encoding.UTF8))
             {
                 // Ignore blank lines and comments

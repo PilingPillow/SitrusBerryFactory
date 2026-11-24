@@ -42,10 +42,8 @@ namespace SitrusBerryFactory._managers
             _boolCache = new Dictionary<string, bool>();
         }
 
-        public void LoadConfig(string configName, byte[] source)
+        public void LoadConfig(string configName)
         {
-            ClearCurrentConfig();
-
             foreach (string line in File.ReadLines(NamesToPaths[configName], Encoding.UTF8))
             {
                 if (!TrySplitLine(line, out string key, out string rawValue))
@@ -62,7 +60,7 @@ namespace SitrusBerryFactory._managers
                 // '*' marks a pointer offset
                 if (rawValue.StartsWith("*")
                     && TryParseNumber(rawValue.Substring(1), out int pointerOffset)
-                    && IoHelper.TryReadPointer(source, pointerOffset, out int resultOffset))
+                    && IoHelper.TryReadPointer(SharedData.RomData, pointerOffset, out int resultOffset))
                 {
                     _intCache[key] = resultOffset;
                     continue;
