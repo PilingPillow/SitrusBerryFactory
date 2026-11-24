@@ -13,14 +13,11 @@ namespace SitrusBerryFactory._managers
         private readonly TrieNode<byte, string> _byteTrieRoot = null;
         private readonly TrieNode<char, byte[]> _stringTrieRoot = null;
 
-        public CharmapManager()
+        public CharmapManager(string filePath)
         {
             _byteTrieRoot = new TrieNode<byte, string>();
             _stringTrieRoot = new TrieNode<char, byte[]>();
-        }
 
-        public void LoadCharmap(string filePath)
-        {
             foreach (string line in File.ReadLines(filePath, Encoding.UTF8))
             {
                 // Ignore blank lines and comments
