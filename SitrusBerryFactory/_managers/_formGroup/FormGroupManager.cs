@@ -17,7 +17,6 @@ namespace SitrusBerryFactory._managers._formGroup
         {
             _owner = owner;
             _editors = new List<Form>();
-            _data = new FormGroupData();
 
             // Find forms in the group and sort them by order
             var formInfos = Assembly.GetExecutingAssembly()
@@ -35,12 +34,15 @@ namespace SitrusBerryFactory._managers._formGroup
             // Create group data when the group has multiple forms
             if (formInfos.Any(x => x.Attribute.Order >= 0))
             {
+                _data = new FormGroupData();
                 _data.RefreshRequested += RefreshForms;
             }
 
             foreach (var info in formInfos)
             {
-                var form = (Form)Activator.CreateInstance(info.Type, _data);
+                var form = _data != null
+                    ? (Form)Activator.CreateInstance(info.Type, _data)
+                    : (Form)Activator.CreateInstance(info.Type);
                 form.FormClosed += SingleForm_FormClosed;
                 _editors.Add(form);
             }
@@ -59,10 +61,8 @@ namespace SitrusBerryFactory._managers._formGroup
                     continue;
                 }
 
-                if (form is IEditorRefresh refreshable)
-                {
-                    refreshable.RefreshUI();
-                }
+                var refreshable = (IEditorRefresh)form;
+                refreshable.RefreshUI();
             }
         }
 
