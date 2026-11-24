@@ -1,33 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace SitrusBerryFactory._helpers
 {
     public static class LinkRbToCtrl
     {
-        private static readonly List<RbLink> _rbLinks = new List<RbLink>();
-
-        private sealed class RbLink
-        {
-            public RadioButton Rb { get; }
-            public Control Ctrl { get; }
-
-            public RbLink(RadioButton rb, Control ctrl)
-            {
-                Rb = rb;
-                Ctrl = ctrl;
-            }
-        }
+        private static readonly Dictionary<Control, RadioButton> _ctrlToRb = new Dictionary<Control, RadioButton>();
+        private static readonly Dictionary<RadioButton, Control> _rbToCtrl = new Dictionary<RadioButton, Control>();
 
         /// <summary>
         /// Links a radio button to a control.
         /// </summary>
         public static void AttachRbToCtrl(RadioButton rb, Control ctrl)
         {
-            var link = new RbLink(rb, ctrl);
-            _rbLinks.Add(link);
+            _ctrlToRb[ctrl] = rb;
+            _rbToCtrl[rb] = ctrl;
 
             ctrl.Enter += CtrlEnter;
             rb.CheckedChanged += RbChecked;
@@ -38,25 +26,25 @@ namespace SitrusBerryFactory._helpers
         /// </summary>
         public static void DetachRbToCtrl(RadioButton rb, Control ctrl)
         {
-            var link = _rbLinks.First(x => x.Rb == rb && x.Ctrl == ctrl);
+            _ctrlToRb.Remove(ctrl);
+            _rbToCtrl.Remove(rb);
 
             ctrl.Enter -= CtrlEnter;
             rb.CheckedChanged -= RbChecked;
-            _rbLinks.Remove(link);
         }
 
         private static void CtrlEnter(object sender, EventArgs e)
         {
-            var link = _rbLinks.First(x => x.Ctrl == (Control)sender);
-            link.Rb.Checked = true;
+            var rb = _ctrlToRb[(Control)sender];
+            rb.Checked = true;
         }
 
         private static void RbChecked(object sender, EventArgs e)
         {
-            var link = _rbLinks.First(x => x.Rb == (RadioButton)sender);
-            if (link.Rb.Checked)
+            var rb = (RadioButton)sender;
+            if (rb.Checked)
             {
-                link.Ctrl.Focus();
+                _rbToCtrl[rb].Focus();
             }
         }
     }
