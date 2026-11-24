@@ -75,30 +75,6 @@ namespace SitrusBerryFactory._managers
             }
         }
 
-        public void ClearCharmap()
-        {
-            ClearTrie(_byteTrieRoot);
-            ClearTrie(_stringTrieRoot);
-
-            void ClearTrie<TKey, TValue>(TrieNode<TKey, TValue> root)
-            {
-                var stack = new Stack<TrieNode<TKey, TValue>>();
-                stack.Push(root);
-
-                while (stack.Count > 0)
-                {
-                    var node = stack.Pop();
-
-                    foreach (var kvp in node.Children)
-                    {
-                        stack.Push(kvp.Value);
-                    }
-
-                    node.Clear();
-                }
-            }
-        }
-
         public string BytesToString(
             byte[] buffer,
             int offset = 0, 
@@ -283,13 +259,6 @@ namespace SitrusBerryFactory._managers
             Children = new Dictionary<TKey, TrieNode<TKey, TValue>>();
             Value = value;
             IsTerminal = isTerminal;
-        }
-
-        public void Clear()
-        {
-            Children.Clear();
-            Value = default;
-            IsTerminal = false;
         }
     }
 }

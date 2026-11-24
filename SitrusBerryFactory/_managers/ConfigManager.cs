@@ -8,43 +8,29 @@ namespace SitrusBerryFactory._managers
 {
     public sealed class ConfigManager
     {
-        /// <summary>
-        /// Maps configuration names to file paths.
-        /// </summary>
-        public Dictionary<string, string> NamesToPaths { get; }
+        private readonly Dictionary<ConfigKey, int> _intCache = null;
+        private readonly Dictionary<ConfigKey, bool> _boolCache = null;
 
-        // Cached by loadconfig
-        private readonly Dictionary<string, int> _intCache = null;
-        private readonly Dictionary<string, bool> _boolCache = null;
-
-        public int GetInt(string key) =>
+        public int GetInt(ConfigKey key) =>
             _intCache.TryGetValue(key, out var val) 
                 ? val 
                 : default;
-        public bool GetBool(string key) =>
+        public bool GetBool(ConfigKey key) =>
             _boolCache.TryGetValue(key, out var val) 
                 ? val
                 : default;
 
-        public ConfigManager(string folderPath)
+        public sealed class ConfigKey
         {
-            NamesToPaths = new Dictionary<string, string>();
-            var searchExt = $"*.{ExtConstant.Ini}";
 
-            foreach (string filePath in Directory.EnumerateFiles(folderPath, searchExt))
-            {
-                string name = Path.GetFileNameWithoutExtension(filePath);
-                NamesToPaths[name] = filePath;
-            }
-
-            // In advance
-            _intCache = new Dictionary<string, int>();
-            _boolCache = new Dictionary<string, bool>();
         }
 
-        public void LoadConfig(string configName)
+        public ConfigManager(string filePath)
         {
-            foreach (string line in File.ReadLines(NamesToPaths[configName], Encoding.UTF8))
+            _intCache = new Dictionary<ConfigKey, int>();
+            _boolCache = new Dictionary<ConfigKey, bool>();
+
+            foreach (string line in File.ReadLines(filePath, Encoding.UTF8))
             {
                 if (!TrySplitLine(line, out string key, out string rawValue))
                 {
@@ -78,7 +64,7 @@ namespace SitrusBerryFactory._managers
             key = string.Empty;
             rawValue = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
+            if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//"))
             {
                 return false;
             }
@@ -105,12 +91,6 @@ namespace SitrusBerryFactory._managers
             }
 
             return int.TryParse(rawValue, out parsedValue);
-        }
-
-        public void ClearCurrentConfig()
-        {
-            _intCache.Clear();
-            _boolCache.Clear();
         }
     }
 }

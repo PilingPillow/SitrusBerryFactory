@@ -42,7 +42,6 @@
         public const string Gba = "gba";
         public const string Bmp = "bmp";
         public const string Def = "def";
-        public const string Ini = "ini";
     }
 
     public static class InvalidConstant
