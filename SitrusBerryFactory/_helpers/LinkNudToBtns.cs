@@ -1,38 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace SitrusBerryFactory._helpers
 {
-    public sealed class NudBtnBinding
-    {
-        public NumericUpDown Nud { get; }
-        public Button PrevBtn { get; }
-        public Button NextBtn { get; }
-
-        public NudBtnBinding(
-            NumericUpDown nud,
-            Button prevBtn,
-            Button nextBtn)
-        {
-            Nud = nud;
-            PrevBtn = prevBtn;
-            NextBtn = nextBtn;
-        }
-    }
-
     public static class LinkNudToBtns
     {
-        private static readonly List<NudBtnBinding> _bindings = new List<NudBtnBinding>();
+        private static readonly Dictionary<NumericUpDown, List<Button>> _nudToBtns = new Dictionary<NumericUpDown, List<Button>>();
+        private static readonly Dictionary<Button, NumericUpDown> _btnToNud = new Dictionary<Button, NumericUpDown>();
+
+        private enum btnOrder
+        {
+            Prev,
+            Next,
+        }
 
         /// <summary>
         /// Connects buttons to a NumericUpDown.
         /// </summary>
         public static void AttachBtnsToNud(NumericUpDown nud, Button btnPrev, Button btnNext)
         {
-            var binding = new NudBtnBinding(nud, btnPrev, btnNext);
-            _bindings.Add(binding);
+            _nudToBtns[nud] = new List<Button>() { btnPrev, btnNext };
+            _btnToNud[btnPrev] = nud;
+            _btnToNud[btnNext] = nud;
 
             btnPrev.Click += BtnDecrease;
             btnNext.Click += BtnIncrease;
@@ -51,15 +41,14 @@ namespace SitrusBerryFactory._helpers
             btnNext.Click -= BtnIncrease;
             nud.ValueChanged -= UpdateBtnsToNud;
 
-            var binding = _bindings.First(x => x.Nud == nud);
-            _bindings.Remove(binding);
+            _nudToBtns.Remove(nud);
+            _btnToNud.Remove(btnPrev);
+            _btnToNud.Remove(btnNext);
         }
 
         private static void BtnDecrease(object sender, EventArgs e)
         {
-            var navigator = _bindings.First(x => x.PrevBtn == (Button)sender);
-
-            var nud = navigator.Nud;
+            var nud = _btnToNud[(Button)sender];
             if (nud.Value > nud.Minimum)
             {
                 nud.Value--;
@@ -68,9 +57,7 @@ namespace SitrusBerryFactory._helpers
 
         private static void BtnIncrease(object sender, EventArgs e)
         {
-            var navigator = _bindings.First(x => x.NextBtn == (Button)sender);
-
-            var nud = navigator.Nud;
+            var nud = _btnToNud[(Button)sender];
             if (nud.Value < nud.Maximum)
             {
                 nud.Value++;
@@ -80,22 +67,24 @@ namespace SitrusBerryFactory._helpers
         private static void UpdateBtnsToNud(object sender, EventArgs e)
         {
             var nud = (NumericUpDown)sender;
-            var navigator = _bindings.First(x => x.Nud == nud);
+            var btns = _nudToBtns[nud];
+            var prevBtn = btns[(int)btnOrder.Prev];
+            var nextBtn = btns[(int)btnOrder.Next];
 
             // Keep focus on the NumericUpDown
             bool canGoPrev = nud.Value > nud.Minimum;
-            if (!canGoPrev && navigator.PrevBtn.Focused)
+            if (!canGoPrev && prevBtn.Focused)
             {
                 nud.Focus();
             }
-            navigator.PrevBtn.Enabled = canGoPrev;
+            prevBtn.Enabled = canGoPrev;
 
             bool canGoNext = nud.Value < nud.Maximum;
-            if (!canGoNext && navigator.NextBtn.Focused)
+            if (!canGoNext && nextBtn.Focused)
             {
                 nud.Focus();
             }
-            navigator.NextBtn.Enabled = canGoNext;
+            nextBtn.Enabled = canGoNext;
         }
     }
 }
