@@ -52,12 +52,6 @@ namespace SitrusBerryFactory._managers
                 ? val
                 : default;
 
-        public void ClearCurrentConfig()
-        {
-            _intCache.Clear();
-            _boolCache.Clear();
-        }
-
         public ConfigManager(string filePath)
         {
             _intCache = new Dictionary<string, int>();
@@ -105,32 +99,42 @@ namespace SitrusBerryFactory._managers
 
         private static bool TrySplitLine(string line, out ConfigContext context)
         {
-            // Whether contain '='
-            int eqIndex = line.IndexOf('=');
-            if (eqIndex < 0)
+            context = null;
+
+            if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//"))
             {
-                context = null;
                 return false;
             }
 
-            // Split at '='
-            string[] parts = line.Split('=');
+            // Whether contain '='
+            string trimmed = line.Trim();
+            int eqIndex = trimmed.IndexOf('=');
+            if (eqIndex < 0)
+            {
+                return false;
+            }
+            var leftSide = trimmed.Substring(0, eqIndex).Trim();
+            var rightSide = trimmed.Substring(eqIndex + 1).RemoveSpace();
 
+            // Split at ' '
+            string[] leftTokens = leftSide.Split( );
             // Get the key name
-            string key = parts[(int)PartOffset.KeyName];
+            var key = leftTokens[leftTokens.Length - 1];
 
             // Get the kind
-            var rightSideStr = parts[(int)PartOffset.KindAndArg];
-            var openParenIndex = rightSideStr.IndexOf('(');
-            var kindStr = rightSideStr.Substring(0, openParenIndex);
+            int openParenIndex = rightSide.IndexOf('(');
+            int closeParenIndex = rightSide.LastIndexOf(')');
+            if (openParenIndex < 0 || closeParenIndex < 0)
+            {
+                return false;
+            }
+            var kindStr = rightSide.Substring(0, openParenIndex);
             InterpType kind = (InterpType)Enum.Parse(typeof(InterpType), kindStr);
 
             // Get the arg
-            var closeParenIndex = rightSideStr.LastIndexOf(')');
-            var arg = rightSideStr.Substring(
-                openParenIndex + 1,
-                closeParenIndex - openParenIndex - 1)
-                .RemoveSpace();
+            string arg = kind != InterpType.ToDo
+                ? rightSide.Substring(openParenIndex + 1, closeParenIndex - openParenIndex - 1)
+                : string.Empty;
 
             context = new ConfigContext(key, kind, arg);
             return true;

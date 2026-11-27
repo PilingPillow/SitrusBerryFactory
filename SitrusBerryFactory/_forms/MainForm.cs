@@ -23,9 +23,9 @@ namespace SitrusBerryFactory._forms
         private string _romPath = string.Empty;
         private bool _isRomLoaded = false;
 
-        // File paths
-        private readonly string _iniFolder = Path.Combine(Application.StartupPath, ExtConstant.Ini);
-        private readonly string _tblPath = Path.Combine(Application.StartupPath, "charmap.tbl");
+        // Paths
+        private readonly string _configPath = Path.Combine(Application.StartupPath, "settings", "Config.cs");
+        private readonly string _charmapPath = Path.Combine(Application.StartupPath, "settings", "charmap.tbl");
 
         private enum SaveMode
         {
@@ -36,11 +36,7 @@ namespace SitrusBerryFactory._forms
         public MainForm()
         {
             InitializeComponent();
-
-            // Initialize shared data
-            SharedData.Config = new ConfigManager(_iniFolder);
-            SharedData.Charmap = new CharmapManager();
-            SharedData.History = new HistoryManager();
+            SharedData.History = new HistoryManager(); // for controls
 
             _eventBinder = new EventBinder();
             _openToolForms = new Dictionary<ToolStripMenuItem, Form>();
@@ -67,15 +63,8 @@ namespace SitrusBerryFactory._forms
                 h => tsmiLoadRom.Click -= h,
                 (_, __) =>
                 {
-                    using (var ofd = new OpenFileDialog())
+                    using (var ofd = new OpenFileDialog() { Filter = FilterConstant.RomFile })
                     {
-                        var configKeys = SharedData.Config.NamesToPaths.Keys.ToList();
-
-                        // Build the file filter
-                        ofd.Filter = string.Join(
-                            "|",
-                            configKeys.Select(key => $"{key}|*.{ExtConstant.Gba}"));
-
                         // Read the byte array
                         if (ofd.ShowDialog() != DialogResult.OK)
                         {
@@ -85,12 +74,9 @@ namespace SitrusBerryFactory._forms
                         SharedData.RomData = File.ReadAllBytes(_romPath);
                         _isRomLoaded = true;
 
-                        // Get the selected configuration
-                        string selectedKey = configKeys[ofd.FilterIndex - 1];
-                        SharedData.Config.LoadConfig(selectedKey);
-
-                        // Load Charmap
-                        SharedData.Charmap.LoadCharmap(_tblPath);
+                        // Initialize other data
+                        SharedData.Config = new ConfigManager(_configPath);
+                        SharedData.Charmap = new CharmapManager(_charmapPath);
 
                         UpdateMainFormUI();
                     }
@@ -106,7 +92,6 @@ namespace SitrusBerryFactory._forms
                         form.Close();
                     }
 
-                    SharedData.ClearAll();
                     _romPath = string.Empty;
                     _isRomLoaded = false;
                     UpdateMainFormUI();

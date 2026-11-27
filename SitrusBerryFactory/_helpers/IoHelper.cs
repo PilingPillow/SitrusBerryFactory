@@ -16,19 +16,19 @@ namespace SitrusBerryFactory._helpers
             bool isLittleEndian = true,
             bool isSigned = false)
         {
-            var slice = new ArraySlicer<byte>(source ?? Array.Empty<byte>(), offset, length);
+            var valid = source ?? Array.Empty<byte>();
             int result = 0;
 
-            for (int i = 0; i < slice.Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 result = isLittleEndian
-                    ? result | (slice[i] << (BinaryConstant.BitsPerByte * i))
-                    : (result << BinaryConstant.BitsPerByte) | slice[i];
+                    ? result | (valid[offset + i] << (BinaryConstant.BitsPerByte * i))
+                    : (result << BinaryConstant.BitsPerByte) | valid[offset + i];
             }
 
             if (isSigned)
             {
-                int shift = (sizeof(int) * BinaryConstant.BitsPerByte) - (slice.Length * BinaryConstant.BitsPerByte);
+                int shift = (sizeof(int) * BinaryConstant.BitsPerByte) - (length * BinaryConstant.BitsPerByte);
                 result = (result << shift) >> shift;
             }
 
@@ -46,11 +46,11 @@ namespace SitrusBerryFactory._helpers
             int value,
             bool isLittleEndian = true)
         {
-            var slicer = new ArraySlicer<byte>(source ?? Array.Empty<byte>(), offset, length);
-            for (int i = 0; i < slicer.Length; i++)
+            var valid = source ?? Array.Empty<byte>();
+            for (int i = 0; i < length; i++)
             {
-                int shift = BinaryConstant.BitsPerByte * (isLittleEndian ? i : slicer.Length - 1 - i);
-                slicer[i] = (byte)((value >> shift) & MaskConstant.Byte);
+                int shift = BinaryConstant.BitsPerByte * (isLittleEndian ? i : length - 1 - i);
+                valid[offset + i] = (byte)((value >> shift) & MaskConstant.Byte);
             }
         }
 
