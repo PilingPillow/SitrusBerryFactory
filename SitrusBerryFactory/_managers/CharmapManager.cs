@@ -20,8 +20,8 @@ namespace SitrusBerryFactory._managers
 
             foreach (string line in File.ReadLines(filePath, Encoding.UTF8))
             {
-                // Ignore blank lines and comments
-                if (string.IsNullOrWhiteSpace(line)|| line.StartsWith(";"))
+                // Ignore blank lines
+                if (string.IsNullOrWhiteSpace(line))
                 {
                     continue;
                 }
