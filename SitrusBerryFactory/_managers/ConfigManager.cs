@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using SitrusBerryFactory._helpers;
@@ -8,89 +9,131 @@ namespace SitrusBerryFactory._managers
 {
     public sealed class ConfigManager
     {
-        private readonly Dictionary<ConfigKey, int> _intCache = null;
-        private readonly Dictionary<ConfigKey, bool> _boolCache = null;
+        private readonly Dictionary<string, int> _intCache = null;
+        private readonly Dictionary<string, bool> _boolCache = null;
 
-        public int GetInt(ConfigKey key) =>
+        private enum InterpType
+        {
+            Int,
+            Pointer,
+            Bool,
+            ToDo,
+        }
+
+        private enum PartOffset
+        {
+            KeyName = 3,
+            KindAndArg = 5,
+        }
+
+        private sealed class ConfigContext
+        {
+            public string Key { get; }
+            public InterpType Kind { get; }
+            public string Arg { get; }
+
+            public ConfigContext(
+                string key, 
+                InterpType kind, 
+                string arg)
+            {
+                Key = key;
+                Kind = kind;
+                Arg = arg;
+            }
+        }
+
+        public int GetInt(string key) =>
             _intCache.TryGetValue(key, out var val) 
                 ? val 
                 : default;
-        public bool GetBool(ConfigKey key) =>
+        public bool GetBool(string key) =>
             _boolCache.TryGetValue(key, out var val) 
                 ? val
                 : default;
 
-        public sealed class ConfigKey
+        public void ClearCurrentConfig()
         {
-
+            _intCache.Clear();
+            _boolCache.Clear();
         }
 
         public ConfigManager(string filePath)
         {
-            _intCache = new Dictionary<ConfigKey, int>();
-            _boolCache = new Dictionary<ConfigKey, bool>();
+            _intCache = new Dictionary<string, int>();
+            _boolCache = new Dictionary<string, bool>();
 
             foreach (string line in File.ReadLines(filePath, Encoding.UTF8))
             {
-                if (!TrySplitLine(line, out string key, out string rawValue))
+                if (!TrySplitLine(line, out ConfigContext context))
                 {
                     continue;
                 }
 
-                if (bool.TryParse(rawValue, out bool boolValue))
+                switch (context.Kind)
                 {
-                    _boolCache[key] = boolValue;
-                    continue;
+                    case InterpType.Int:
+                        int value = ParseToNumber(context.Arg);
+                        _intCache[context.Key] = value;
+                        break;
+                    case InterpType.Pointer:
+                        int pointer = ParseToNumber(context.Arg);
+                        if (SharedData.RomData.TryReadPointer(pointer, out int offset))
+                        {
+                            _intCache[context.Key] = offset;
+                        }
+                        break;
+                    case InterpType.Bool:
+                        bool result = Convert.ToBoolean(context.Arg);
+                        _boolCache[context.Key] = result;
+                        break;
+                }
+            }
+
+            // helper
+            int ParseToNumber(string str)
+            {
+                if (str.StartsWith(PrefixConstant.Hex)) // 0x
+                {
+                    string hexPart = str.Substring(PrefixConstant.Hex.Length);
+                    return ConvHelper.ParseHexToInt(hexPart);
                 }
 
-                // '*' marks a pointer offset
-                if (rawValue.StartsWith("*")
-                    && TryParseNumber(rawValue.Substring(1), out int pointerOffset)
-                    && IoHelper.TryReadPointer(SharedData.RomData, pointerOffset, out int resultOffset))
-                {
-                    _intCache[key] = resultOffset;
-                    continue;
-                }
-
-                if (TryParseNumber(rawValue, out int numberValue))
-                {
-                    _intCache[key] = numberValue;
-                }
+                return Convert.ToInt32(str.RemoveSpace());
             }
         }
 
-        private static bool TrySplitLine(string line, out string key, out string rawValue)
+        private static bool TrySplitLine(string line, out ConfigContext context)
         {
-            key = string.Empty;
-            rawValue = string.Empty;
-
-            if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//"))
+            // Whether contain '='
+            int eqIndex = line.IndexOf('=');
+            if (eqIndex < 0)
             {
+                context = null;
                 return false;
             }
 
             // Split at '='
             string[] parts = line.Split('=');
-            if (parts.Length != KvpConstant.PartsCount)
-            {
-                return false;
-            }
 
-            key = parts[KvpConstant.Key].RemoveSpace();
-            rawValue = parts[KvpConstant.Val].RemoveSpace();
+            // Get the key name
+            string key = parts[(int)PartOffset.KeyName];
+
+            // Get the kind
+            var rightSideStr = parts[(int)PartOffset.KindAndArg];
+            var openParenIndex = rightSideStr.IndexOf('(');
+            var kindStr = rightSideStr.Substring(0, openParenIndex);
+            InterpType kind = (InterpType)Enum.Parse(typeof(InterpType), kindStr);
+
+            // Get the arg
+            var closeParenIndex = rightSideStr.LastIndexOf(')');
+            var arg = rightSideStr.Substring(
+                openParenIndex + 1,
+                closeParenIndex - openParenIndex - 1)
+                .RemoveSpace();
+
+            context = new ConfigContext(key, kind, arg);
             return true;
-        }
-
-        private bool TryParseNumber(string rawValue, out int parsedValue)
-        {
-            if (rawValue.StartsWith(PrefixConstant.Hex)) // 0x
-            {
-                string hexPart = rawValue.Substring(PrefixConstant.Hex.Length);
-                parsedValue = ConvHelper.ParseHexToInt(hexPart);
-                return true;
-            }
-
-            return int.TryParse(rawValue, out parsedValue);
         }
     }
 }

@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="settings\Config.cs" />
+    <Compile Include="settings\Config.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="_forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
